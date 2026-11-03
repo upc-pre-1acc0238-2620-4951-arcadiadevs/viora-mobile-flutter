@@ -5,11 +5,11 @@ import 'package:viora/core/navigation/placeholder_screen.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/home/presentation/ui/home_page.dart';
 
-/// Raíz de composición de la navegación: conoce las pantallas de todos los
-/// features. En `core/`, solo `di/` y `database/` pueden importar `features/`.
+/// Composition root of navigation: the one place that knows the screens of every
+/// feature. Inside `core/`, only `di/` and `database/` may import `features/`.
 ///
-/// Para integrar un feature: reemplaza el `PlaceholderScreen` de su tab por su
-/// pantalla raíz y agrega sus rutas de detalle dentro de la rama.
+/// When a feature is ready, replace the `PlaceholderScreen` of its tab with the
+/// feature's root screen and add its detail routes inside the branch.
 final GoRouter appRouter = GoRouter(
   initialLocation: TopLevelDestination.home.path,
   routes: [

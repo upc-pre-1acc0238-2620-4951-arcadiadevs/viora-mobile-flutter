@@ -12,12 +12,11 @@ import 'package:viora/features/home/presentation/ui/widgets/home_headline.dart';
 
 void _noop() {}
 
-/// Home / "Inicio" (Figma P10). Conecta el ViewModel con la UI; equivale a
-/// `HomeScreen` de Android.
+/// Home screen. Connects the ViewModel with the UI.
 ///
-/// Las secciones de otros features (fase, "Hoy en tu campo", alternancia) se
-/// enchufan por [sections], en el orden del diseño; "Mis lotes" va siempre al
-/// final. Así el Home solo es el contenedor y no conoce a esos features.
+/// The sections owned by other features (phase, "Hoy en tu campo", alternation) plug
+/// into [sections], in design order; "Mis lotes" always comes last. This way the Home
+/// is only the container and doesn't know those features.
 class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
@@ -43,8 +42,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
-/// Contenedor visual del Home: sin Bloc, para poder probarlo con un
-/// [HomeUiState] fijo (equivale a `HomeScreenContent`).
+/// Visual container of the Home. It has no Bloc dependency, so it can be tested with
+/// a fixed [HomeUiState].
 class HomePageContent extends StatelessWidget {
   const HomePageContent({
     super.key,
@@ -58,7 +57,7 @@ class HomePageContent extends StatelessWidget {
   final VoidCallback onOpenAlerts;
   final List<Widget> sections;
 
-  /// Fecha mostrada; por defecto la de hoy (inyectable para pruebas).
+  /// Date shown; today by default (injectable for tests).
   final DateTime? today;
 
   @override
@@ -74,7 +73,7 @@ class HomePageContent extends StatelessWidget {
             Spacing.lg,
             Spacing.sm,
             Spacing.lg,
-            // Toda pantalla de tab reserva el espacio de la barra flotante.
+            // Every tab screen reserves the space of the floating bar.
             VioraTabBarDefaults.contentBottomPadding + bottomInset,
           ),
           child: Column(

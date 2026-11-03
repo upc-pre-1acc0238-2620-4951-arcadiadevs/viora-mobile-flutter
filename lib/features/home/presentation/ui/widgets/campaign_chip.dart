@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/spacing.dart';
 
-/// Chip de la campaña vigente ("Campaña 2026").
+/// Chip with the current campaign ("Campaña 2026").
 class CampaignChip extends StatelessWidget {
   const CampaignChip({super.key, required this.text});
 

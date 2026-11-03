@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:viora/core/designsystem/component/viora_tab_bar.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
 
-/// Shell de la app: el contenido de la rama activa con la barra flotante encima.
-/// Las pantallas que se abren fuera del shell (asistentes, mapas a pantalla
-/// completa) tapan la barra de forma natural.
+/// App shell: the content of the active branch with the floating bar on top.
+/// Screens opened outside the shell (wizards, full-screen maps) cover the bar
+/// naturally.
 class AppShell extends StatelessWidget {
   const AppShell({super.key, required this.navigationShell});
 
@@ -31,11 +31,11 @@ class AppShell extends StatelessWidget {
                 selectedIndex: navigationShell.currentIndex,
                 onItemSelected: (index) => navigationShell.goBranch(
                   index,
-                  // Tocar el tab activo vuelve a la raíz de su rama.
+                  // Tapping the active tab goes back to the root of its branch.
                   initialLocation: index == navigationShell.currentIndex,
                 ),
                 actionLabel: '¿Qué vas a registrar?',
-                // TODO(shell): abrir el menú "¿Qué vas a registrar?".
+                // TODO(shell): open the "¿Qué vas a registrar?" menu.
                 onActionPressed: () {},
               ),
             ),

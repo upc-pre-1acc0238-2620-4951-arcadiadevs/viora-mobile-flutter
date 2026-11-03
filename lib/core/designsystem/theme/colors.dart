@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
-/// Colores de marca y primitivas de Figma ("Viora202602_Mobile_App").
-/// Equivalente a `Color.kt` del proyecto Android: usar estas primitivas para
-/// superficies de diseño que no tienen rol en Material 3 (tarjetas de fase del
-/// Home, tab bar flotante, etc.).
+/// Brand colors and primitives from Figma ("Viora202602_Mobile_App"). Use these
+/// primitives for design surfaces that have no Material 3 role (Home phase cards,
+/// floating tab bar, etc.).
 abstract final class VioraColors {
-  // Marca.
+  // Brand.
   static const forest = Color(0xFF2E4A3A);
   static const shadow = Color(0xFF1F2C26);
   static const harvest = Color(0xFFE8B923);
   static const tierra = Color(0xFFC15A2E);
 
-  // Primitivas.
+  // Primitives.
   static const green100 = Color(0xFFE9EEEB);
   static const green200 = Color(0xFFD4DBD7);
   static const green700 = Color(0xFF485A4F);
@@ -36,11 +35,11 @@ abstract final class VioraColors {
   static const neutral700 = Color(0xFF413F3C);
   static const neutral900 = Color(0xFF1B1916);
 
-  /// Marrón cálido para sombras de elementos flotantes (en vez de negro puro).
+  /// Warm brown for the shadows of floating elements, instead of pure black.
   static const shadowTint = Color(0xFF4B3425);
 }
 
-/// Esquema Material 3 claro (el único diseñado en Figma).
+/// Light Material 3 scheme, the only one designed in Figma.
 const ColorScheme vioraLightScheme = ColorScheme(
   brightness: Brightness.light,
   primary: VioraColors.forest,
@@ -76,4 +75,43 @@ const ColorScheme vioraLightScheme = ColorScheme(
   surfaceContainer: Color(0xFFEFEDE2),
   surfaceContainerHigh: Color(0xFFE9E7DC),
   surfaceContainerHighest: Color(0xFFE3E1D7),
+);
+
+/// Dark Material 3 scheme. It isn't wired into the app: only the light scheme is
+/// designed in Figma, so the app doesn't follow the system dark mode.
+const ColorScheme vioraDarkScheme = ColorScheme(
+  brightness: Brightness.dark,
+  primary: Color(0xFF9BCFA9),
+  onPrimary: VioraColors.shadow,
+  primaryContainer: Color(0xFF2E4A3A),
+  onPrimaryContainer: Color(0xFFB6D3C0),
+  secondary: Color(0xFFE9B695),
+  onSecondary: Color(0xFF5A2C11),
+  secondaryContainer: Color(0xFF7E4020),
+  onSecondaryContainer: Color(0xFFF3D2BE),
+  tertiary: Color(0xFFECC865),
+  onTertiary: Color(0xFF3D2E00),
+  tertiaryContainer: Color(0xFF584200),
+  onTertiaryContainer: Color(0xFFFCE7A8),
+  error: Color(0xFFFFB4AB),
+  onError: Color(0xFF690005),
+  errorContainer: Color(0xFF93000A),
+  onErrorContainer: Color(0xFFFFDAD6),
+  surface: VioraColors.shadow,
+  onSurface: Color(0xFFE4E3D9),
+  onSurfaceVariant: Color(0xFFC6C7B8),
+  outline: Color(0xFF909183),
+  outlineVariant: Color(0xFF46483C),
+  shadow: Color(0xFF000000),
+  scrim: Color(0xFF000000),
+  inverseSurface: Color(0xFFE4E3D9),
+  onInverseSurface: Color(0xFF30312B),
+  inversePrimary: VioraColors.forest,
+  surfaceDim: VioraColors.shadow,
+  surfaceBright: Color(0xFF434A42),
+  surfaceContainerLowest: Color(0xFF141F18),
+  surfaceContainerLow: Color(0xFF1F2A22),
+  surfaceContainer: Color(0xFF232E26),
+  surfaceContainerHigh: Color(0xFF2E3830),
+  surfaceContainerHighest: Color(0xFF39433B),
 );

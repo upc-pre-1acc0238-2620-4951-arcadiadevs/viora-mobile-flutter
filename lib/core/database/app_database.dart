@@ -3,11 +3,11 @@ import 'package:drift_flutter/drift_flutter.dart';
 
 part 'app_database.g.dart';
 
-/// Base de datos local, compartida por todos los features (equivale a la
-/// `AppDatabase` de Room). Cada feature agrega aquí sus tablas y DAOs.
+/// Local database shared by every feature. Each feature registers its own tables
+/// and DAOs here.
 @DriftDatabase(tables: [])
 class AppDatabase extends _$AppDatabase {
-  // La conexión se abre en la primera consulta; por eso no hace falta await.
+  // The connection opens on the first query, so startup doesn't have to await it.
   AppDatabase([QueryExecutor? executor])
       : super(executor ?? driftDatabase(name: 'viora'));
 

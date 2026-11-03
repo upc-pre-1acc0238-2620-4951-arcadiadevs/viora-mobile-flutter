@@ -6,7 +6,7 @@ import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/spacing.dart';
 import 'package:viora/core/designsystem/component/viora_icon.dart';
 
-/// Un destino de [VioraTabBar]. [label] se usa solo para accesibilidad.
+/// One destination of [VioraTabBar]. [label] is only used for accessibility.
 class TabBarItem {
   const TabBarItem({required this.iconAsset, required this.label});
 
@@ -22,16 +22,16 @@ abstract final class VioraTabBarDefaults {
   static const double barInnerPadding = 8;
   static const double gap = Spacing.sm;
 
-  /// Padding inferior que toda pantalla de tab debe reservar para que la barra
-  /// flotante nunca tape el contenido (equivale a `ContentBottomPadding`).
+  /// Bottom padding every tab screen must reserve so the floating bar never hides
+  /// content.
   static const double contentBottomPadding = barHeight + bottomMargin + Spacing.md;
 }
 
-/// Píldora de navegación flotante: una burbuja marfil se desliza al destino
-/// seleccionado, más el botón amarillo "+" aparte (Figma: Editorial/Tapbar flotante).
+/// Floating navigation pill with an ivory bubble that slides to the selected
+/// destination, plus the separate yellow "+" action (Figma: Editorial/Tapbar flotante).
 ///
-/// Versión base: solo el estado de reposo. Los estados `Compact` y `Actions`
-/// (menú "¿Qué vas a registrar?") del Android quedan pendientes.
+/// Only the resting state exists so far. The compact state and the
+/// "¿Qué vas a registrar?" menu are still pending.
 class VioraTabBar extends StatelessWidget {
   const VioraTabBar({
     super.key,
@@ -167,7 +167,7 @@ class _TabCell extends StatelessWidget {
         child: SizedBox(
           height: VioraTabBarDefaults.barHeight,
           child: Center(
-            // El icono se oscurece al llegar la burbuja marfil.
+            // The icon darkens as the ivory bubble arrives.
             child: TweenAnimationBuilder<Color?>(
               duration: const Duration(milliseconds: 260),
               tween: ColorTween(

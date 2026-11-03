@@ -8,12 +8,12 @@ void main() {
   setUp(setupDependencies);
   tearDown(() => getIt.reset());
 
-  test('get_it entrega un ViewModel nuevo cada vez y una sola base de datos', () {
+  test('get_it provides a new ViewModel every time and a single database', () {
     expect(getIt<HomeViewModel>(), isNot(same(getIt<HomeViewModel>())));
     expect(getIt<AppDatabase>(), same(getIt<AppDatabase>()));
   });
 
-  testWidgets('la app abre en Inicio con el estado del Cubit', (tester) async {
+  testWidgets('the app opens on Home with the Cubit state', (tester) async {
     await tester.pumpWidget(const VioraApp());
     await tester.pumpAndSettle();
 

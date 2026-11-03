@@ -1,7 +1,7 @@
 import 'package:viora/core/designsystem/component/viora_icon.dart';
 
-/// Destinos de la barra flotante, en orden de aparición. Para cambiar los tabs
-/// basta con editar esta lista: el shell y la barra se arman solos.
+/// The destinations of the floating tab bar, in display order. The shell and the
+/// bar are built from this list, so changing the tabs only means editing it.
 enum TopLevelDestination {
   home('/home', 'Inicio', VioraIcons.home),
   plots('/plots', 'Lotes', VioraIcons.map),

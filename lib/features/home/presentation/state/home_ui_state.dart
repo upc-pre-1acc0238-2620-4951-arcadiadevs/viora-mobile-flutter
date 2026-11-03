@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-/// Lo que muestra el Home (Figma P10 "Inicio").
+/// What the Home shows.
 ///
-/// Por ahora solo lo que ya tiene datos detrás (saludo y alertas). Cuando se
-/// integren los lotes pasa a ser una `sealed class` como en Android
-/// (`Loading`, `Error`, `NoPlots`, `Content`), igual que `HomeUiState.kt`.
+/// Only the parts that already have data behind them live here (greeting and
+/// alerts). Once plots are integrated this becomes a `sealed class` with mutually
+/// exclusive states (`Loading`, `Error`, `NoPlots`, `Content`).
 @immutable
 class HomeUiState {
   const HomeUiState({
@@ -12,10 +12,10 @@ class HomeUiState {
     this.hasUnreadAlerts = false,
   });
 
-  /// Nombre completo del perfil; `null` mientras no se conozca.
+  /// Full name of the profile; `null` while it isn't known.
   final String? displayName;
 
-  /// Muestra el punto de aviso sobre la campana.
+  /// Shows the notice dot on the bell.
   final bool hasUnreadAlerts;
 
   HomeUiState copyWith({String? displayName, bool? hasUnreadAlerts}) {

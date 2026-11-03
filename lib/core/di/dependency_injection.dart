@@ -14,7 +14,7 @@ void _setupCore() {
   getIt.registerLazySingleton<AppDatabase>(() => AppDatabase());
 }
 
-// Los ViewModels guardan estado de pantalla: una instancia nueva cada vez.
+// ViewModels hold screen state, so every screen gets a new instance.
 void _setupViewModels() {
   getIt.registerFactory<HomeViewModel>(() => HomeViewModel());
 }

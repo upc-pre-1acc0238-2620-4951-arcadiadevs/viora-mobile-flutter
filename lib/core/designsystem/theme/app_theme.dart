@@ -3,23 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/typography.dart';
 
-/// Radios de Viora: chip 8, tarjeta 12, sheet 28; botones y chips usan la píldora.
+/// Viora corner radii: chip 8, card 12, sheet 28. Buttons and the search field use
+/// the pill shape.
 abstract final class AppRadius {
+  static const double xs = 4;
   static const double sm = 8;
   static const double md = 12;
+  static const double lg = 20;
   static const double xl = 28;
 }
 
-/// Tema de Viora (tokens portados desde el proyecto Android).
+/// Viora theme, built from the brand color and typography tokens.
 abstract final class AppTheme {
-  static ThemeData get light => ThemeData(
+  // Figma screens use neutral100 as background; surface (neutral50) is for cards.
+  static ThemeData get light => _build(vioraLightScheme, VioraColors.neutral100);
+
+  static ThemeData get dark => _build(vioraDarkScheme, vioraDarkScheme.surface);
+
+  static ThemeData _build(ColorScheme scheme, Color background) => ThemeData(
         useMaterial3: true,
-        colorScheme: vioraLightScheme,
-        // Las pantallas de Figma usan neutral100 de fondo; surface (neutral50) es para tarjetas.
-        scaffoldBackgroundColor: VioraColors.neutral100,
+        colorScheme: scheme,
+        scaffoldBackgroundColor: background,
         textTheme: vioraTextTheme.apply(
-          bodyColor: vioraLightScheme.onSurface,
-          displayColor: vioraLightScheme.onSurface,
+          bodyColor: scheme.onSurface,
+          displayColor: scheme.onSurface,
         ),
         cardTheme: const CardThemeData(
           elevation: 0,

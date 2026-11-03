@@ -5,7 +5,7 @@ import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/spacing.dart';
 import 'package:viora/features/home/presentation/util/home_formatters.dart';
 
-/// Avatar (iniciales o isotipo), saludo con fecha y campana de alertas.
+/// Avatar (initials or isotype), greeting with the date, and alerts bell.
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
     super.key,

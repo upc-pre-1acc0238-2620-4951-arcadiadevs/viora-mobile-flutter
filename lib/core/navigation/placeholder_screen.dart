@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:viora/core/designsystem/component/viora_tab_bar.dart';
 import 'package:viora/core/designsystem/theme/spacing.dart';
 
-/// Cuerpo temporal de un tab cuyo feature aún no se construye.
+/// Temporary body of a tab whose feature isn't built yet.
 class PlaceholderScreen extends StatelessWidget {
   const PlaceholderScreen({super.key, required this.title});
 
