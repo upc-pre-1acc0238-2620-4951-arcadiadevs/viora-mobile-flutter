@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+import 'package:viora/core/designsystem/component/viora_morphing_shape_indicator.dart';
+import 'package:viora/core/designsystem/component/viora_wavy_progress_indicator.dart';
+import 'package:viora/core/designsystem/theme/app_theme.dart';
+import 'package:viora/core/navigation/top_level_destination.dart';
+import 'package:viora/features/iam/presentation/ui/splash_page.dart';
+
+void main() {
+  Widget app() => MaterialApp.router(
+        routerConfig: GoRouter(
+          initialLocation: SplashPage.path,
+          routes: [
+            GoRoute(
+              path: SplashPage.path,
+              pageBuilder: (context, state) => const NoTransitionPage(child: SplashPage()),
+            ),
+            GoRoute(
+              path: TopLevelDestination.home.path,
+              pageBuilder: (context, state) => const NoTransitionPage(child: Text('home')),
+            ),
+          ],
+        ),
+      );
+
+  /// Pumps 16 ms frames for [millis].
+  Future<void> play(WidgetTester tester, int millis) async {
+    for (var elapsed = 0; elapsed < millis; elapsed += 16) {
+      await tester.pump(const Duration(milliseconds: 16));
+    }
+  }
+
+  testWidgets('starts with the morphing shape and without the loading ring', (tester) async {
+    await tester.pumpWidget(app());
+    await play(tester, 500);
+
+    expect(find.byType(VioraMorphingShapeIndicator), findsOneWidget);
+    expect(find.byType(VioraWavyProgressIndicator), findsNothing);
+    expect(find.text('home'), findsNothing);
+  });
+
+  testWidgets('shows the loading ring before going to the Home', (tester) async {
+    await tester.pumpWidget(app());
+
+    var elapsed = 0;
+    while (find.byType(VioraWavyProgressIndicator).evaluate().isEmpty && elapsed < 8000) {
+      await play(tester, 100);
+      elapsed += 100;
+    }
+
+    expect(find.byType(VioraWavyProgressIndicator), findsOneWidget);
+    expect(find.text('home'), findsNothing);
+  });
+
+  testWidgets('goes to the Home when it ends, in the time of the sequence', (tester) async {
+    await tester.pumpWidget(app());
+
+    var elapsed = 0;
+    while (find.text('home').evaluate().isEmpty && elapsed < 8000) {
+      await play(tester, 100);
+      elapsed += 100;
+    }
+
+    expect(find.text('home'), findsOneWidget);
+    expect(find.byType(SplashPage), findsNothing);
+    // The minimum times alone add up to 3 s; the springs of the morph add a little more.
+    expect(elapsed, inInclusiveRange(3000, 5000));
+  });
+
+  testWidgets('uses white icons on the system bars', (tester) async {
+    await tester.pumpWidget(app());
+    await tester.pump();
+
+    final region = tester.widget<AnnotatedRegion<SystemUiOverlayStyle>>(
+      find.descendant(
+        of: find.byType(SplashPage),
+        matching: find.byType(AnnotatedRegion<SystemUiOverlayStyle>),
+      ),
+    );
+    expect(region.value, AppTheme.systemBarsOnDark);
+    expect(region.value.statusBarIconBrightness, Brightness.light);
+  });
+
+  testWidgets('leaves no timer running if it is removed halfway', (tester) async {
+    await tester.pumpWidget(app());
+    await play(tester, 1500);
+
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 2));
+  });
+}

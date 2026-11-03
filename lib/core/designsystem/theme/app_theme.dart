@@ -28,6 +28,13 @@ abstract final class AppTheme {
     systemNavigationBarContrastEnforced: false,
   );
 
+  /// [systemBars] with white icons, for screens with a dark background.
+  static final SystemUiOverlayStyle systemBarsOnDark = systemBars.copyWith(
+    statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
+    systemNavigationBarIconBrightness: Brightness.light,
+  );
+
   // Figma screens use neutral100 as background; surface (neutral50) is for cards.
   static ThemeData get light => _build(vioraLightScheme, VioraColors.neutral100);
 
