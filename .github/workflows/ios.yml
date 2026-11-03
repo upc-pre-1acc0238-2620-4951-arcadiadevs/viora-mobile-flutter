@@ -35,10 +35,15 @@ jobs:
         run: |
           mkdir -p recording
           xcrun simctl install "$DEVICE" build/ios/iphonesimulator/Runner.app
-          # The first launch is slow and the splash plays during it, so recording starts before.
-          xcrun simctl io "$DEVICE" recordVideo --codec=h264 --force recording/launch.mp4 &
+          # The recorder takes a while to start and the splash plays during the launch, so the
+          # app opens only once the recorder says it's running.
+          xcrun simctl io "$DEVICE" recordVideo --codec=h264 --force recording/launch.mp4 > recording/recorder.log 2>&1 &
           RECORDER=$!
-          sleep 3
+          for attempt in $(seq 1 180); do
+            grep -q "Recording started" recording/recorder.log && break
+            sleep 1
+          done
+          grep "Recording started" recording/recorder.log
           xcrun simctl launch "$DEVICE" pe.edu.upc.viora.gestor
           sleep 20
           xcrun simctl io "$DEVICE" screenshot recording/end.png
