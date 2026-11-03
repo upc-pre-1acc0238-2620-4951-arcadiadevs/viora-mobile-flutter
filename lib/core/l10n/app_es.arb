@@ -1,0 +1,13 @@
+{
+  "@@locale": "es",
+  "navHome": "Inicio",
+  "navRisk": "Riesgo",
+  "navCollection": "Acopio",
+  "navMembers": "Socios",
+  "placeholderComingSoon": "Próximamente",
+  "homeGreeting": "Hola, {name}",
+  "homeGreetingAnonymous": "Hola",
+  "homeAlerts": "Alertas",
+  "homeHeadlineLead": "Tu valle,",
+  "homeHeadlineEmphasis": "hoy."
+}

@@ -1,16 +1,12 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../state/home_ui_state.dart';
+import 'package:viora/features/home/presentation/state/home_ui_state.dart';
 
-/// Equivale a `HomeViewModel` + `HomeGreetingViewModel` de Android.
+/// Holds the Home greeting, voice line and alerts badge.
 ///
-/// TODO(home): leer el nombre desde el feature de perfiles (IAM/Profiles) y
-/// las alertas activas desde telemetría; ambos entran por casos de uso en
-/// `application/`, no directamente aquí.
-class HomeViewModel extends Notifier<HomeUiState> {
-  @override
-  HomeUiState build() => const HomeUiState();
+/// TODO(home): read the name from the profiles feature (IAM/Profiles) and the active
+/// alerts from telemetry; both come in through use cases in `application/`, not
+/// directly here.
+class HomeViewModel extends Cubit<HomeUiState> {
+  HomeViewModel() : super(const HomeUiState());
 }
-
-final homeViewModelProvider =
-    NotifierProvider<HomeViewModel, HomeUiState>(HomeViewModel.new);
