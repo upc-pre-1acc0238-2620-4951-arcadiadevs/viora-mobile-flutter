@@ -1,0 +1,62 @@
+name: iOS
+
+on:
+  pull_request:
+    branches: [develop, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  simulator:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.8
+          cache: true
+      - run: flutter pub get
+      - name: Build for the simulator
+        run: flutter build ios --simulator --debug
+      - name: Boot a simulator
+        run: |
+          DEVICE=$(xcrun simctl list devices available -j | python3 -c "
+          import json, sys
+          devices = json.load(sys.stdin)['devices']
+          ios = [d for runtime, items in devices.items() if 'iOS' in runtime for d in items if d['name'].startswith('iPhone')]
+          print(ios[-1]['udid'])
+          ")
+          echo "DEVICE=$DEVICE" >> "$GITHUB_ENV"
+          xcrun simctl boot "$DEVICE"
+          xcrun simctl bootstatus "$DEVICE"
+      - name: Record the app launch
+        run: |
+          mkdir -p recording
+          xcrun simctl install "$DEVICE" build/ios/iphonesimulator/Runner.app
+          # The recorder takes a while to start and the splash plays during the launch, so the
+          # app opens only once the recorder says it's running.
+          xcrun simctl io "$DEVICE" recordVideo --codec=h264 --force recording/launch.mp4 > recording/recorder.log 2>&1 &
+          RECORDER=$!
+          for attempt in $(seq 1 180); do
+            grep -q "Recording started" recording/recorder.log && break
+            sleep 1
+          done
+          grep "Recording started" recording/recorder.log
+          xcrun simctl launch "$DEVICE" pe.edu.upc.viora.gestor
+          sleep 20
+          xcrun simctl io "$DEVICE" screenshot recording/end.png
+          kill -INT "$RECORDER"
+          wait "$RECORDER" || true
+      - name: Extract frames from the recording
+        run: |
+          python3 -m pip install --break-system-packages imageio-ffmpeg
+          FFMPEG=$(python3 -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())")
+          mkdir -p recording/frames
+          "$FFMPEG" -i recording/launch.mp4 -vf "fps=5,scale=270:-1" recording/frames/%04d.png
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-launch
+          path: recording

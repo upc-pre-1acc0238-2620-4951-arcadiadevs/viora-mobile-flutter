@@ -21,6 +21,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  material_new_shapes: ^1.0.0
 
 dev_dependencies:
   flutter_test:

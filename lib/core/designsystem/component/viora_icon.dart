@@ -18,6 +18,8 @@ abstract final class VioraIcons {
   static const brote = 'assets/icons/ic_brote.svg';
   static const acUnit = 'assets/icons/ic_ac_unit.svg';
   static const scale = 'assets/icons/ic_scale.svg';
+  static const logoWordmarkMark = 'assets/icons/logo_wordmark_mark.svg';
+  static const logoWordmarkLetters = 'assets/icons/logo_wordmark_letters.svg';
 }
 
 /// SVG icon tinted with [color].
