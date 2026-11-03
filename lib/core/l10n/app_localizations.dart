@@ -157,6 +157,648 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'today.'**
   String get homeHeadlineEmphasis;
+
+  /// No description provided for @commonContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get commonContinue;
+
+  /// No description provided for @commonRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get commonRetry;
+
+  /// No description provided for @welcomeIntroEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'WELCOME TO VIORA'**
+  String get welcomeIntroEyebrow;
+
+  /// No description provided for @welcomeIntroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your valley has\nits own *rhythm.*'**
+  String get welcomeIntroTitle;
+
+  /// No description provided for @welcomeIntroDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Viora helps you read the alternate bearing of your valley and prioritize each visit in time.'**
+  String get welcomeIntroDescription;
+
+  /// No description provided for @welcomeStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get welcomeStart;
+
+  /// No description provided for @welcomeHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'I already have an account'**
+  String get welcomeHaveAccount;
+
+  /// No description provided for @welcomePlateEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'FOR TECHNICAL MANAGERS'**
+  String get welcomePlateEyebrow;
+
+  /// No description provided for @welcomePlateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The whole valley,\nin a *single read.*'**
+  String get welcomePlateTitle;
+
+  /// No description provided for @welcomePlateDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow each producer\'s alternate bearing and prioritize visits where they matter most.'**
+  String get welcomePlateDescription;
+
+  /// No description provided for @welcomeSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get welcomeSkip;
+
+  /// No description provided for @onboardingStepCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} / {total}'**
+  String onboardingStepCounter(String current, String total);
+
+  /// No description provided for @onboardingNameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What is\nyour *name?*'**
+  String get onboardingNameTitle;
+
+  /// No description provided for @onboardingNameVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'I will greet you by it every season.'**
+  String get onboardingNameVoice;
+
+  /// No description provided for @onboardingNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'First and last name'**
+  String get onboardingNameLabel;
+
+  /// No description provided for @onboardingPhoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Which number\nshould I *text?*'**
+  String get onboardingPhoneTitle;
+
+  /// No description provided for @onboardingPhoneVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'I will reach you here when your grove needs it.'**
+  String get onboardingPhoneVoice;
+
+  /// No description provided for @onboardingCountryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get onboardingCountryLabel;
+
+  /// No description provided for @onboardingPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile'**
+  String get onboardingPhoneLabel;
+
+  /// No description provided for @onboardingPhoneSupporting.
+  ///
+  /// In en, this message translates to:
+  /// **'Only for alerts and technical coordination.'**
+  String get onboardingPhoneSupporting;
+
+  /// No description provided for @onboardingPhoneInvalidNine.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter 9 digits starting with 9.'**
+  String get onboardingPhoneInvalidNine;
+
+  /// No description provided for @onboardingPhoneInvalidSixOrSeven.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter 9 digits starting with 6 or 7.'**
+  String get onboardingPhoneInvalidSixOrSeven;
+
+  /// No description provided for @countryPeru.
+  ///
+  /// In en, this message translates to:
+  /// **'Peru'**
+  String get countryPeru;
+
+  /// No description provided for @countrySpain.
+  ///
+  /// In en, this message translates to:
+  /// **'Spain'**
+  String get countrySpain;
+
+  /// No description provided for @countryChile.
+  ///
+  /// In en, this message translates to:
+  /// **'Chile'**
+  String get countryChile;
+
+  /// No description provided for @onboardingAlertsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'I only tell you\nwhat *matters.*'**
+  String get onboardingAlertsTitle;
+
+  /// No description provided for @onboardingAlertsVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'You can turn them off any time from your account.'**
+  String get onboardingAlertsVoice;
+
+  /// No description provided for @onboardingAlertBackMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'VALLEY TRAFFIC LIGHT · YESTERDAY'**
+  String get onboardingAlertBackMeta;
+
+  /// No description provided for @onboardingAlertBackBody.
+  ///
+  /// In en, this message translates to:
+  /// **'9 plots in La Yarada Baja became critical.'**
+  String get onboardingAlertBackBody;
+
+  /// No description provided for @onboardingAlertFrontMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'OLIVAR DEL SUR · NOW'**
+  String get onboardingAlertFrontMeta;
+
+  /// No description provided for @onboardingAlertFrontBody.
+  ///
+  /// In en, this message translates to:
+  /// **'4 members haven\'t recorded their sampling yet.'**
+  String get onboardingAlertFrontBody;
+
+  /// No description provided for @onboardingAlertsItemLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Plots that reach a critical load'**
+  String get onboardingAlertsItemLoad;
+
+  /// No description provided for @onboardingAlertsItemClimate.
+  ///
+  /// In en, this message translates to:
+  /// **'Climate risk by sector and El Niño'**
+  String get onboardingAlertsItemClimate;
+
+  /// No description provided for @onboardingAlertsItemMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Members with pending sampling or thinning'**
+  String get onboardingAlertsItemMembers;
+
+  /// No description provided for @onboardingAlertsEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on alerts'**
+  String get onboardingAlertsEnable;
+
+  /// No description provided for @onboardingNotNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get onboardingNotNow;
+
+  /// No description provided for @onboardingSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All set,\n*{name}.*'**
+  String onboardingSummaryTitle(String name);
+
+  /// No description provided for @onboardingSummaryVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Check what you chose before creating your account.'**
+  String get onboardingSummaryVoice;
+
+  /// No description provided for @onboardingSummaryName.
+  ///
+  /// In en, this message translates to:
+  /// **'NAME'**
+  String get onboardingSummaryName;
+
+  /// No description provided for @onboardingSummaryPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'MOBILE'**
+  String get onboardingSummaryPhone;
+
+  /// No description provided for @onboardingSummaryAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'ALERTS'**
+  String get onboardingSummaryAlerts;
+
+  /// No description provided for @onboardingEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get onboardingEdit;
+
+  /// No description provided for @onboardingAlertsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get onboardingAlertsOn;
+
+  /// No description provided for @onboardingAlertsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get onboardingAlertsOff;
+
+  /// No description provided for @onboardingCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create my account'**
+  String get onboardingCreate;
+
+  /// No description provided for @onboardingLegalNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'By continuing you accept the Terms and conditions and the Privacy policy (Law No. 29733).'**
+  String get onboardingLegalNotice;
+
+  /// No description provided for @iamSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get iamSignIn;
+
+  /// No description provided for @iamNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account yet?'**
+  String get iamNoAccount;
+
+  /// No description provided for @iamLetsStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s start'**
+  String get iamLetsStart;
+
+  /// No description provided for @iamSignInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome\n*back.*'**
+  String get iamSignInTitle;
+
+  /// No description provided for @iamSignInVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with your email and password.'**
+  String get iamSignInVoice;
+
+  /// No description provided for @iamEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get iamEmail;
+
+  /// No description provided for @iamPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get iamPassword;
+
+  /// No description provided for @iamShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get iamShow;
+
+  /// No description provided for @iamHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide'**
+  String get iamHide;
+
+  /// No description provided for @iamForgotLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot your password?'**
+  String get iamForgotLink;
+
+  /// No description provided for @iamInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect email or password.'**
+  String get iamInvalidCredentials;
+
+  /// No description provided for @iamOtherRoleAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'This account isn\'t a technical manager\'s. Sign in from the Viora app for producers.'**
+  String get iamOtherRoleAccount;
+
+  /// No description provided for @iamCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get iamCreateAccount;
+
+  /// No description provided for @iamCreateNote.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll send you a code to verify your email.'**
+  String get iamCreateNote;
+
+  /// No description provided for @iamCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your\n*account.*'**
+  String get iamCreateTitle;
+
+  /// No description provided for @iamCreateVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m keeping what you chose, {name}.'**
+  String iamCreateVoice(String name);
+
+  /// No description provided for @iamCreateVoiceAnonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m keeping what you chose.'**
+  String get iamCreateVoiceAnonymous;
+
+  /// No description provided for @iamEmailOtherRole.
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already signing up in the producer app. Use another email.'**
+  String get iamEmailOtherRole;
+
+  /// No description provided for @iamEmailTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'This email already has an account. Sign in or use another email.'**
+  String get iamEmailTaken;
+
+  /// No description provided for @iamPasswordWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least 8 characters, with letters and numbers.'**
+  String get iamPasswordWeak;
+
+  /// No description provided for @iamRuleLength.
+  ///
+  /// In en, this message translates to:
+  /// **'8 characters'**
+  String get iamRuleLength;
+
+  /// No description provided for @iamRuleLettersNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Letters and numbers'**
+  String get iamRuleLettersNumbers;
+
+  /// No description provided for @iamRuleMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'They match'**
+  String get iamRuleMatch;
+
+  /// No description provided for @iamVerifyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your\n*email.*'**
+  String get iamVerifyTitle;
+
+  /// No description provided for @iamVerifyVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'I sent a 6-digit code to {email}'**
+  String iamVerifyVoice(String email);
+
+  /// No description provided for @iamCodeWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect code.'**
+  String get iamCodeWrong;
+
+  /// No description provided for @iamCodeWrongAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Incorrect code. You have 1 attempt left.} other{Incorrect code. You have {count} attempts left.}}'**
+  String iamCodeWrongAttempts(int count);
+
+  /// No description provided for @iamCodeBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Request a new code.'**
+  String get iamCodeBlocked;
+
+  /// No description provided for @iamCodeExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This code expired. Request a new one.'**
+  String get iamCodeExpired;
+
+  /// No description provided for @iamCodeMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'There\'s no active code for this email. Request a new one.'**
+  String get iamCodeMissing;
+
+  /// No description provided for @iamResendIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code in {time}'**
+  String iamResendIn(String time);
+
+  /// No description provided for @iamResendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get iamResendCode;
+
+  /// No description provided for @iamChangeEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Change email'**
+  String get iamChangeEmail;
+
+  /// No description provided for @iamCodeResent.
+  ///
+  /// In en, this message translates to:
+  /// **'I sent you a new code.'**
+  String get iamCodeResent;
+
+  /// No description provided for @iamLinkResent.
+  ///
+  /// In en, this message translates to:
+  /// **'I sent you a new link.'**
+  String get iamLinkResent;
+
+  /// No description provided for @iamSendLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Send link'**
+  String get iamSendLink;
+
+  /// No description provided for @iamForgotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot your\n*password?*'**
+  String get iamForgotTitle;
+
+  /// No description provided for @iamForgotVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email and I\'ll send you a link to create a new one.'**
+  String get iamForgotVoice;
+
+  /// No description provided for @iamLinkSentEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'LINK SENT'**
+  String get iamLinkSentEyebrow;
+
+  /// No description provided for @iamLinkSentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your\n*email.*'**
+  String get iamLinkSentTitle;
+
+  /// No description provided for @iamLinkSentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If {email} has an account, you\'ll get a single-use link to create a new password.'**
+  String iamLinkSentBody(String email);
+
+  /// No description provided for @iamOpenEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Open my email'**
+  String get iamOpenEmail;
+
+  /// No description provided for @iamResendLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend link'**
+  String get iamResendLink;
+
+  /// No description provided for @iamSavePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Save password'**
+  String get iamSavePassword;
+
+  /// No description provided for @iamNewPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new\n*password.*'**
+  String get iamNewPasswordTitle;
+
+  /// No description provided for @iamNewPasswordVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Use one you haven\'t used before in Viora.'**
+  String get iamNewPasswordVoice;
+
+  /// No description provided for @iamNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get iamNewPassword;
+
+  /// No description provided for @iamConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get iamConfirmPassword;
+
+  /// No description provided for @iamPasswordReused.
+  ///
+  /// In en, this message translates to:
+  /// **'Use one you haven\'t used before in Viora.'**
+  String get iamPasswordReused;
+
+  /// No description provided for @iamResetDoneEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'NEW PASSWORD'**
+  String get iamResetDoneEyebrow;
+
+  /// No description provided for @iamResetDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Done, you can\n*sign in.*'**
+  String get iamResetDoneTitle;
+
+  /// No description provided for @iamResetDoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password was updated. For security, we closed your other sessions.'**
+  String get iamResetDoneBody;
+
+  /// No description provided for @iamLinkExpiredEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'INVALID LINK'**
+  String get iamLinkExpiredEyebrow;
+
+  /// No description provided for @iamLinkExpiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This link\n*has expired.*'**
+  String get iamLinkExpiredTitle;
+
+  /// No description provided for @iamLinkExpiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'For security, each link works only once and for a limited time. Request a new one.'**
+  String get iamLinkExpiredBody;
+
+  /// No description provided for @iamRequestNewLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a new link'**
+  String get iamRequestNewLink;
+
+  /// No description provided for @iamBackToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to sign in'**
+  String get iamBackToSignIn;
+
+  /// No description provided for @iamErrorOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection. Check your signal and try again.'**
+  String get iamErrorOffline;
+
+  /// No description provided for @iamErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get iamErrorGeneric;
+
+  /// No description provided for @iamErrorWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Wait a moment and try again.'**
+  String get iamErrorWait;
+
+  /// No description provided for @iamErrorPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'The server didn\'t accept this mobile number. Go back and check it.'**
+  String get iamErrorPhone;
 }
 
 class _AppLocalizationsDelegate

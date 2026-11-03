@@ -10,16 +10,18 @@ import 'package:viora/core/designsystem/component/viora_morphing_shape_indicator
 import 'package:viora/core/designsystem/component/viora_wavy_progress_indicator.dart';
 import 'package:viora/core/designsystem/theme/app_theme.dart';
 import 'package:viora/core/designsystem/theme/colors.dart';
+import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
+import 'package:viora/features/iam/presentation/ui/welcome_page.dart';
+import 'package:viora/features/iam/presentation/viewmodel/splash_view_model.dart';
 
 /// First screen of every launch, played in this order on the brand green:
 /// 1. a white ring holds a loading shape that keeps morphing;
 /// 2. the shape settles into a circle and fills the ring;
 /// 3. ring and circle give way to the white isotype;
 /// 4. the isotype shrinks into the "o" of "Viora" while the other letters appear;
-/// 5. a wavy progress ring shows under the logo, and then the screen fades into the Home.
-///
-/// TODO(iam): choose between the Home and the welcome once sessions exist.
+/// 5. a wavy progress ring shows under the logo until the saved session has been read,
+///    and then the screen fades into the Home or the welcome.
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -73,6 +75,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   Timer? _morphTimer;
   Timer? _loaderTimer;
   bool _settle = false;
+  late final SplashViewModel _viewModel = getIt<SplashViewModel>();
 
   @override
   void initState() {
@@ -94,8 +97,17 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       _loaderTimer = Timer(_minLoaderTime, minLoader.complete);
       await minLoader.future;
 
+      final destination =
+          _viewModel.state ?? await _viewModel.stream.firstWhere((value) => value != null);
+      if (!mounted) return;
+
       await _leave.animateTo(1, duration: _leaveTime).orCancel;
-      if (mounted) context.go(TopLevelDestination.home.path);
+      if (!mounted) return;
+      context.go(
+        destination == SplashDestination.home
+            ? TopLevelDestination.home.path
+            : WelcomePage.path,
+      );
     } on TickerCanceled {
       // The screen left the tree while it was playing.
     }
@@ -110,6 +122,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     _wordmark.dispose();
     _loader.dispose();
     _leave.dispose();
+    _viewModel.close();
     super.dispose();
   }
 

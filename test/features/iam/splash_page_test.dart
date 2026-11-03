@@ -5,10 +5,38 @@ import 'package:go_router/go_router.dart';
 import 'package:viora/core/designsystem/component/viora_morphing_shape_indicator.dart';
 import 'package:viora/core/designsystem/component/viora_wavy_progress_indicator.dart';
 import 'package:viora/core/designsystem/theme/app_theme.dart';
+import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
+import 'package:viora/features/iam/application/usecase/is_signed_in_use_case.dart';
+import 'package:viora/features/iam/domain/repository/auth_repository.dart';
 import 'package:viora/features/iam/presentation/ui/splash_page.dart';
+import 'package:viora/features/iam/presentation/ui/welcome_page.dart';
+import 'package:viora/features/iam/presentation/viewmodel/splash_view_model.dart';
+
+class _FakeAuthRepository implements AuthRepository {
+  _FakeAuthRepository({required this.signedIn});
+
+  final bool signedIn;
+
+  @override
+  Future<bool> isSignedIn() async => signedIn;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 void main() {
+  void useSession({required bool signedIn}) {
+    getIt.registerFactory<SplashViewModel>(
+      () => SplashViewModel(
+        isSignedIn: IsSignedInUseCase(repository: _FakeAuthRepository(signedIn: signedIn)),
+      ),
+    );
+  }
+
+  setUp(() => useSession(signedIn: true));
+  tearDown(() => getIt.reset());
+
   Widget app() => MaterialApp.router(
         routerConfig: GoRouter(
           initialLocation: SplashPage.path,
@@ -20,6 +48,10 @@ void main() {
             GoRoute(
               path: TopLevelDestination.home.path,
               pageBuilder: (context, state) => const NoTransitionPage(child: Text('home')),
+            ),
+            GoRoute(
+              path: WelcomePage.path,
+              pageBuilder: (context, state) => const NoTransitionPage(child: Text('welcome')),
             ),
           ],
         ),
@@ -67,6 +99,21 @@ void main() {
     expect(find.byType(SplashPage), findsNothing);
     // The minimum times alone add up to 3 s; the springs of the morph add a little more.
     expect(elapsed, inInclusiveRange(3000, 5000));
+  });
+
+  testWidgets('goes to the welcome without a saved session', (tester) async {
+    await getIt.reset();
+    useSession(signedIn: false);
+    await tester.pumpWidget(app());
+
+    var elapsed = 0;
+    while (find.text('welcome').evaluate().isEmpty && elapsed < 8000) {
+      await play(tester, 100);
+      elapsed += 100;
+    }
+
+    expect(find.text('welcome'), findsOneWidget);
+    expect(find.text('home'), findsNothing);
   });
 
   testWidgets('uses white icons on the system bars', (tester) async {

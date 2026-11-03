@@ -30,7 +30,8 @@ class VioraApp extends StatelessWidget {
       // MaterialApp sets its own style while building, so a style set in main() is lost.
       builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
         value: AppTheme.systemBars,
-        child: child!,
+        // What a crossfade between two screens shows through; without it the fade dips to black.
+        child: ColoredBox(color: Theme.of(context).scaffoldBackgroundColor, child: child!),
       ),
     );
   }
