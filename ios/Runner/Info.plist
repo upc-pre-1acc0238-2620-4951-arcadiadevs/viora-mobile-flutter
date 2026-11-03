@@ -73,5 +73,16 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>pe.edu.upc.viora.gestor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>viora-gestor</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
