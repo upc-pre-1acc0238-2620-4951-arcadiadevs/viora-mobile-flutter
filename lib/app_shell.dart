@@ -45,9 +45,12 @@ class AppShell extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: SafeArea(
-              top: false,
-              minimum: const EdgeInsets.only(bottom: VioraTabBarDefaults.bottomMargin),
+            // Android 15+ draws the app behind the navigation bar, so the margin goes on top
+            // of that inset.
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.viewPaddingOf(context).bottom + VioraTabBarDefaults.bottomMargin,
+              ),
               child: VioraTabBar(
                 items: [
                   for (final d in TopLevelDestination.values)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:viora/core/designsystem/theme/app_theme.dart';
 import 'package:viora/core/di/dependency_injection.dart';
@@ -6,6 +7,8 @@ import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/navigation/app_router.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   setupDependencies();
   runApp(const VioraApp());
 }
@@ -24,6 +27,11 @@ class VioraApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: appRouter,
+      // MaterialApp sets its own style while building, so a style set in main() is lost.
+      builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
+        value: AppTheme.systemBars,
+        child: child!,
+      ),
     );
   }
 }

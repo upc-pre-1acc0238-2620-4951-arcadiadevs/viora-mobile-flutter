@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/typography.dart';
@@ -15,6 +16,18 @@ abstract final class AppRadius {
 
 /// Viora theme, built from the brand color and typography tokens.
 abstract final class AppTheme {
+  /// Transparent system bars with dark icons: the app is light-only, so the icons stay
+  /// dark even if the phone is in dark mode.
+  static const SystemUiOverlayStyle systemBars = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.light,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarDividerColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarContrastEnforced: false,
+  );
+
   // Figma screens use neutral100 as background; surface (neutral50) is for cards.
   static ThemeData get light => _build(vioraLightScheme, VioraColors.neutral100);
 
@@ -28,6 +41,7 @@ abstract final class AppTheme {
           bodyColor: scheme.onSurface,
           displayColor: scheme.onSurface,
         ),
+        appBarTheme: const AppBarTheme(systemOverlayStyle: systemBars),
         cardTheme: const CardThemeData(
           elevation: 0,
           margin: EdgeInsets.zero,
