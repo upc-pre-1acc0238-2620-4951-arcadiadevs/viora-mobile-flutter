@@ -18,6 +18,9 @@ abstract final class VioraIcons {
   static const brote = 'assets/icons/ic_brote.svg';
   static const acUnit = 'assets/icons/ic_ac_unit.svg';
   static const scale = 'assets/icons/ic_scale.svg';
+  static const arrowBack = 'assets/icons/ic_arrow_back.svg';
+  static const check = 'assets/icons/ic_check.svg';
+  static const close = 'assets/icons/ic_close.svg';
   static const logoWordmarkMark = 'assets/icons/logo_wordmark_mark.svg';
   static const logoWordmarkLetters = 'assets/icons/logo_wordmark_letters.svg';
 }
