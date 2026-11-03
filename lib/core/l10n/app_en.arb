@@ -16,5 +16,164 @@
   "homeGreetingAnonymous": "Hello",
   "homeAlerts": "Alerts",
   "homeHeadlineLead": "Your valley,",
-  "homeHeadlineEmphasis": "today."
+  "homeHeadlineEmphasis": "today.",
+  "commonContinue": "Continue",
+  "commonRetry": "Try again",
+  "welcomeIntroEyebrow": "WELCOME TO VIORA",
+  "welcomeIntroTitle": "Your valley has\nits own *rhythm.*",
+  "welcomeIntroDescription": "Viora helps you read the alternate bearing of your valley and prioritize each visit in time.",
+  "welcomeStart": "Get started",
+  "welcomeHaveAccount": "I already have an account",
+  "welcomePlateEyebrow": "FOR TECHNICAL MANAGERS",
+  "welcomePlateTitle": "The whole valley,\nin a *single read.*",
+  "welcomePlateDescription": "Follow each producer's alternate bearing and prioritize visits where they matter most.",
+  "welcomeSkip": "Skip",
+  "onboardingStepCounter": "{current} / {total}",
+  "@onboardingStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingNameTitle": "What is\nyour *name?*",
+  "onboardingNameVoice": "I will greet you by it every season.",
+  "onboardingNameLabel": "First and last name",
+  "onboardingPhoneTitle": "Which number\nshould I *text?*",
+  "onboardingPhoneVoice": "I will reach you here when your grove needs it.",
+  "onboardingCountryLabel": "Country",
+  "onboardingPhoneLabel": "Mobile",
+  "onboardingPhoneSupporting": "Only for alerts and technical coordination.",
+  "onboardingPhoneInvalidNine": "Enter 9 digits starting with 9.",
+  "onboardingPhoneInvalidSixOrSeven": "Enter 9 digits starting with 6 or 7.",
+  "countryPeru": "Peru",
+  "countrySpain": "Spain",
+  "countryChile": "Chile",
+  "onboardingAlertsTitle": "I only tell you\nwhat *matters.*",
+  "onboardingAlertsVoice": "You can turn them off any time from your account.",
+  "onboardingAlertBackMeta": "VALLEY TRAFFIC LIGHT · YESTERDAY",
+  "onboardingAlertBackBody": "9 plots in La Yarada Baja became critical.",
+  "onboardingAlertFrontMeta": "OLIVAR DEL SUR · NOW",
+  "onboardingAlertFrontBody": "4 members haven't recorded their sampling yet.",
+  "onboardingAlertsItemLoad": "Plots that reach a critical load",
+  "onboardingAlertsItemClimate": "Climate risk by sector and El Niño",
+  "onboardingAlertsItemMembers": "Members with pending sampling or thinning",
+  "onboardingAlertsEnable": "Turn on alerts",
+  "onboardingNotNow": "Not now",
+  "onboardingSummaryTitle": "All set,\n*{name}.*",
+  "@onboardingSummaryTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingSummaryVoice": "Check what you chose before creating your account.",
+  "onboardingSummaryName": "NAME",
+  "onboardingSummaryPhone": "MOBILE",
+  "onboardingSummaryAlerts": "ALERTS",
+  "onboardingEdit": "Edit",
+  "onboardingAlertsOn": "On",
+  "onboardingAlertsOff": "Off",
+  "onboardingCreate": "Create my account",
+  "onboardingLegalNotice": "By continuing you accept the Terms and conditions and the Privacy policy (Law No. 29733).",
+  "iamSignIn": "Sign in",
+  "iamNoAccount": "Don't have an account yet?",
+  "iamLetsStart": "Let's start",
+  "iamSignInTitle": "Welcome\n*back.*",
+  "iamSignInVoice": "Sign in with your email and password.",
+  "iamEmail": "Email",
+  "iamPassword": "Password",
+  "iamShow": "Show",
+  "iamHide": "Hide",
+  "iamForgotLink": "Forgot your password?",
+  "iamInvalidCredentials": "Incorrect email or password.",
+  "iamOtherRoleAccount": "This account isn't a technical manager's. Sign in from the Viora app for producers.",
+  "iamCreateAccount": "Create account",
+  "iamCreateNote": "We'll send you a code to verify your email.",
+  "iamCreateTitle": "Create your\n*account.*",
+  "iamCreateVoice": "I'm keeping what you chose, {name}.",
+  "@iamCreateVoice": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "iamCreateVoiceAnonymous": "I'm keeping what you chose.",
+  "iamEmailOtherRole": "This email is already signing up in the producer app. Use another email.",
+  "iamEmailTaken": "This email already has an account. Sign in or use another email.",
+  "iamPasswordWeak": "Use at least 8 characters, with letters and numbers.",
+  "iamRuleLength": "8 characters",
+  "iamRuleLettersNumbers": "Letters and numbers",
+  "iamRuleMatch": "They match",
+  "iamVerifyTitle": "Check your\n*email.*",
+  "iamVerifyVoice": "I sent a 6-digit code to {email}",
+  "@iamVerifyVoice": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "iamCodeWrong": "Incorrect code.",
+  "iamCodeWrongAttempts": "{count, plural, =1{Incorrect code. You have 1 attempt left.} other{Incorrect code. You have {count} attempts left.}}",
+  "@iamCodeWrongAttempts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "iamCodeBlocked": "Too many attempts. Request a new code.",
+  "iamCodeExpired": "This code expired. Request a new one.",
+  "iamCodeMissing": "There's no active code for this email. Request a new one.",
+  "iamResendIn": "Resend code in {time}",
+  "@iamResendIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "iamResendCode": "Resend code",
+  "iamChangeEmail": "Change email",
+  "iamCodeResent": "I sent you a new code.",
+  "iamLinkResent": "I sent you a new link.",
+  "iamSendLink": "Send link",
+  "iamForgotTitle": "Forgot your\n*password?*",
+  "iamForgotVoice": "Enter your email and I'll send you a link to create a new one.",
+  "iamLinkSentEyebrow": "LINK SENT",
+  "iamLinkSentTitle": "Check your\n*email.*",
+  "iamLinkSentBody": "If {email} has an account, you'll get a single-use link to create a new password.",
+  "@iamLinkSentBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "iamOpenEmail": "Open my email",
+  "iamResendLink": "Resend link",
+  "iamSavePassword": "Save password",
+  "iamNewPasswordTitle": "Create a new\n*password.*",
+  "iamNewPasswordVoice": "Use one you haven't used before in Viora.",
+  "iamNewPassword": "New password",
+  "iamConfirmPassword": "Confirm password",
+  "iamPasswordReused": "Use one you haven't used before in Viora.",
+  "iamResetDoneEyebrow": "NEW PASSWORD",
+  "iamResetDoneTitle": "Done, you can\n*sign in.*",
+  "iamResetDoneBody": "Your password was updated. For security, we closed your other sessions.",
+  "iamLinkExpiredEyebrow": "INVALID LINK",
+  "iamLinkExpiredTitle": "This link\n*has expired.*",
+  "iamLinkExpiredBody": "For security, each link works only once and for a limited time. Request a new one.",
+  "iamRequestNewLink": "Request a new link",
+  "iamBackToSignIn": "Back to sign in",
+  "iamErrorOffline": "No connection. Check your signal and try again.",
+  "iamErrorGeneric": "Something went wrong. Try again.",
+  "iamErrorWait": "Too many attempts. Wait a moment and try again.",
+  "iamErrorPhone": "The server didn't accept this mobile number. Go back and check it."
 }

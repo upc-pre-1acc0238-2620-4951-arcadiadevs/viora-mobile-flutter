@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/typography.dart';
+import 'package:viora/core/designsystem/theme/viora_page_transitions.dart';
 
 /// Viora corner radii: chip 8, card 12, sheet 28. Buttons and the search field use
 /// the pill shape.
@@ -44,6 +45,7 @@ abstract final class AppTheme {
         useMaterial3: true,
         colorScheme: scheme,
         scaffoldBackgroundColor: background,
+        pageTransitionsTheme: VioraPageTransitionsBuilder.theme,
         textTheme: vioraTextTheme.apply(
           bodyColor: scheme.onSurface,
           displayColor: scheme.onSurface,

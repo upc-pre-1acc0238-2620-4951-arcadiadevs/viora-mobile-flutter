@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:viora/core/database/app_database.dart';
 import 'package:viora/core/designsystem/component/viora_tab_bar.dart';
@@ -9,7 +10,11 @@ import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart'
 import 'package:viora/main.dart';
 
 void main() {
-  setUp(setupDependencies);
+  setUp(() {
+    // A saved session, so the app goes from the splash to the Home.
+    FlutterSecureStorage.setMockInitialValues({'session.refresh_token': 'token'});
+    setupDependencies();
+  });
   tearDown(() => getIt.reset());
 
   test('get_it provides a new ViewModel every time and registers the database', () {
