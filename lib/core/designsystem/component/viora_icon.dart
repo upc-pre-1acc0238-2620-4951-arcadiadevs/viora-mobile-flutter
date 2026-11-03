@@ -11,6 +11,13 @@ abstract final class VioraIcons {
   static const add = 'assets/icons/ic_add.svg';
   static const chevronRight = 'assets/icons/ic_chevron_right.svg';
   static const isotype = 'assets/icons/ic_isotype.svg';
+  static const locationOn = 'assets/icons/ic_location_on.svg';
+  static const inventory2 = 'assets/icons/ic_inventory_2.svg';
+  static const groups = 'assets/icons/ic_groups.svg';
+  static const arrowForward = 'assets/icons/ic_arrow_forward.svg';
+  static const brote = 'assets/icons/ic_brote.svg';
+  static const acUnit = 'assets/icons/ic_ac_unit.svg';
+  static const scale = 'assets/icons/ic_scale.svg';
 }
 
 /// SVG icon tinted with [color].

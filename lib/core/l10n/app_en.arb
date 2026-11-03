@@ -1,0 +1,20 @@
+{
+  "@@locale": "en",
+  "navHome": "Home",
+  "navRisk": "Risk",
+  "navCollection": "Collection",
+  "navMembers": "Members",
+  "placeholderComingSoon": "Coming soon",
+  "homeGreeting": "Hello, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingAnonymous": "Hello",
+  "homeAlerts": "Alerts",
+  "homeHeadlineLead": "Your valley,",
+  "homeHeadlineEmphasis": "today."
+}

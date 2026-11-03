@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 
 import 'package:viora/app_shell.dart';
+import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/navigation/placeholder_screen.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/home/presentation/ui/home_page.dart';
@@ -24,7 +25,7 @@ final GoRouter appRouter = GoRouter(
                 path: d.path,
                 builder: (context, state) => d == TopLevelDestination.home
                     ? const HomePage()
-                    : PlaceholderScreen(title: d.label),
+                    : PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
               ),
             ],
           ),

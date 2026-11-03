@@ -1,10 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-
+import 'package:viora/core/designsystem/component/viora_icon.dart';
 import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/spacing.dart';
-import 'package:viora/core/designsystem/component/viora_icon.dart';
 
 /// One destination of [VioraTabBar]. [label] is only used for accessibility.
 class TabBarItem {
@@ -20,7 +19,6 @@ abstract final class VioraTabBarDefaults {
   static const double maxWidth = 354;
   static const double bubbleSize = 60;
   static const double barInnerPadding = 8;
-  static const double gap = Spacing.sm;
 
   /// Bottom padding every tab screen must reserve so the floating bar never hides
   /// content.
@@ -28,47 +26,35 @@ abstract final class VioraTabBarDefaults {
 }
 
 /// Floating navigation pill with an ivory bubble that slides to the selected
-/// destination, plus the separate yellow "+" action (Figma: Editorial/Tapbar flotante).
-///
-/// Only the resting state exists so far. The compact state and the
-/// "¿Qué vas a registrar?" menu are still pending.
+/// destination. The manager only consults and prioritizes, so the bar has no action
+/// button. Max width 354, centered on wider screens.
 class VioraTabBar extends StatelessWidget {
   const VioraTabBar({
     super.key,
     required this.items,
     required this.selectedIndex,
     required this.onItemSelected,
-    required this.actionLabel,
-    this.onActionPressed,
   });
 
   final List<TabBarItem> items;
   final int selectedIndex;
   final ValueChanged<int> onItemSelected;
-  final String actionLabel;
-  final VoidCallback? onActionPressed;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
+      // Takes only the height of the bar, so the shell can anchor it to the bottom.
       child: Center(
+        heightFactor: 1,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: VioraTabBarDefaults.maxWidth),
           child: SizedBox(
             height: VioraTabBarDefaults.barHeight,
-            child: Row(
-              children: [
-                Expanded(
-                  child: _NavigationPill(
-                    items: items,
-                    selectedIndex: selectedIndex,
-                    onItemSelected: onItemSelected,
-                  ),
-                ),
-                const SizedBox(width: VioraTabBarDefaults.gap),
-                _ActionButton(label: actionLabel, onPressed: onActionPressed),
-              ],
+            child: _NavigationPill(
+              items: items,
+              selectedIndex: selectedIndex,
+              onItemSelected: onItemSelected,
             ),
           ),
         ),
@@ -96,49 +82,62 @@ class _NavigationPill extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: VioraColors.green900,
-        shape: StadiumBorder(),
+        shape: const StadiumBorder(),
         shadows: [
           BoxShadow(
-            color: VioraColors.shadowTint.withValues(alpha: 0.28),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
+            color: VioraColors.shadowTint.withValues(alpha: 0.12),
+            blurRadius: 32,
           ),
         ],
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final cellWidth = (constraints.maxWidth - inner * 2) / items.length;
-          final bubbleSize = math.min(cellWidth, VioraTabBarDefaults.bubbleSize);
+          final available = constraints.maxWidth - inner * 2;
+          final bubbleSize = math.min(available / items.length, VioraTabBarDefaults.bubbleSize);
+          // Distance between destinations: the first and last bubble touch the padding.
+          final step = (available - bubbleSize) / (items.length - 1);
+          double bubbleLeft(double position) => inner + step * position;
 
-          return Stack(
-            children: [
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 380),
-                curve: Curves.easeOutBack,
-                left: inner + cellWidth * selectedIndex + (cellWidth - bubbleSize) / 2,
-                top: (barHeight - bubbleSize) / 2,
-                width: bubbleSize,
-                height: bubbleSize,
-                child: const DecoratedBox(
-                  decoration: ShapeDecoration(color: VioraColors.neutral50, shape: StadiumBorder()),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: inner),
-                child: Row(
-                  children: [
-                    for (var i = 0; i < items.length; i++)
-                      Expanded(
-                        child: _TabCell(
-                          item: items[i],
-                          selected: i == selectedIndex,
-                          onTap: () => onItemSelected(i),
-                        ),
+          return TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 380),
+            curve: Curves.easeOutBack,
+            tween: Tween(end: selectedIndex.toDouble()),
+            builder: (context, position, _) {
+              // The curve overshoots; at the ends that would push the bubble off the bar.
+              final bubblePosition = position.clamp(0.0, items.length - 1.0);
+              return Stack(
+                children: [
+                  Positioned(
+                    left: bubbleLeft(bubblePosition),
+                    top: (barHeight - bubbleSize) / 2,
+                    width: bubbleSize,
+                    height: bubbleSize,
+                    child: const DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: VioraColors.neutral50,
+                        shape: CircleBorder(),
                       ),
-                  ],
-                ),
-              ),
-            ],
+                    ),
+                  ),
+                  for (var i = 0; i < items.length; i++)
+                    Positioned(
+                      // Each touch area reaches halfway to its neighbors.
+                      left: bubbleLeft(i.toDouble()) + (bubbleSize - step) / 2,
+                      top: 0,
+                      width: step,
+                      height: barHeight,
+                      child: _TabCell(
+                        item: items[i],
+                        selected: i == selectedIndex,
+                        // How much of the bubble sits over this cell: the icon darkens
+                        // exactly as the bubble arrives.
+                        coverage: (1 - (i - bubblePosition).abs()).clamp(0.0, 1.0),
+                        onTap: () => onItemSelected(i),
+                      ),
+                    ),
+                ],
+              );
+            },
           );
         },
       ),
@@ -147,10 +146,16 @@ class _NavigationPill extends StatelessWidget {
 }
 
 class _TabCell extends StatelessWidget {
-  const _TabCell({required this.item, required this.selected, required this.onTap});
+  const _TabCell({
+    required this.item,
+    required this.selected,
+    required this.coverage,
+    required this.onTap,
+  });
 
   final TabBarItem item;
   final bool selected;
+  final double coverage;
   final VoidCallback onTap;
 
   @override
@@ -164,59 +169,10 @@ class _TabCell extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: SizedBox(
-          height: VioraTabBarDefaults.barHeight,
-          child: Center(
-            // The icon darkens as the ivory bubble arrives.
-            child: TweenAnimationBuilder<Color?>(
-              duration: const Duration(milliseconds: 260),
-              tween: ColorTween(
-                end: selected ? VioraColors.neutral900 : VioraColors.neutral50,
-              ),
-              builder: (context, color, _) => VioraIcon(item.iconAsset, color: color),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ActionButton extends StatelessWidget {
-  const _ActionButton({required this.label, this.onPressed});
-
-  final String label;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    const size = VioraTabBarDefaults.barHeight;
-    return Semantics(
-      button: true,
-      label: label,
-      excludeSemantics: true,
-      onTap: onPressed,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: VioraColors.harvest300,
-            shape: StadiumBorder(),
-            shadows: [
-              BoxShadow(
-                color: VioraColors.shadowTint.withValues(alpha: 0.22),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: const SizedBox(
-            width: size,
-            height: size,
-            child: Center(
-              child: VioraIcon(VioraIcons.add, color: VioraColors.neutral900),
-            ),
+        child: Center(
+          child: VioraIcon(
+            item.iconAsset,
+            color: Color.lerp(VioraColors.neutral50, VioraColors.neutral900, coverage),
           ),
         ),
       ),
