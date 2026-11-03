@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../designsystem/component/viora_tab_bar.dart';
-import '../designsystem/theme/spacing.dart';
+import 'package:viora/core/designsystem/component/viora_tab_bar.dart';
+import 'package:viora/core/designsystem/theme/spacing.dart';
+import 'package:viora/core/l10n/app_localizations.dart';
 
-/// Cuerpo temporal de un tab cuyo feature aún no se construye.
+/// Temporary body of a tab whose feature isn't built yet.
 class PlaceholderScreen extends StatelessWidget {
   const PlaceholderScreen({super.key, required this.title});
 
@@ -23,7 +24,7 @@ class PlaceholderScreen extends StatelessWidget {
                 Text(title, style: theme.textTheme.displaySmall),
                 const SizedBox(height: Spacing.xs),
                 Text(
-                  'Próximamente',
+                  AppLocalizations.of(context).placeholderComingSoon,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),

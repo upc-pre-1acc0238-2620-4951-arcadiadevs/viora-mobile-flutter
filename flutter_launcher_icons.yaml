@@ -1,0 +1,10 @@
+# To generate the icons: dart run flutter_launcher_icons
+# Android 8+ uses the adaptive vector icon in res/mipmap-anydpi-v26. This PNG is used
+# for iOS and Android 7 (API 24-25).
+flutter_launcher_icons:
+  # 1024x1024 PNG, outside the declared assets so it isn't bundled in the app.
+  image_path: "assets/launcher/icon.png"
+  android: true
+  min_sdk_android: 21
+  ios: true
+  remove_alpha_ios: true

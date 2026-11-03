@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-/// Rutas de los iconos SVG (convertidos desde los vector drawables de Android,
-/// mismos nombres que en `res/drawable`).
+/// Paths of the SVG icons bundled in `assets/icons`.
 abstract final class VioraIcons {
   static const home = 'assets/icons/ic_home.svg';
   static const map = 'assets/icons/ic_map.svg';
@@ -12,9 +11,16 @@ abstract final class VioraIcons {
   static const add = 'assets/icons/ic_add.svg';
   static const chevronRight = 'assets/icons/ic_chevron_right.svg';
   static const isotype = 'assets/icons/ic_isotype.svg';
+  static const locationOn = 'assets/icons/ic_location_on.svg';
+  static const inventory2 = 'assets/icons/ic_inventory_2.svg';
+  static const groups = 'assets/icons/ic_groups.svg';
+  static const arrowForward = 'assets/icons/ic_arrow_forward.svg';
+  static const brote = 'assets/icons/ic_brote.svg';
+  static const acUnit = 'assets/icons/ic_ac_unit.svg';
+  static const scale = 'assets/icons/ic_scale.svg';
 }
 
-/// Icono SVG teñido con [color] (equivale a `Icon(painter, tint)` de Compose).
+/// SVG icon tinted with [color].
 class VioraIcon extends StatelessWidget {
   const VioraIcon(
     this.asset, {

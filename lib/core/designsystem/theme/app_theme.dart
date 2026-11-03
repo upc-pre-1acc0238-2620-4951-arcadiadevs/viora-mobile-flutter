@@ -1,26 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import 'colors.dart';
-import 'typography.dart';
+import 'package:viora/core/designsystem/theme/colors.dart';
+import 'package:viora/core/designsystem/theme/typography.dart';
 
-/// Radios de Viora: chip 8, tarjeta 12, sheet 28; botones y chips usan la píldora.
+/// Viora corner radii: chip 8, card 12, sheet 28. Buttons and the search field use
+/// the pill shape.
 abstract final class AppRadius {
+  static const double xs = 4;
   static const double sm = 8;
   static const double md = 12;
+  static const double lg = 20;
   static const double xl = 28;
 }
 
-/// Tema de Viora (tokens portados desde el proyecto Android).
+/// Viora theme, built from the brand color and typography tokens.
 abstract final class AppTheme {
-  static ThemeData get light => ThemeData(
+  /// Transparent system bars with dark icons: the app is light-only, so the icons stay
+  /// dark even if the phone is in dark mode.
+  static const SystemUiOverlayStyle systemBars = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.light,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarDividerColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarContrastEnforced: false,
+  );
+
+  // Figma screens use neutral100 as background; surface (neutral50) is for cards.
+  static ThemeData get light => _build(vioraLightScheme, VioraColors.neutral100);
+
+  static ThemeData get dark => _build(vioraDarkScheme, vioraDarkScheme.surface);
+
+  static ThemeData _build(ColorScheme scheme, Color background) => ThemeData(
         useMaterial3: true,
-        colorScheme: vioraLightScheme,
-        // Las pantallas de Figma usan neutral100 de fondo; surface (neutral50) es para tarjetas.
-        scaffoldBackgroundColor: VioraColors.neutral100,
+        colorScheme: scheme,
+        scaffoldBackgroundColor: background,
         textTheme: vioraTextTheme.apply(
-          bodyColor: vioraLightScheme.onSurface,
-          displayColor: vioraLightScheme.onSurface,
+          bodyColor: scheme.onSurface,
+          displayColor: scheme.onSurface,
         ),
+        appBarTheme: const AppBarTheme(systemOverlayStyle: systemBars),
         cardTheme: const CardThemeData(
           elevation: 0,
           margin: EdgeInsets.zero,

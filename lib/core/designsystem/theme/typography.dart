@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-/// Familias empaquetadas en `assets/fonts` (SIL OFL, licencias en `assets/licenses`).
+/// Families bundled in `assets/fonts` (SIL OFL, licenses in `assets/licenses`).
 abstract final class VioraFonts {
-  /// Serif de marca para momentos expresivos (roles Display y Headline).
+  /// Brand serif for expressive moments (Display and Headline roles).
   static const newsreader = 'Newsreader';
 
-  /// Fuente de interfaz para todo texto funcional (Title, Body y Label).
+  /// Interface font for all functional text (Title, Body and Label).
   static const roboto = 'Roboto';
 }
 
-// Las dos fuentes son variables: el peso se aplica como variación del eje `wght`.
+// Both fonts are variable: the weight is applied as a variation of the `wght` axis.
 TextStyle _style(
   String family, {
   required double size,
@@ -38,10 +38,10 @@ TextStyle _sans(
 }) =>
     _style(VioraFonts.roboto, size: size, lineHeight: lineHeight, weight: weight, letterSpacing: letterSpacing);
 
-/// Escala Material 3 adaptada a Viora (equivale a `AppTypography` en Type.kt):
-/// Newsreader para Display/Headline y Roboto para el resto. Los Display se reducen
-/// (48/40/32) porque Newsreader es más ancha que Roboto en pantallas compactas.
-/// Body Large (16) es el tamaño de lectura por defecto; nada baja de 11.
+/// Material 3 scale adapted to Viora: Newsreader for Display/Headline and Roboto for
+/// the rest. Display sizes are reduced (48/40/32) because Newsreader is wider than
+/// Roboto on compact screens. Body Large (16) is the default reading size; nothing
+/// goes below 11.
 final TextTheme vioraTextTheme = TextTheme(
   displayLarge: _serif(48, 52, letterSpacing: -0.5),
   displayMedium: _serif(40, 44, letterSpacing: -0.25),
@@ -58,4 +58,11 @@ final TextTheme vioraTextTheme = TextTheme(
   labelLarge: _sans(14, 20, weight: FontWeight.w500, letterSpacing: 0.1),
   labelMedium: _sans(12, 16, weight: FontWeight.w500, letterSpacing: 0.5),
   labelSmall: _sans(11, 16, weight: FontWeight.w500, letterSpacing: 0.5),
+);
+
+/// Italic style for the emphasized part of expressive text (e.g. "Hoy toca *aclarar.*").
+/// Merge it with a Display or Headline style.
+const TextStyle vioraNewsreaderItalic = TextStyle(
+  fontFamily: VioraFonts.newsreader,
+  fontStyle: FontStyle.italic,
 );
