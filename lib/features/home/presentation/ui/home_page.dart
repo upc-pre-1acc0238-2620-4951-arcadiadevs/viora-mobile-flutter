@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/designsystem/component/viora_tab_bar.dart';
-import '../../../../core/designsystem/theme/spacing.dart';
-import '../state/home_ui_state.dart';
-import '../viewmodel/home_view_model.dart';
-import 'widgets/campaign_chip.dart';
-import 'widgets/home_headline.dart';
-import 'widgets/home_header.dart';
+import 'package:viora/core/designsystem/component/viora_tab_bar.dart';
+import 'package:viora/core/designsystem/theme/spacing.dart';
+import 'package:viora/core/di/dependency_injection.dart';
+import 'package:viora/features/home/presentation/state/home_ui_state.dart';
+import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart';
+import 'package:viora/features/home/presentation/ui/widgets/campaign_chip.dart';
+import 'package:viora/features/home/presentation/ui/widgets/home_header.dart';
+import 'package:viora/features/home/presentation/ui/widgets/home_headline.dart';
 
 void _noop() {}
 
@@ -17,7 +18,7 @@ void _noop() {}
 /// Las secciones de otros features (fase, "Hoy en tu campo", alternancia) se
 /// enchufan por [sections], en el orden del diseño; "Mis lotes" va siempre al
 /// final. Así el Home solo es el contenedor y no conoce a esos features.
-class HomePage extends ConsumerWidget {
+class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
     this.onOpenAlerts = _noop,
@@ -28,17 +29,21 @@ class HomePage extends ConsumerWidget {
   final List<Widget> sections;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(homeViewModelProvider);
-    return HomePageContent(
-      state: state,
-      onOpenAlerts: onOpenAlerts,
-      sections: sections,
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<HomeViewModel>(),
+      child: BlocBuilder<HomeViewModel, HomeUiState>(
+        builder: (context, state) => HomePageContent(
+          state: state,
+          onOpenAlerts: onOpenAlerts,
+          sections: sections,
+        ),
+      ),
     );
   }
 }
 
-/// Contenedor visual del Home: sin Riverpod, para poder probarlo con un
+/// Contenedor visual del Home: sin Bloc, para poder probarlo con un
 /// [HomeUiState] fijo (equivale a `HomeScreenContent`).
 class HomePageContent extends StatelessWidget {
   const HomePageContent({

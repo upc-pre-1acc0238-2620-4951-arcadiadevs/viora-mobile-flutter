@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'core/designsystem/component/viora_tab_bar.dart';
-import 'core/navigation/top_level_destination.dart';
+import 'package:viora/core/designsystem/component/viora_tab_bar.dart';
+import 'package:viora/core/navigation/top_level_destination.dart';
 
 /// Shell de la app: el contenido de la rama activa con la barra flotante encima.
 /// Las pantallas que se abren fuera del shell (asistentes, mapas a pantalla

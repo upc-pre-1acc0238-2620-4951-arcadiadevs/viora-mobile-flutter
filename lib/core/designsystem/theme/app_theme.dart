@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'colors.dart';
-import 'typography.dart';
+import 'package:viora/core/designsystem/theme/colors.dart';
+import 'package:viora/core/designsystem/theme/typography.dart';
 
 /// Radios de Viora: chip 8, tarjeta 12, sheet 28; botones y chips usan la píldora.
 abstract final class AppRadius {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/designsystem/component/viora_icon.dart';
-import '../../../../../core/designsystem/theme/colors.dart';
-import '../../../../../core/designsystem/theme/spacing.dart';
-import '../../util/home_formatters.dart';
+import 'package:viora/core/designsystem/component/viora_icon.dart';
+import 'package:viora/core/designsystem/theme/colors.dart';
+import 'package:viora/core/designsystem/theme/spacing.dart';
+import 'package:viora/features/home/presentation/util/home_formatters.dart';
 
 /// Avatar (iniciales o isotipo), saludo con fecha y campana de alertas.
 class HomeHeader extends StatelessWidget {

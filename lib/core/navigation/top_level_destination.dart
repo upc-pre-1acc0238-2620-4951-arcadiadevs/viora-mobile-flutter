@@ -1,4 +1,4 @@
-import '../designsystem/component/viora_icon.dart';
+import 'package:viora/core/designsystem/component/viora_icon.dart';
 
 /// Destinos de la barra flotante, en orden de aparición. Para cambiar los tabs
 /// basta con editar esta lista: el shell y la barra se arman solos.

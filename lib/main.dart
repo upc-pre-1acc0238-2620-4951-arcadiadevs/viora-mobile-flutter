@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'core/designsystem/theme/app_theme.dart';
-import 'navigation/app_router.dart';
+import 'package:viora/core/designsystem/theme/app_theme.dart';
+import 'package:viora/core/di/dependency_injection.dart';
+import 'package:viora/navigation/app_router.dart';
 
 void main() {
-  runApp(const ProviderScope(child: VioraApp()));
+  setupDependencies();
+  runApp(const VioraApp());
 }
 
 class VioraApp extends StatelessWidget {

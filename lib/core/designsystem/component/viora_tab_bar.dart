@@ -2,9 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../theme/colors.dart';
-import '../theme/spacing.dart';
-import 'viora_icon.dart';
+import 'package:viora/core/designsystem/theme/colors.dart';
+import 'package:viora/core/designsystem/theme/spacing.dart';
+import 'package:viora/core/designsystem/component/viora_icon.dart';
 
 /// Un destino de [VioraTabBar]. [label] se usa solo para accesibilidad.
 class TabBarItem {

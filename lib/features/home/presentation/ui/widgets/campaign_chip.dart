@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/designsystem/theme/colors.dart';
-import '../../../../../core/designsystem/theme/spacing.dart';
+import 'package:viora/core/designsystem/theme/colors.dart';
+import 'package:viora/core/designsystem/theme/spacing.dart';
 
 /// Chip de la campaña vigente ("Campaña 2026").
 class CampaignChip extends StatelessWidget {
