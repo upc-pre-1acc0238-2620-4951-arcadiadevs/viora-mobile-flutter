@@ -24,7 +24,7 @@ class IamPage extends StatelessWidget {
   static const path = '/auth';
 
   /// Path of the recovery link the backend emails.
-  static const resetPath = '/password-resets/:token';
+  static const resetPath = '/gestor/password-resets/:token';
 
   @override
   Widget build(BuildContext context) {
