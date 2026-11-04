@@ -11,7 +11,7 @@ import 'package:viora/features/iam/domain/exception/auth_failure.dart';
 import 'package:viora/features/iam/domain/valueobject/registration.dart';
 import 'package:viora/features/iam/domain/repository/auth_repository.dart';
 import 'package:viora/features/iam/domain/repository/onboarding_repository.dart';
-import 'package:viora/features/iam/domain/valueobject/account_rules.dart';
+import 'package:viora/core/domain/account_rules.dart';
 import 'package:viora/features/iam/domain/valueobject/onboarding_answers.dart';
 import 'package:viora/features/iam/presentation/state/iam_ui_state.dart';
 import 'package:viora/features/iam/presentation/state/onboarding_ui_state.dart';
@@ -44,6 +44,12 @@ class _FakeAuth implements AuthRepository {
 
   @override
   Future<void> signIn(String email, String password) => _maybeFail();
+
+  @override
+  Future<void> signOut() async {}
+
+  @override
+  Future<void> changePassword(String currentPassword, String newPassword) => _maybeFail();
 
   @override
   Future<String> signUp(Registration registration) async {

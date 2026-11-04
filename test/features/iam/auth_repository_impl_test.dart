@@ -121,6 +121,57 @@ void main() {
     });
   });
 
+  group('changePassword', () {
+    test('saves the session of the answer', () async {
+      final repo = repository(200, session);
+
+      await repo.changePassword('Clave1234', 'Nueva1234');
+
+      expect(lastRequest.method, 'PATCH');
+      expect(lastRequest.url.path, endsWith('/auth/passwords'));
+      expect(await repo.isSignedIn(), isTrue);
+    });
+
+    test('a wrong current password is CurrentPasswordIncorrect', () {
+      expect(
+        repository(422, {'reason': 'user.password.current_invalid'})
+            .changePassword('x', 'Nueva1234'),
+        throwsA(isA<CurrentPasswordIncorrect>()),
+      );
+    });
+
+    test('a recent password is PasswordReused', () {
+      expect(
+        repository(422, {'reason': 'user.password.reused'}).changePassword('x', 'Nueva1234'),
+        throwsA(isA<PasswordReused>()),
+      );
+    });
+  });
+
+  group('signOut', () {
+    test('closes the session on the phone and on the server', () async {
+      final repo = repository(200, session);
+      await repo.signIn('rosa@example.com', 'Clave1234');
+
+      await repo.signOut();
+      await Future<void>.delayed(Duration.zero);
+
+      expect(await repo.isSignedIn(), isFalse);
+      expect(lastRequest.url.path, endsWith('/auth/sign-out'));
+      expect(jsonDecode(lastRequest.body), {'refreshToken': 'refresh'});
+    });
+
+    test('closes the session on the phone even if the server fails', () async {
+      final repo = repository(200, session);
+      await repo.signIn('rosa@example.com', 'Clave1234');
+
+      await repository(500, {}).signOut();
+      await Future<void>.delayed(Duration.zero);
+
+      expect(await repo.isSignedIn(), isFalse);
+    });
+  });
+
   group('signIn', () {
     test('saves the session', () async {
       final repo = repository(200, session);

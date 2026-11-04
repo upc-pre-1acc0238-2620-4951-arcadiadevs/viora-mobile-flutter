@@ -46,6 +46,14 @@ abstract final class AppTheme {
         colorScheme: scheme,
         scaffoldBackgroundColor: background,
         pageTransitionsTheme: VioraPageTransitionsBuilder.theme,
+        // The dark pill of the design, instead of the bar of Material.
+        snackBarTheme: SnackBarThemeData(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: VioraColors.green800,
+          contentTextStyle: vioraTextTheme.labelLarge?.copyWith(color: VioraColors.neutral0),
+          shape: const StadiumBorder(),
+          elevation: 0,
+        ),
         textTheme: vioraTextTheme.apply(
           bodyColor: scheme.onSurface,
           displayColor: scheme.onSurface,

@@ -1,6 +1,6 @@
 import 'package:viora/features/iam/domain/valueobject/registration.dart';
 import 'package:viora/features/iam/domain/valueobject/account_role.dart';
-import 'package:viora/features/iam/domain/valueobject/account_rules.dart';
+import 'package:viora/core/domain/account_rules.dart';
 import 'package:viora/features/iam/infrastructure/remote/account_role_dto.dart';
 
 class SignUpRequestDto {

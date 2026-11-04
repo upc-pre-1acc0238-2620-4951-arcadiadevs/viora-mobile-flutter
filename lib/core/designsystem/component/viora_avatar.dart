@@ -4,18 +4,24 @@ import 'package:viora/core/designsystem/theme/colors.dart';
 
 /// Circle with the initials of [name], or the isotype while the name isn't known.
 class VioraAvatar extends StatelessWidget {
-  const VioraAvatar({super.key, required this.name, this.size = 48});
+  const VioraAvatar({
+    super.key,
+    required this.name,
+    this.size = 48,
+    this.background = VioraColors.terracotta100,
+  });
 
   final String name;
   final double size;
+  final Color background;
 
   @override
   Widget build(BuildContext context) {
     final initials = _initialsOf(name);
     return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: VioraColors.terracotta100,
-        shape: CircleBorder(),
+      decoration: ShapeDecoration(
+        color: background,
+        shape: const CircleBorder(),
       ),
       child: SizedBox.square(
         dimension: size,
