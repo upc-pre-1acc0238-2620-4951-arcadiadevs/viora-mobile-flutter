@@ -99,7 +99,7 @@ class VioraFormFrame extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 24, 0),
+              padding: const EdgeInsets.fromLTRB(12, 8, 24, 8),
               child: SizedBox(
                 height: 44,
                 child: Row(
@@ -126,7 +126,8 @@ class VioraFormFrame extends StatelessWidget {
             ),
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(24, 22, 24, 8),
+                // The scrolled content stops short of the bar and the footer, instead of touching them.
+                padding: const EdgeInsets.fromLTRB(24, 14, 24, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: children,
@@ -134,7 +135,7 @@ class VioraFormFrame extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
+              padding: const EdgeInsets.fromLTRB(24, 16, 24, 20),
               child: Column(mainAxisSize: MainAxisSize.min, children: footer),
             ),
           ],
