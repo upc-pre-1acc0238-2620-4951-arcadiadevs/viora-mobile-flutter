@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:viora/features/iam/domain/valueobject/account_rules.dart';
+import 'package:viora/core/domain/account_rules.dart';
 
 /// The onboarding questions in order; [number] is the one the top bar shows.
 enum OnboardingStep {

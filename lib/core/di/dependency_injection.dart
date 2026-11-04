@@ -1,14 +1,19 @@
 import 'package:get_it/get_it.dart';
 
 import 'package:viora/core/database/app_database.dart';
+import 'package:viora/core/datastore/session_events.dart';
 import 'package:viora/core/datastore/session_store.dart';
+import 'package:viora/core/locale/app_language.dart';
 import 'package:viora/core/network/api_client.dart';
+import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart';
+import 'package:viora/features/iam/application/usecase/change_password_use_case.dart';
 import 'package:viora/features/iam/application/usecase/check_password_reset_link_use_case.dart';
 import 'package:viora/features/iam/application/usecase/is_signed_in_use_case.dart';
 import 'package:viora/features/iam/application/usecase/request_password_reset_use_case.dart';
 import 'package:viora/features/iam/application/usecase/resend_code_use_case.dart';
 import 'package:viora/features/iam/application/usecase/reset_password_use_case.dart';
 import 'package:viora/features/iam/application/usecase/sign_in_use_case.dart';
+import 'package:viora/features/iam/application/usecase/sign_out_use_case.dart';
 import 'package:viora/features/iam/application/usecase/sign_up_use_case.dart';
 import 'package:viora/features/iam/application/usecase/verify_email_use_case.dart';
 import 'package:viora/features/iam/domain/repository/auth_repository.dart';
@@ -19,26 +24,79 @@ import 'package:viora/features/iam/infrastructure/repository/auth_repository_imp
 import 'package:viora/features/iam/presentation/viewmodel/iam_view_model.dart';
 import 'package:viora/features/iam/presentation/viewmodel/onboarding_view_model.dart';
 import 'package:viora/features/iam/presentation/viewmodel/splash_view_model.dart';
-import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart';
+import 'package:viora/features/profiles/application/usecase/get_current_profile_use_case.dart';
+import 'package:viora/features/profiles/application/usecase/refresh_profile_use_case.dart';
+import 'package:viora/features/profiles/application/usecase/update_profile_use_case.dart';
+import 'package:viora/features/profiles/application/usecase/watch_current_profile_use_case.dart';
+import 'package:viora/features/profiles/domain/repository/profile_repository.dart';
+import 'package:viora/features/profiles/infrastructure/local/profile_store.dart';
+import 'package:viora/features/profiles/infrastructure/remote/profile_api.dart';
+import 'package:viora/features/profiles/infrastructure/repository/profile_repository_impl.dart';
+import 'package:viora/features/profiles/presentation/viewmodel/account_view_model.dart';
+import 'package:viora/features/profiles/presentation/viewmodel/change_password_view_model.dart';
+import 'package:viora/features/profiles/presentation/viewmodel/edit_profile_view_model.dart';
 
 final getIt = GetIt.instance;
 
 void setupDependencies() {
   _setupCore();
   _setupIam();
+  _setupProfiles();
   _setupViewModels();
 }
 
 void _setupCore() {
   getIt.registerLazySingleton<AppDatabase>(() => AppDatabase());
-  getIt.registerLazySingleton<ApiClient>(() => ApiClient());
+  getIt.registerLazySingleton<AppLanguageCubit>(() => AppLanguageCubit());
   getIt.registerLazySingleton<SessionStore>(() => const SessionStore());
+  getIt.registerLazySingleton<SessionEvents>(() => SessionEvents());
+  getIt.registerLazySingleton<ApiClient>(
+    () => ApiClient(
+      sessionStore: getIt<SessionStore>(),
+      sessionEvents: getIt<SessionEvents>(),
+      languageTag: () => getIt<AppLanguageCubit>().languageTag,
+    ),
+  );
+}
+
+void _setupProfiles() {
+  getIt.registerLazySingleton<ProfileStore>(() => ProfileStore());
+  getIt.registerLazySingleton<ProfileApi>(() => ProfileApi(client: getIt<ApiClient>()));
+  getIt.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(
+      api: getIt<ProfileApi>(),
+      store: getIt<ProfileStore>(),
+      sessionStore: getIt<SessionStore>(),
+    ),
+  );
+  getIt.registerLazySingleton<GetCurrentProfileUseCase>(
+    () => GetCurrentProfileUseCase(repository: getIt<ProfileRepository>()),
+  );
+  getIt.registerLazySingleton<WatchCurrentProfileUseCase>(
+    () => WatchCurrentProfileUseCase(repository: getIt<ProfileRepository>()),
+  );
+  getIt.registerLazySingleton<RefreshProfileUseCase>(
+    () => RefreshProfileUseCase(repository: getIt<ProfileRepository>()),
+  );
+  getIt.registerLazySingleton<UpdateProfileUseCase>(
+    () => UpdateProfileUseCase(repository: getIt<ProfileRepository>()),
+  );
 }
 
 void _setupIam() {
+  getIt.registerLazySingleton<SignOutUseCase>(
+    () => SignOutUseCase(repository: getIt<AuthRepository>()),
+  );
+  getIt.registerLazySingleton<ChangePasswordUseCase>(
+    () => ChangePasswordUseCase(repository: getIt<AuthRepository>()),
+  );
   getIt.registerLazySingleton<AuthApi>(() => AuthApi(client: getIt<ApiClient>()));
   getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(api: getIt<AuthApi>(), sessionStore: getIt<SessionStore>()),
+    () => AuthRepositoryImpl(
+      api: getIt<AuthApi>(),
+      sessionStore: getIt<SessionStore>(),
+      sessionEvents: getIt<SessionEvents>(),
+    ),
   );
   getIt.registerLazySingleton<OnboardingRepository>(() => const OnboardingStore());
 
@@ -70,7 +128,28 @@ void _setupIam() {
 
 // ViewModels hold screen state, so every screen gets a new instance.
 void _setupViewModels() {
-  getIt.registerFactory<HomeViewModel>(() => HomeViewModel());
+  getIt.registerFactory<HomeViewModel>(
+    () => HomeViewModel(
+      watchProfile: getIt<WatchCurrentProfileUseCase>(),
+      refreshProfile: getIt<RefreshProfileUseCase>(),
+    ),
+  );
+  getIt.registerFactory<EditProfileViewModel>(
+    () => EditProfileViewModel(
+      getCurrentProfile: getIt<GetCurrentProfileUseCase>(),
+      updateProfile: getIt<UpdateProfileUseCase>(),
+    ),
+  );
+  getIt.registerFactory<ChangePasswordViewModel>(
+    () => ChangePasswordViewModel(changePassword: getIt<ChangePasswordUseCase>()),
+  );
+  getIt.registerFactory<AccountViewModel>(
+    () => AccountViewModel(
+      watchProfile: getIt<WatchCurrentProfileUseCase>(),
+      refreshProfile: getIt<RefreshProfileUseCase>(),
+      signOutUseCase: getIt<SignOutUseCase>(),
+    ),
+  );
   getIt.registerFactory<SplashViewModel>(
     () => SplashViewModel(isSignedIn: getIt<IsSignedInUseCase>()),
   );
@@ -89,4 +168,9 @@ void _setupViewModels() {
       onboardingRepository: getIt<OnboardingRepository>(),
     ),
   );
+}
+
+/// What belongs to the account stays on the phone only while its session lasts.
+void forgetAccountDataWhenSessionEnds() {
+  getIt<SessionEvents>().ended.listen((_) => getIt<ProfileRepository>().clear());
 }

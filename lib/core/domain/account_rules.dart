@@ -45,12 +45,17 @@ enum PhoneCountry {
 
   bool isValidMobile(String national) => RegExp(_mobilePattern).hasMatch(national);
 
+  /// The mobile without the dial code of an E.164 number.
+  String nationalOf(String e164) =>
+      e164.startsWith(dialCode) ? e164.substring(dialCode.length) : e164;
+
   /// E.164, the only format the server accepts ("+51987654321").
   String e164(String national) => '$dialCode$national';
 
   /// For reading ("+51 987 654 321").
-  String international(String national) {
-    final groups = RegExp(r'.{1,3}').allMatches(national).map((match) => match.group(0));
-    return '$dialCode ${groups.join(' ')}';
-  }
+  String international(String national) => '$dialCode ${grouped(national)}';
+
+  /// The digits in groups of three ("987 654 321").
+  String grouped(String national) =>
+      RegExp(r'.{1,3}').allMatches(national).map((match) => match.group(0)).join(' ');
 }

@@ -22,10 +22,12 @@ class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
     this.onOpenAlerts = _noop,
+    this.onOpenAccount = _noop,
     this.sections = const [],
   });
 
   final VoidCallback onOpenAlerts;
+  final VoidCallback onOpenAccount;
   final List<Widget> sections;
 
   @override
@@ -36,6 +38,7 @@ class HomePage extends StatelessWidget {
         builder: (context, state) => HomePageContent(
           state: state,
           onOpenAlerts: onOpenAlerts,
+          onOpenAccount: onOpenAccount,
           sections: sections,
         ),
       ),
@@ -50,11 +53,13 @@ class HomePageContent extends StatelessWidget {
     super.key,
     required this.state,
     this.onOpenAlerts = _noop,
+    this.onOpenAccount = _noop,
     this.sections = const [],
   });
 
   final HomeUiState state;
   final VoidCallback onOpenAlerts;
+  final VoidCallback onOpenAccount;
   final List<Widget> sections;
 
   @override
@@ -81,6 +86,7 @@ class HomePageContent extends StatelessWidget {
                 subtitle: state.subtitle,
                 hasUnreadAlerts: state.hasUnreadAlerts,
                 onOpenAlerts: onOpenAlerts,
+                onOpenAccount: onOpenAccount,
               ),
               const SizedBox(height: 28),
               HomeHeadline(lead: l10n.homeHeadlineLead, emphasis: l10n.homeHeadlineEmphasis),

@@ -1,4 +1,4 @@
-import 'package:viora/features/iam/domain/valueobject/account_rules.dart';
+import 'package:viora/core/domain/account_rules.dart';
 
 /// What the person answered in the onboarding. The answers stay on the phone until the
 /// email is verified; name, country and mobile become the profile at sign-up.

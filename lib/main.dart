@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:viora/core/designsystem/theme/app_theme.dart';
 import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
+import 'package:viora/core/locale/app_language.dart';
 import 'package:viora/navigation/app_router.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   setupDependencies();
+  openSignInWhenSessionExpires();
+  forgetAccountDataWhenSessionEnds();
+  // The saved language has to be known before the first frame.
+  await getIt<AppLanguageCubit>().load();
   runApp(const VioraApp());
 }
 
@@ -18,12 +24,22 @@ class VioraApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider.value(
+      value: getIt<AppLanguageCubit>(),
+      child: BlocBuilder<AppLanguageCubit, AppLanguage?>(
+        builder: (context, language) => _app(language),
+      ),
+    );
+  }
+
+  Widget _app(AppLanguage? language) {
     return MaterialApp.router(
       title: 'Viora',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      // The language follows the phone: es-PE resolves to Spanish, and any language
-      // the app doesn't have falls back to the first one in the list, English.
+      // Without a choice in the app, the language follows the phone: es-PE resolves to Spanish,
+      // and any language the app doesn't have falls back to the first one in the list, English.
+      locale: language?.locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: appRouter,

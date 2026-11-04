@@ -11,12 +11,14 @@ class HomeHeader extends StatelessWidget {
   const HomeHeader({
     super.key,
     required this.onOpenAlerts,
+    required this.onOpenAccount,
     this.displayName,
     this.subtitle,
     this.hasUnreadAlerts = false,
   });
 
   final VoidCallback onOpenAlerts;
+  final VoidCallback onOpenAccount;
   final String? displayName;
   final String? subtitle;
   final bool hasUnreadAlerts;
@@ -30,7 +32,17 @@ class HomeHeader extends StatelessWidget {
 
     return Row(
       children: [
-        VioraAvatar(name: name),
+        Semantics(
+          button: true,
+          label: l10n.accountTitle,
+          onTap: onOpenAccount,
+          excludeSemantics: true,
+          child: InkWell(
+            customBorder: const CircleBorder(),
+            onTap: onOpenAccount,
+            child: VioraAvatar(name: name),
+          ),
+        ),
         const SizedBox(width: Spacing.sm),
         Expanded(
           child: Column(

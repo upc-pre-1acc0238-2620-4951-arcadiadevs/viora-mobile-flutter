@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:viora/app_shell.dart';
+import 'package:viora/core/datastore/session_events.dart';
 import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/navigation/placeholder_screen.dart';
@@ -12,6 +13,9 @@ import 'package:viora/features/iam/presentation/ui/onboarding_page.dart';
 import 'package:viora/features/iam/presentation/ui/splash_page.dart';
 import 'package:viora/features/iam/presentation/ui/welcome_page.dart';
 import 'package:viora/features/iam/presentation/viewmodel/iam_view_model.dart';
+import 'package:viora/features/profiles/presentation/ui/account_page.dart';
+import 'package:viora/features/profiles/presentation/ui/change_password_page.dart';
+import 'package:viora/features/profiles/presentation/ui/edit_profile_page.dart';
 
 /// Composition root of navigation: the one place that knows the screens of every
 /// feature. Inside `core/`, only `di/` and `database/` may import `features/`.
@@ -42,6 +46,9 @@ final GoRouter appRouter = GoRouter(
         child: const IamPage(),
       ),
     ),
+    GoRoute(path: AccountPage.path, builder: (context, state) => const AccountPage()),
+    GoRoute(path: EditProfilePage.path, builder: (context, state) => const EditProfilePage()),
+    GoRoute(path: ChangePasswordPage.path, builder: (context, state) => const ChangePasswordPage()),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) => AppShell(navigationShell: navigationShell),
       branches: [
@@ -51,7 +58,7 @@ final GoRouter appRouter = GoRouter(
               GoRoute(
                 path: d.path,
                 builder: (context, state) => d == TopLevelDestination.home
-                    ? const HomePage()
+                    ? HomePage(onOpenAccount: () => context.push(AccountPage.path))
                     : PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
               ),
             ],
@@ -60,3 +67,8 @@ final GoRouter appRouter = GoRouter(
     ),
   ],
 );
+
+/// A session that can no longer be renewed goes back to sign-in, from any screen.
+void openSignInWhenSessionExpires() {
+  getIt<SessionEvents>().expired.listen((_) => appRouter.go(IamPage.path));
+}

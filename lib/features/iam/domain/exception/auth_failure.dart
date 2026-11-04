@@ -24,6 +24,11 @@ class InvalidCredentials extends AuthFailure {
   const InvalidCredentials();
 }
 
+/// The current password typed to change it is wrong.
+class CurrentPasswordIncorrect extends AuthFailure {
+  const CurrentPasswordIncorrect();
+}
+
 /// Right password, but the account has a role this app doesn't serve.
 class AccountOfOtherRole extends AuthFailure {
   const AccountOfOtherRole();

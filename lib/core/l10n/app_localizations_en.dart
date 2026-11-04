@@ -33,6 +33,153 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeGreetingAnonymous => 'Hello';
 
   @override
+  String get accountLanguageNotice => 'Language: English';
+
+  @override
+  String get accountGroupSecurity => 'SECURITY';
+
+  @override
+  String get accountChangePassword => 'Change password';
+
+  @override
+  String get accountGroupPreferences => 'PREFERENCES';
+
+  @override
+  String get accountLanguage => 'Language';
+
+  @override
+  String get accountLanguageSpanish => 'Español';
+
+  @override
+  String get accountLanguageEnglish => 'English';
+
+  @override
+  String get accountNotifications => 'Notifications';
+
+  @override
+  String get accountNotificationsOn => 'On';
+
+  @override
+  String get accountNotificationsOff => 'Off';
+
+  @override
+  String accountVersion(String version) {
+    return 'Viora $version · Android · iOS';
+  }
+
+  @override
+  String get accountDetailsSaved => 'Changes saved';
+
+  @override
+  String get accountPasswordChanged => 'Password updated';
+
+  @override
+  String get accountDetailsTitle => 'Personal details';
+
+  @override
+  String get accountDetailsHeadline => 'Your\n*details.*';
+
+  @override
+  String get accountFullName => 'Full name';
+
+  @override
+  String get accountFullNamePlaceholder => 'Enter your name';
+
+  @override
+  String get accountFullNameRequired => 'Your name is required.';
+
+  @override
+  String accountPhoneLabel(String country, String dialCode) {
+    return 'Mobile · $country $dialCode';
+  }
+
+  @override
+  String accountPhoneHelper(String example) {
+    return 'International format: $example';
+  }
+
+  @override
+  String get accountEmailHelper => 'Verified · used to sign in to Viora';
+
+  @override
+  String get accountSaveChanges => 'Save changes';
+
+  @override
+  String get accountSaveOffline =>
+      'No connection: your changes weren\'t saved. Try again.';
+
+  @override
+  String get accountSaveFailed => 'We couldn\'t save your changes. Try again.';
+
+  @override
+  String get accountSecurityTitle => 'Security';
+
+  @override
+  String get accountPasswordHeadline => 'New\n*password.*';
+
+  @override
+  String get accountCurrentPassword => 'Current password';
+
+  @override
+  String get accountCurrentPasswordWrong =>
+      'The current password isn\'t correct.';
+
+  @override
+  String get accountConfirmNewPassword => 'Confirm new password';
+
+  @override
+  String get accountPasswordRules => 'It doesn\'t meet the requirements below.';
+
+  @override
+  String get accountPasswordMismatch => 'The passwords don\'t match.';
+
+  @override
+  String get accountRuleLength => '8 characters or more';
+
+  @override
+  String get accountRuleDifferent => 'Different from the current one';
+
+  @override
+  String get languageSheetTitle => 'App\n*language*';
+
+  @override
+  String get languageSheetSubtitle => 'Changes right away, without signing out';
+
+  @override
+  String get languageSheetNote =>
+      'Thousands separators and the date format change too. It stays saved on this phone.';
+
+  @override
+  String get accountTitle => 'My account';
+
+  @override
+  String get accountRole => 'Technical manager';
+
+  @override
+  String get accountHeadline => 'Your\n*account.*';
+
+  @override
+  String get accountGroupPersonal => 'PERSONAL DETAILS';
+
+  @override
+  String get accountName => 'Name';
+
+  @override
+  String get accountMobile => 'Mobile';
+
+  @override
+  String get accountEmail => 'Email';
+
+  @override
+  String get accountVerified => 'Verified';
+
+  @override
+  String get accountGroupSession => 'SESSION';
+
+  @override
+  String get accountSignOut => 'Log out';
+
+  @override
   String get homeAlerts => 'Alerts';
 
   @override

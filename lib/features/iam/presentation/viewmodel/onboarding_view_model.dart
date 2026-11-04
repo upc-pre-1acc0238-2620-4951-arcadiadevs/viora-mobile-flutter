@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:viora/features/iam/domain/repository/onboarding_repository.dart';
-import 'package:viora/features/iam/domain/valueobject/account_rules.dart';
+import 'package:viora/core/domain/account_rules.dart';
 import 'package:viora/features/iam/domain/valueobject/onboarding_answers.dart';
 import 'package:viora/features/iam/presentation/state/onboarding_ui_state.dart';
 
