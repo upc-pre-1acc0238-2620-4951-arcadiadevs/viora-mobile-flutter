@@ -13,6 +13,7 @@ abstract final class AuthErrorMapper {
   static const _codeExpired = 'user.email_verification.code_expired';
   static const _noActiveCode = 'user.email_verification.no_active_code';
   static const _passwordReused = 'user.password.reused';
+  static const _currentPasswordInvalid = 'user.password.current_invalid';
 
   static AuthFailure? signIn(ApiException error) {
     if (error.status != 403) return null;
@@ -53,6 +54,13 @@ abstract final class AuthErrorMapper {
 
   static AuthFailure? resetPassword(ApiException error) => switch (error.status) {
         404 => const ResetLinkExpired(),
+        422 when error.reason == _passwordReused => const PasswordReused(),
+        400 when _breaksPasswordRules(error) => const WeakPassword(),
+        _ => null,
+      };
+
+  static AuthFailure? changePassword(ApiException error) => switch (error.status) {
+        422 when error.reason == _currentPasswordInvalid => const CurrentPasswordIncorrect(),
         422 when error.reason == _passwordReused => const PasswordReused(),
         400 when _breaksPasswordRules(error) => const WeakPassword(),
         _ => null,

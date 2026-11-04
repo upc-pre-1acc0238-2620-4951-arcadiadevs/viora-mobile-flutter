@@ -2,6 +2,12 @@ import 'package:viora/features/iam/domain/valueobject/registration.dart';
 
 /// The person's account. Every operation throws an AuthFailure when it can't complete.
 abstract class AuthRepository {
+  /// Changes the password; the phone stays signed in with a new session.
+  Future<void> changePassword(String currentPassword, String newPassword);
+
+  /// Closes the session on this phone, and on the server when it can be reached.
+  Future<void> signOut();
+
   /// Opens a session.
   Future<void> signIn(String email, String password);
 

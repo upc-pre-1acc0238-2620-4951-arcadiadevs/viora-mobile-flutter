@@ -10,7 +10,7 @@ import 'package:viora/core/designsystem/component/viora_voice.dart';
 import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
-import 'package:viora/features/iam/domain/valueobject/account_rules.dart';
+import 'package:viora/core/domain/account_rules.dart';
 import 'package:viora/features/iam/presentation/state/onboarding_ui_state.dart';
 import 'package:viora/features/iam/presentation/ui/iam_page.dart';
 import 'package:viora/features/iam/presentation/ui/widgets/account_widgets.dart';
