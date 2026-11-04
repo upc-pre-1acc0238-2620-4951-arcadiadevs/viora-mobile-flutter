@@ -140,6 +140,282 @@ abstract class AppLocalizations {
   /// **'Hello'**
   String get homeGreetingAnonymous;
 
+  /// No description provided for @accountLanguageNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Language: English'**
+  String get accountLanguageNotice;
+
+  /// No description provided for @accountGroupSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'SECURITY'**
+  String get accountGroupSecurity;
+
+  /// No description provided for @accountChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get accountChangePassword;
+
+  /// No description provided for @accountGroupPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'PREFERENCES'**
+  String get accountGroupPreferences;
+
+  /// No description provided for @accountLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get accountLanguage;
+
+  /// No description provided for @accountLanguageSpanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Español'**
+  String get accountLanguageSpanish;
+
+  /// No description provided for @accountLanguageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get accountLanguageEnglish;
+
+  /// No description provided for @accountNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get accountNotifications;
+
+  /// No description provided for @accountNotificationsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get accountNotificationsOn;
+
+  /// No description provided for @accountNotificationsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get accountNotificationsOff;
+
+  /// No description provided for @accountVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Viora {version} · Android · iOS'**
+  String accountVersion(String version);
+
+  /// No description provided for @accountDetailsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes saved'**
+  String get accountDetailsSaved;
+
+  /// No description provided for @accountPasswordChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated'**
+  String get accountPasswordChanged;
+
+  /// No description provided for @accountDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal details'**
+  String get accountDetailsTitle;
+
+  /// No description provided for @accountDetailsHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your\n*details.*'**
+  String get accountDetailsHeadline;
+
+  /// No description provided for @accountFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get accountFullName;
+
+  /// No description provided for @accountFullNamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name'**
+  String get accountFullNamePlaceholder;
+
+  /// No description provided for @accountFullNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name is required.'**
+  String get accountFullNameRequired;
+
+  /// No description provided for @accountPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile · {country} {dialCode}'**
+  String accountPhoneLabel(String country, String dialCode);
+
+  /// No description provided for @accountPhoneHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'International format: {example}'**
+  String accountPhoneHelper(String example);
+
+  /// No description provided for @accountEmailHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified · used to sign in to Viora'**
+  String get accountEmailHelper;
+
+  /// No description provided for @accountSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get accountSaveChanges;
+
+  /// No description provided for @accountSaveOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection: your changes weren\'t saved. Try again.'**
+  String get accountSaveOffline;
+
+  /// No description provided for @accountSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t save your changes. Try again.'**
+  String get accountSaveFailed;
+
+  /// No description provided for @accountSecurityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get accountSecurityTitle;
+
+  /// No description provided for @accountPasswordHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'New\n*password.*'**
+  String get accountPasswordHeadline;
+
+  /// No description provided for @accountCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get accountCurrentPassword;
+
+  /// No description provided for @accountCurrentPasswordWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'The current password isn\'t correct.'**
+  String get accountCurrentPasswordWrong;
+
+  /// No description provided for @accountConfirmNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get accountConfirmNewPassword;
+
+  /// No description provided for @accountPasswordRules.
+  ///
+  /// In en, this message translates to:
+  /// **'It doesn\'t meet the requirements below.'**
+  String get accountPasswordRules;
+
+  /// No description provided for @accountPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The passwords don\'t match.'**
+  String get accountPasswordMismatch;
+
+  /// No description provided for @accountRuleLength.
+  ///
+  /// In en, this message translates to:
+  /// **'8 characters or more'**
+  String get accountRuleLength;
+
+  /// No description provided for @accountRuleDifferent.
+  ///
+  /// In en, this message translates to:
+  /// **'Different from the current one'**
+  String get accountRuleDifferent;
+
+  /// No description provided for @languageSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'App\n*language*'**
+  String get languageSheetTitle;
+
+  /// No description provided for @languageSheetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes right away, without signing out'**
+  String get languageSheetSubtitle;
+
+  /// No description provided for @languageSheetNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Thousands separators and the date format change too. It stays saved on this phone.'**
+  String get languageSheetNote;
+
+  /// No description provided for @accountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My account'**
+  String get accountTitle;
+
+  /// No description provided for @accountRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical manager'**
+  String get accountRole;
+
+  /// No description provided for @accountHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your\n*account.*'**
+  String get accountHeadline;
+
+  /// No description provided for @accountGroupPersonal.
+  ///
+  /// In en, this message translates to:
+  /// **'PERSONAL DETAILS'**
+  String get accountGroupPersonal;
+
+  /// No description provided for @accountName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get accountName;
+
+  /// No description provided for @accountMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile'**
+  String get accountMobile;
+
+  /// No description provided for @accountEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get accountEmail;
+
+  /// No description provided for @accountVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get accountVerified;
+
+  /// No description provided for @accountGroupSession.
+  ///
+  /// In en, this message translates to:
+  /// **'SESSION'**
+  String get accountGroupSession;
+
+  /// No description provided for @accountSignOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get accountSignOut;
+
   /// No description provided for @homeAlerts.
   ///
   /// In en, this message translates to:
