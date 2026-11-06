@@ -551,4 +551,105 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get iamErrorPhone =>
       'The server didn\'t accept this mobile number. Go back and check it.';
+
+  @override
+  String get licenseNoneEyebrow => 'ACCOUNT CREATED';
+
+  @override
+  String get licenseNoneTitle => 'You don\'t have\n*a license yet.*';
+
+  @override
+  String get licenseNoneBody =>
+      'If your organization already hired Viora, enter the code we gave you.';
+
+  @override
+  String get licenseCodeNotRedeemable =>
+      'Invalid or already used code. Ask the Viora team for a new one.';
+
+  @override
+  String get licenseCodeLabel => 'Manager code';
+
+  @override
+  String get licenseCodeHint => 'GEST-XXXX';
+
+  @override
+  String get licenseStatus => 'Status';
+
+  @override
+  String get licenseStatusNone => 'No license assigned';
+
+  @override
+  String get licenseStatusExpired => 'License expired';
+
+  @override
+  String get licenseEmail => 'Email';
+
+  @override
+  String get licenseActivate => 'Activate license';
+
+  @override
+  String get licenseContact => 'Not hired yet? Write to us';
+
+  @override
+  String get licenseActivatedEyebrow => 'LICENSE ACTIVATED';
+
+  @override
+  String get licenseActivatedTitle => 'Your license\n*is now active.*';
+
+  @override
+  String get licenseActivatedBody =>
+      'You can now issue codes for your members and see their plots.';
+
+  @override
+  String get licenseOrganization => 'Organization';
+
+  @override
+  String get licenseQuota => 'Quota';
+
+  @override
+  String licenseQuotaValue(int seats, String hectares) {
+    String _temp0 = intl.Intl.pluralLogic(
+      seats,
+      locale: localeName,
+      other: '$seats seats',
+      one: '1 seat',
+    );
+    return '$_temp0 · $hectares ha';
+  }
+
+  @override
+  String get licenseValidity => 'Valid';
+
+  @override
+  String licenseValidUntil(String date) {
+    return 'Until $date';
+  }
+
+  @override
+  String get licenseGoHome => 'Go to home';
+
+  @override
+  String get licenseActiveBadge => 'Active license';
+
+  @override
+  String licenseRoleOfOrganization(String organization) {
+    return ' · $organization';
+  }
+
+  @override
+  String get licenseCheckFailedTitle => 'We couldn\'t check\n*your license.*';
+
+  @override
+  String get licenseRetry => 'Try again';
+
+  @override
+  String get licenseErrorOffline =>
+      'No connection. Check your signal and try again.';
+
+  @override
+  String get licenseErrorGeneric => 'Something went wrong. Try again.';
+
+  @override
+  String get licenseErrorWait =>
+      'Too many codes tried. Wait a few minutes and try again.';
 }

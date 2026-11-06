@@ -1075,6 +1075,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The server didn\'t accept this mobile number. Go back and check it.'**
   String get iamErrorPhone;
+
+  /// No description provided for @licenseNoneEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'ACCOUNT CREATED'**
+  String get licenseNoneEyebrow;
+
+  /// No description provided for @licenseNoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have\n*a license yet.*'**
+  String get licenseNoneTitle;
+
+  /// No description provided for @licenseNoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If your organization already hired Viora, enter the code we gave you.'**
+  String get licenseNoneBody;
+
+  /// No description provided for @licenseCodeNotRedeemable.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid or already used code. Ask the Viora team for a new one.'**
+  String get licenseCodeNotRedeemable;
+
+  /// No description provided for @licenseCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager code'**
+  String get licenseCodeLabel;
+
+  /// No description provided for @licenseCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'GEST-XXXX'**
+  String get licenseCodeHint;
+
+  /// No description provided for @licenseStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get licenseStatus;
+
+  /// No description provided for @licenseStatusNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No license assigned'**
+  String get licenseStatusNone;
+
+  /// No description provided for @licenseStatusExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'License expired'**
+  String get licenseStatusExpired;
+
+  /// No description provided for @licenseEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get licenseEmail;
+
+  /// No description provided for @licenseActivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate license'**
+  String get licenseActivate;
+
+  /// No description provided for @licenseContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Not hired yet? Write to us'**
+  String get licenseContact;
+
+  /// No description provided for @licenseActivatedEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'LICENSE ACTIVATED'**
+  String get licenseActivatedEyebrow;
+
+  /// No description provided for @licenseActivatedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your license\n*is now active.*'**
+  String get licenseActivatedTitle;
+
+  /// No description provided for @licenseActivatedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can now issue codes for your members and see their plots.'**
+  String get licenseActivatedBody;
+
+  /// No description provided for @licenseOrganization.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get licenseOrganization;
+
+  /// No description provided for @licenseQuota.
+  ///
+  /// In en, this message translates to:
+  /// **'Quota'**
+  String get licenseQuota;
+
+  /// No description provided for @licenseQuotaValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{seats, plural, =1{1 seat} other{{seats} seats}} · {hectares} ha'**
+  String licenseQuotaValue(int seats, String hectares);
+
+  /// No description provided for @licenseValidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid'**
+  String get licenseValidity;
+
+  /// No description provided for @licenseValidUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Until {date}'**
+  String licenseValidUntil(String date);
+
+  /// No description provided for @licenseGoHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to home'**
+  String get licenseGoHome;
+
+  /// No description provided for @licenseActiveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Active license'**
+  String get licenseActiveBadge;
+
+  /// No description provided for @licenseRoleOfOrganization.
+  ///
+  /// In en, this message translates to:
+  /// **' · {organization}'**
+  String licenseRoleOfOrganization(String organization);
+
+  /// No description provided for @licenseCheckFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t check\n*your license.*'**
+  String get licenseCheckFailedTitle;
+
+  /// No description provided for @licenseRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get licenseRetry;
+
+  /// No description provided for @licenseErrorOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection. Check your signal and try again.'**
+  String get licenseErrorOffline;
+
+  /// No description provided for @licenseErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get licenseErrorGeneric;
+
+  /// No description provided for @licenseErrorWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many codes tried. Wait a few minutes and try again.'**
+  String get licenseErrorWait;
 }
 
 class _AppLocalizationsDelegate
