@@ -11,7 +11,7 @@ import 'package:viora/core/designsystem/component/viora_wavy_progress_indicator.
 import 'package:viora/core/designsystem/theme/app_theme.dart';
 import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/di/dependency_injection.dart';
-import 'package:viora/core/navigation/top_level_destination.dart';
+import 'package:viora/core/navigation/app_routes.dart';
 import 'package:viora/features/iam/presentation/ui/welcome_page.dart';
 import 'package:viora/features/iam/presentation/viewmodel/splash_view_model.dart';
 
@@ -103,10 +103,9 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
       await _leave.animateTo(1, duration: _leaveTime).orCancel;
       if (!mounted) return;
+      // A saved session goes through the license check, which opens the Home or the activation.
       context.go(
-        destination == SplashDestination.home
-            ? TopLevelDestination.home.path
-            : WelcomePage.path,
+        destination == SplashDestination.home ? AppRoutes.licenseGate : WelcomePage.path,
       );
     } on TickerCanceled {
       // The screen left the tree while it was playing.

@@ -47,6 +47,26 @@ void main() {
 
   bool isRefresh(http.Request request) => request.url.path.endsWith('auth/refresh-tokens');
 
+  test('a collection answer is read as a list, also after renewing the token', () async {
+    final licenses = await client((request) async {
+      if (isRefresh(request)) return renewed();
+      return request.headers['authorization'] == 'Bearer new-access'
+          ? http.Response('[{"id":"license-1"},{"id":"license-2"}]', 200)
+          : http.Response('{}', 401);
+    }).getList('cooperative-licenses');
+
+    expect(licenses.map((license) => license['id']), ['license-1', 'license-2']);
+  });
+
+  test('a collection error keeps its status and reason', () async {
+    await expectLater(
+      client((_) async => http.Response('{"reason":"some.reason"}', 403)).getList('licenses'),
+      throwsA(isA<ApiException>()
+          .having((error) => error.status, 'status', 403)
+          .having((error) => error.reason, 'reason', 'some.reason')),
+    );
+  });
+
   test('sends the access token of the session', () async {
     await client((_) async => http.Response('{}', 200)).get('plots');
 

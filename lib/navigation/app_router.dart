@@ -16,6 +16,8 @@ import 'package:viora/features/iam/presentation/viewmodel/iam_view_model.dart';
 import 'package:viora/features/profiles/presentation/ui/account_page.dart';
 import 'package:viora/features/profiles/presentation/ui/change_password_page.dart';
 import 'package:viora/features/profiles/presentation/ui/edit_profile_page.dart';
+import 'package:viora/features/subscription/presentation/ui/license_activation_page.dart';
+import 'package:viora/features/subscription/presentation/ui/license_gate_page.dart';
 
 /// Composition root of navigation: the one place that knows the screens of every
 /// feature. Inside `core/`, only `di/` and `database/` may import `features/`.
@@ -46,6 +48,11 @@ final GoRouter appRouter = GoRouter(
         child: const IamPage(),
       ),
     ),
+    GoRoute(
+      path: LicenseGatePage.path,
+      pageBuilder: (context, state) => const NoTransitionPage(child: LicenseGatePage()),
+    ),
+    GoRoute(path: LicenseActivationPage.path, builder: (context, state) => const LicenseActivationPage()),
     GoRoute(path: AccountPage.path, builder: (context, state) => const AccountPage()),
     GoRoute(path: EditProfilePage.path, builder: (context, state) => const EditProfilePage()),
     GoRoute(path: ChangePasswordPage.path, builder: (context, state) => const ChangePasswordPage()),

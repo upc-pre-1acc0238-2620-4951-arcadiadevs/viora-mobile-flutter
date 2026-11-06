@@ -69,6 +69,11 @@ class ApiClient {
   Future<Map<String, dynamic>> get(String path) =>
       _authorized((headers) => _client.get(_uri(path), headers: headers));
 
+  /// A GET whose answer is a JSON array, such as a collection.
+  Future<List<Map<String, dynamic>>> getList(String path) async => _decodeList(
+        await _authorizedBody((headers) => _client.get(_uri(path), headers: headers)),
+      );
+
   Uri _uri(String path) => Uri.parse('$baseUrl$path');
 
   Map<String, String> _headers(String? accessToken) => {
@@ -84,15 +89,20 @@ class ApiClient {
   /// request repeated; if that isn't possible, the caller gets the original 401.
   Future<Map<String, dynamic>> _authorized(
     Future<http.Response> Function(Map<String, String> headers) request,
+  ) async =>
+      _decode(await _authorizedBody(request));
+
+  Future<String> _authorizedBody(
+    Future<http.Response> Function(Map<String, String> headers) request,
   ) async {
     final accessToken = await _sessionStore?.accessToken();
     try {
-      return await _send(() => request(_headers(accessToken)));
+      return await _sendForBody(() => request(_headers(accessToken)));
     } on ApiException catch (error) {
       if (error.status != 401 || accessToken == null) rethrow;
       final renewed = await _renewedToken(accessToken);
       if (renewed == null) rethrow;
-      return _send(() => request(_headers(renewed)));
+      return _sendForBody(() => request(_headers(renewed)));
     }
   }
 
@@ -135,7 +145,11 @@ class ApiClient {
     return accessToken;
   }
 
-  Future<Map<String, dynamic>> _send(Future<http.Response> Function() request) async {
+  Future<Map<String, dynamic>> _send(Future<http.Response> Function() request) async =>
+      _decode(await _sendForBody(request));
+
+  /// The raw body of a successful answer; an error status throws its [ApiException].
+  Future<String> _sendForBody(Future<http.Response> Function() request) async {
     final http.Response response;
     try {
       response = await request().timeout(_timeout);
@@ -147,14 +161,24 @@ class ApiClient {
       throw const ApiUnreachableException();
     }
 
+    if (response.statusCode >= 200 && response.statusCode < 300) return response.body;
     final body = _decode(response.body);
-    if (response.statusCode >= 200 && response.statusCode < 300) return body;
     throw ApiException(
       response.statusCode,
       body,
       (body['retryAfterSeconds'] as num?)?.toInt() ??
           int.tryParse(response.headers['retry-after'] ?? ''),
     );
+  }
+
+  List<Map<String, dynamic>> _decodeList(String raw) {
+    if (raw.isEmpty) return const [];
+    try {
+      final decoded = jsonDecode(raw);
+      return decoded is List ? decoded.whereType<Map<String, dynamic>>().toList() : const [];
+    } on FormatException {
+      return const [];
+    }
   }
 
   Map<String, dynamic> _decode(String raw) {
