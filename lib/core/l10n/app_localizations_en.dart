@@ -652,4 +652,72 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get licenseErrorWait =>
       'Too many codes tried. Wait a few minutes and try again.';
+
+  @override
+  String get producerPlanEyebrow => 'ANNUAL SUBSCRIPTION';
+
+  @override
+  String get producerPlanTitle => 'Plan\n*Producer*';
+
+  @override
+  String get producerPlanHectares => 'YOUR HECTARES';
+
+  @override
+  String producerPlanIncrease(String step) {
+    return 'Increase by $step ha';
+  }
+
+  @override
+  String producerPlanDecrease(String step) {
+    return 'Decrease by $step ha';
+  }
+
+  @override
+  String get producerPlanIncludes => 'INCLUDES';
+
+  @override
+  String get producerPlanBenefitBbi => 'Alternate bearing diagnosis (BBI)';
+
+  @override
+  String get producerPlanBenefitClimate =>
+      'Accumulated chill and water stress alerts';
+
+  @override
+  String get producerPlanBenefitSampling =>
+      'Offline sampling and thinning prescription';
+
+  @override
+  String producerPlanBenefitCapacity(String hectares) {
+    return 'Up to $hectares ha registered in your plots';
+  }
+
+  @override
+  String get producerPlanTotal => 'ESTIMATED ANNUAL TOTAL';
+
+  @override
+  String producerPlanMonthly(String amount) {
+    return 'Equivalent to $amount per month · Paid annually';
+  }
+
+  @override
+  String get producerPlanTaxIncluded => 'Includes IGV';
+
+  @override
+  String producerPlanUpdated(String timestamp) {
+    return 'Catalog updated: $timestamp';
+  }
+
+  @override
+  String get producerPlanSavedCopy =>
+      'Saved information. Refresh to check the latest conditions.';
+
+  @override
+  String get producerPlanLoading => 'Updating plan conditions…';
+
+  @override
+  String get producerPlanEmpty =>
+      'No plans are available. Refresh the catalog to check again.';
+
+  @override
+  String get producerPlanCooperative => 'I have a cooperative code';
 }
