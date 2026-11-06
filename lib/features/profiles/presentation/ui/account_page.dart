@@ -21,9 +21,16 @@ import 'package:viora/features/profiles/presentation/viewmodel/account_view_mode
 
 /// The person's account: the profile, its details, the preferences and closing the session.
 class AccountPage extends StatelessWidget {
-  const AccountPage({super.key});
+  const AccountPage({super.key, this.statusBadge, this.roleSuffix});
 
   static const path = '/account';
+
+  /// Shown on the profile card, such as the license of the manager. The router provides it, so
+  /// this context doesn't depend on where it comes from.
+  final Widget? statusBadge;
+
+  /// Follows the role under the title, in its style, such as the organization of the manager.
+  final Widget? roleSuffix;
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +39,19 @@ class AccountPage extends StatelessWidget {
       child: BlocConsumer<AccountViewModel, AccountUiState>(
         listenWhen: (previous, current) => current.signedOut,
         listener: (context, state) => context.go(IamPage.path),
-        builder: (context, state) => _AccountView(state: state),
+        builder: (context, state) =>
+            _AccountView(state: state, statusBadge: statusBadge, roleSuffix: roleSuffix),
       ),
     );
   }
 }
 
 class _AccountView extends StatefulWidget {
-  const _AccountView({required this.state});
+  const _AccountView({required this.state, this.statusBadge, this.roleSuffix});
 
   final AccountUiState state;
+  final Widget? statusBadge;
+  final Widget? roleSuffix;
 
   @override
   State<_AccountView> createState() => _AccountViewState();
@@ -121,6 +131,7 @@ class _AccountViewState extends State<_AccountView> with WidgetsBindingObserver 
               child: AccountTopBar(
                 title: l10n.accountTitle,
                 subtitle: l10n.accountRole,
+                subtitleSuffix: widget.roleSuffix,
                 onBack: context.pop,
                 notice: switch (state.notice) {
                   AccountNotice.language => l10n.accountLanguageNotice,
@@ -138,7 +149,7 @@ class _AccountViewState extends State<_AccountView> with WidgetsBindingObserver 
                   children: [
                     VioraEditorialTitle(l10n.accountHeadline),
                     const SizedBox(height: 20),
-                    _ProfileCard(profile: profile),
+                    _ProfileCard(profile: profile, statusBadge: widget.statusBadge),
                     const SizedBox(height: 24),
                     AccountSection(
                       title: l10n.accountGroupPersonal,
@@ -227,9 +238,10 @@ class _AccountViewState extends State<_AccountView> with WidgetsBindingObserver 
 }
 
 class _ProfileCard extends StatelessWidget {
-  const _ProfileCard({required this.profile});
+  const _ProfileCard({required this.profile, this.statusBadge});
 
   final Profile? profile;
+  final Widget? statusBadge;
 
   @override
   Widget build(BuildContext context) {
@@ -244,7 +256,13 @@ class _ProfileCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          VioraAvatar(name: profile?.fullName ?? '', size: 64, background: VioraColors.neutral0),
+          Row(
+            children: [
+              VioraAvatar(name: profile?.fullName ?? '', size: 64, background: VioraColors.neutral0),
+              const Spacer(),
+              ?statusBadge,
+            ],
+          ),
           const SizedBox(height: 8),
           if (profile != null) ...[
             VioraEditorialTitle(_titleOf(profile.fullName), fontSize: 34, lineHeight: 36),

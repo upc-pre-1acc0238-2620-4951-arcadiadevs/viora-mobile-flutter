@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
-import 'package:viora/core/navigation/top_level_destination.dart';
+import 'package:viora/core/navigation/app_routes.dart';
 import 'package:viora/features/iam/presentation/state/iam_ui_state.dart';
 import 'package:viora/features/iam/presentation/ui/account/checking_link_view.dart';
 import 'package:viora/features/iam/presentation/ui/account/create_account_view.dart';
@@ -21,7 +21,7 @@ import 'package:viora/features/iam/presentation/viewmodel/iam_view_model.dart';
 class IamPage extends StatelessWidget {
   const IamPage({super.key});
 
-  static const path = '/auth';
+  static const path = AppRoutes.signIn;
 
   /// Path of the recovery link the backend emails.
   static const resetPath = '/gestor/password-resets/:token';
@@ -34,7 +34,8 @@ class IamPage extends StatelessWidget {
           previous.authenticated != current.authenticated || previous.notice != current.notice,
       listener: (context, state) {
         if (state.authenticated) {
-          context.go(TopLevelDestination.home.path);
+          // A signed-in manager opens the Home only with a license in force.
+          context.go(AppRoutes.licenseGate);
           return;
         }
         final l10n = AppLocalizations.of(context);

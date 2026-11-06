@@ -7,13 +7,41 @@ import 'package:viora/core/designsystem/component/viora_tab_bar.dart';
 import 'package:viora/core/designsystem/theme/app_theme.dart';
 import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart';
+import 'package:viora/features/subscription/domain/entity/manager_license.dart';
+import 'package:viora/features/subscription/domain/repository/license_repository.dart';
 import 'package:viora/main.dart';
+
+/// A manager whose kept license is in force, so the license check opens the Home.
+class _LicensedManager implements LicenseRepository {
+  static final _license = ManagerLicense(
+    id: 'license-1',
+    organizationName: 'Cooperativa Olivar del Sur',
+    seats: 60,
+    contractedAreaHa: 200,
+    startsAt: DateTime(2026),
+    endsAt: DateTime(2100),
+  );
+
+  @override
+  Future<ManagerLicense?> kept() async => _license;
+
+  @override
+  Future<ManagerLicense?> refresh() async => _license;
+
+  @override
+  Stream<ManagerLicense?> watchCurrent() => Stream.value(_license);
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 void main() {
   setUp(() {
     // A saved session, so the app goes from the splash to the Home.
     FlutterSecureStorage.setMockInitialValues({'session.refresh_token': 'token'});
     setupDependencies();
+    getIt.unregister<LicenseRepository>();
+    getIt.registerLazySingleton<LicenseRepository>(_LicensedManager.new);
   });
   tearDown(() => getIt.reset());
 

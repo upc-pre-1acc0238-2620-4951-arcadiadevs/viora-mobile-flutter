@@ -6,7 +6,7 @@ import 'package:viora/core/designsystem/component/viora_morphing_shape_indicator
 import 'package:viora/core/designsystem/component/viora_wavy_progress_indicator.dart';
 import 'package:viora/core/designsystem/theme/app_theme.dart';
 import 'package:viora/core/di/dependency_injection.dart';
-import 'package:viora/core/navigation/top_level_destination.dart';
+import 'package:viora/core/navigation/app_routes.dart';
 import 'package:viora/features/iam/application/usecase/is_signed_in_use_case.dart';
 import 'package:viora/features/iam/domain/repository/auth_repository.dart';
 import 'package:viora/features/iam/presentation/ui/splash_page.dart';
@@ -46,8 +46,8 @@ void main() {
               pageBuilder: (context, state) => const NoTransitionPage(child: SplashPage()),
             ),
             GoRoute(
-              path: TopLevelDestination.home.path,
-              pageBuilder: (context, state) => const NoTransitionPage(child: Text('home')),
+              path: AppRoutes.licenseGate,
+              pageBuilder: (context, state) => const NoTransitionPage(child: Text('license check')),
             ),
             GoRoute(
               path: WelcomePage.path,
@@ -70,10 +70,10 @@ void main() {
 
     expect(find.byType(VioraMorphingShapeIndicator), findsOneWidget);
     expect(find.byType(VioraWavyProgressIndicator), findsNothing);
-    expect(find.text('home'), findsNothing);
+    expect(find.text('license check'), findsNothing);
   });
 
-  testWidgets('shows the loading ring before going to the Home', (tester) async {
+  testWidgets('shows the loading ring before checking the license', (tester) async {
     await tester.pumpWidget(app());
 
     var elapsed = 0;
@@ -83,19 +83,19 @@ void main() {
     }
 
     expect(find.byType(VioraWavyProgressIndicator), findsOneWidget);
-    expect(find.text('home'), findsNothing);
+    expect(find.text('license check'), findsNothing);
   });
 
-  testWidgets('goes to the Home when it ends, in the time of the sequence', (tester) async {
+  testWidgets('checks the license of a saved session when it ends, in the time of the sequence', (tester) async {
     await tester.pumpWidget(app());
 
     var elapsed = 0;
-    while (find.text('home').evaluate().isEmpty && elapsed < 8000) {
+    while (find.text('license check').evaluate().isEmpty && elapsed < 8000) {
       await play(tester, 100);
       elapsed += 100;
     }
 
-    expect(find.text('home'), findsOneWidget);
+    expect(find.text('license check'), findsOneWidget);
     expect(find.byType(SplashPage), findsNothing);
     // The minimum times alone add up to 3 s; the springs of the morph add a little more.
     expect(elapsed, inInclusiveRange(3000, 5000));
@@ -113,7 +113,7 @@ void main() {
     }
 
     expect(find.text('welcome'), findsOneWidget);
-    expect(find.text('home'), findsNothing);
+    expect(find.text('license check'), findsNothing);
   });
 
   testWidgets('uses white icons on the system bars', (tester) async {

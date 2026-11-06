@@ -265,13 +265,17 @@ void main() {
     });
   });
 
-  Widget app(AccountViewModel accountViewModel) {
+  Widget app(AccountViewModel accountViewModel, {Widget? statusBadge, Widget? roleSuffix}) {
     getIt.registerFactory<AccountViewModel>(() => accountViewModel);
     getIt.registerLazySingleton<AppLanguageCubit>(() => AppLanguageCubit());
     final router = GoRouter(
       initialLocation: AccountPage.path,
       routes: [
-        GoRoute(path: AccountPage.path, builder: (context, state) => const AccountPage()),
+        GoRoute(
+          path: AccountPage.path,
+          builder: (context, state) =>
+              AccountPage(statusBadge: statusBadge, roleSuffix: roleSuffix),
+        ),
         GoRoute(path: IamPage.path, builder: (context, state) => const Text('sign-in')),
       ],
     );
@@ -296,6 +300,20 @@ void main() {
     expect(find.text('Cambiar contraseña'), findsOneWidget);
     expect(find.text('Idioma'), findsOneWidget);
     expect(find.text('Notificaciones'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('the account shows the status and the role suffix it is given', (tester) async {
+    await tester.pumpWidget(app(
+      viewModel(_profile),
+      statusBadge: const Text('Licencia activa'),
+      roleSuffix: const Text(' · Olivar del Sur'),
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Licencia activa'), findsOneWidget);
+    expect(find.text('Gestor técnico'), findsOneWidget);
+    expect(find.text(' · Olivar del Sur'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

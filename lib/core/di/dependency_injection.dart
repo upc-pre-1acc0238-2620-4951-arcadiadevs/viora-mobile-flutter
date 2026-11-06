@@ -35,6 +35,18 @@ import 'package:viora/features/profiles/infrastructure/repository/profile_reposi
 import 'package:viora/features/profiles/presentation/viewmodel/account_view_model.dart';
 import 'package:viora/features/profiles/presentation/viewmodel/change_password_view_model.dart';
 import 'package:viora/features/profiles/presentation/viewmodel/edit_profile_view_model.dart';
+import 'package:viora/features/subscription/application/usecase/activate_license_use_case.dart';
+import 'package:viora/features/subscription/application/usecase/get_account_email_use_case.dart';
+import 'package:viora/features/subscription/application/usecase/get_kept_license_use_case.dart';
+import 'package:viora/features/subscription/application/usecase/refresh_license_use_case.dart';
+import 'package:viora/features/subscription/application/usecase/watch_current_license_use_case.dart';
+import 'package:viora/features/subscription/domain/repository/license_repository.dart';
+import 'package:viora/features/subscription/infrastructure/local/manager_license_dao.dart';
+import 'package:viora/features/subscription/infrastructure/remote/license_api.dart';
+import 'package:viora/features/subscription/infrastructure/repository/license_repository_impl.dart';
+import 'package:viora/features/subscription/presentation/viewmodel/license_activation_view_model.dart';
+import 'package:viora/features/subscription/presentation/viewmodel/license_gate_view_model.dart';
+import 'package:viora/features/subscription/presentation/viewmodel/license_status_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -42,7 +54,35 @@ void setupDependencies() {
   _setupCore();
   _setupIam();
   _setupProfiles();
+  _setupSubscription();
   _setupViewModels();
+}
+
+void _setupSubscription() {
+  getIt.registerLazySingleton<LicenseApi>(() => LicenseApi(client: getIt<ApiClient>()));
+  getIt.registerLazySingleton<ManagerLicenseDao>(() => ManagerLicenseDao(getIt<AppDatabase>()));
+  getIt.registerLazySingleton<LicenseRepository>(
+    () => LicenseRepositoryImpl(
+      api: getIt<LicenseApi>(),
+      dao: getIt<ManagerLicenseDao>(),
+      sessionStore: getIt<SessionStore>(),
+    ),
+  );
+  getIt.registerLazySingleton<WatchCurrentLicenseUseCase>(
+    () => WatchCurrentLicenseUseCase(repository: getIt<LicenseRepository>()),
+  );
+  getIt.registerLazySingleton<GetKeptLicenseUseCase>(
+    () => GetKeptLicenseUseCase(repository: getIt<LicenseRepository>()),
+  );
+  getIt.registerLazySingleton<RefreshLicenseUseCase>(
+    () => RefreshLicenseUseCase(repository: getIt<LicenseRepository>()),
+  );
+  getIt.registerLazySingleton<ActivateLicenseUseCase>(
+    () => ActivateLicenseUseCase(repository: getIt<LicenseRepository>()),
+  );
+  getIt.registerLazySingleton<GetAccountEmailUseCase>(
+    () => GetAccountEmailUseCase(repository: getIt<LicenseRepository>()),
+  );
 }
 
 void _setupCore() {
@@ -156,6 +196,27 @@ void _setupViewModels() {
   getIt.registerFactory<OnboardingViewModel>(
     () => OnboardingViewModel(repository: getIt<OnboardingRepository>()),
   );
+  getIt.registerFactory<LicenseGateViewModel>(
+    () => LicenseGateViewModel(
+      getKeptLicense: getIt<GetKeptLicenseUseCase>(),
+      refreshLicense: getIt<RefreshLicenseUseCase>(),
+      signOutUseCase: getIt<SignOutUseCase>(),
+    ),
+  );
+  getIt.registerFactory<LicenseActivationViewModel>(
+    () => LicenseActivationViewModel(
+      activateLicense: getIt<ActivateLicenseUseCase>(),
+      getKeptLicense: getIt<GetKeptLicenseUseCase>(),
+      getAccountEmail: getIt<GetAccountEmailUseCase>(),
+      signOutUseCase: getIt<SignOutUseCase>(),
+    ),
+  );
+  getIt.registerFactory<LicenseStatusViewModel>(
+    () => LicenseStatusViewModel(
+      watchLicense: getIt<WatchCurrentLicenseUseCase>(),
+      refreshLicense: getIt<RefreshLicenseUseCase>(),
+    ),
+  );
   getIt.registerFactory<IamViewModel>(
     () => IamViewModel(
       signInUseCase: getIt<SignInUseCase>(),
@@ -172,5 +233,8 @@ void _setupViewModels() {
 
 /// What belongs to the account stays on the phone only while its session lasts.
 void forgetAccountDataWhenSessionEnds() {
-  getIt<SessionEvents>().ended.listen((_) => getIt<ProfileRepository>().clear());
+  getIt<SessionEvents>().ended.listen((_) {
+    getIt<ProfileRepository>().clear();
+    getIt<LicenseRepository>().clear();
+  });
 }
