@@ -16,10 +16,14 @@ class AccountTopBar extends StatelessWidget {
     required this.onBack,
     this.isClose = false,
     this.notice,
+    this.subtitleSuffix,
   });
 
   final String title;
   final String subtitle;
+
+  /// Continues [subtitle] on the same line and in its style.
+  final Widget? subtitleSuffix;
   final VoidCallback onBack;
   final bool isClose;
   final String? notice;
@@ -46,12 +50,22 @@ class AccountTopBar extends StatelessWidget {
           Column(
             children: [
               Text(title, style: textTheme.titleSmall?.copyWith(fontSize: 15, height: 20 / 15)),
-              Text(
-                subtitle,
+              DefaultTextStyle.merge(
                 style: textTheme.bodySmall?.copyWith(
                   fontSize: 12,
                   height: 16 / 12,
                   color: VioraColors.neutral600,
+                ),
+                child: Padding(
+                  // Clear of the round button, so a long name doesn't run under it.
+                  padding: const EdgeInsets.symmetric(horizontal: 56),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(subtitle),
+                      if (subtitleSuffix != null) Flexible(child: subtitleSuffix!),
+                    ],
+                  ),
                 ),
               ),
             ],
