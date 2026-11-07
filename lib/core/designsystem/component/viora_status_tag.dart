@@ -5,7 +5,13 @@ import 'package:viora/core/designsystem/theme/colors.dart';
 /// Color of a [VioraStatusTag]: [alert] asks for attention, [info] only informs.
 enum VioraTagTone {
   alert(VioraColors.terracotta100, VioraColors.terracotta700),
-  info(VioraColors.green200, VioraColors.green800);
+  info(VioraColors.green200, VioraColors.green800),
+
+  /// Something to keep an eye on soon, such as a code about to expire.
+  pending(VioraColors.harvest100, VioraColors.harvest800),
+
+  /// Plain information without a judgement, such as missing data.
+  neutral(VioraColors.neutral100, VioraColors.neutral700);
 
   const VioraTagTone(this.background, this.foreground);
 
