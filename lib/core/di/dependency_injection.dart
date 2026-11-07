@@ -38,15 +38,22 @@ import 'package:viora/features/profiles/presentation/viewmodel/edit_profile_view
 import 'package:viora/features/subscription/application/usecase/activate_license_use_case.dart';
 import 'package:viora/features/subscription/application/usecase/get_account_email_use_case.dart';
 import 'package:viora/features/subscription/application/usecase/get_kept_license_use_case.dart';
+import 'package:viora/features/subscription/application/usecase/get_kept_producer_plan_catalog_use_case.dart';
 import 'package:viora/features/subscription/application/usecase/refresh_license_use_case.dart';
+import 'package:viora/features/subscription/application/usecase/refresh_producer_plan_catalog_use_case.dart';
 import 'package:viora/features/subscription/application/usecase/watch_current_license_use_case.dart';
 import 'package:viora/features/subscription/domain/repository/license_repository.dart';
+import 'package:viora/features/subscription/domain/repository/producer_plan_repository.dart';
 import 'package:viora/features/subscription/infrastructure/local/manager_license_dao.dart';
 import 'package:viora/features/subscription/infrastructure/remote/license_api.dart';
+import 'package:viora/features/subscription/infrastructure/remote/producer_plan_api.dart';
 import 'package:viora/features/subscription/infrastructure/repository/license_repository_impl.dart';
+import 'package:viora/features/subscription/infrastructure/repository/producer_plan_repository_impl.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_activation_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_gate_view_model.dart';
+import 'package:viora/features/subscription/presentation/viewmodel/license_guard_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_status_view_model.dart';
+import 'package:viora/features/subscription/presentation/viewmodel/producer_plan_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -82,6 +89,17 @@ void _setupSubscription() {
   );
   getIt.registerLazySingleton<GetAccountEmailUseCase>(
     () => GetAccountEmailUseCase(repository: getIt<LicenseRepository>()),
+  );
+  getIt.registerLazySingleton<ProducerPlanApi>(() => ProducerPlanApi(client: getIt<ApiClient>()));
+  // A singleton, because it keeps the last catalog read for as long as the app runs.
+  getIt.registerLazySingleton<ProducerPlanRepository>(
+    () => ProducerPlanRepositoryImpl(api: getIt<ProducerPlanApi>()),
+  );
+  getIt.registerLazySingleton<GetKeptProducerPlanCatalogUseCase>(
+    () => GetKeptProducerPlanCatalogUseCase(repository: getIt<ProducerPlanRepository>()),
+  );
+  getIt.registerLazySingleton<RefreshProducerPlanCatalogUseCase>(
+    () => RefreshProducerPlanCatalogUseCase(repository: getIt<ProducerPlanRepository>()),
   );
 }
 
@@ -215,6 +233,19 @@ void _setupViewModels() {
     () => LicenseStatusViewModel(
       watchLicense: getIt<WatchCurrentLicenseUseCase>(),
       refreshLicense: getIt<RefreshLicenseUseCase>(),
+    ),
+  );
+  getIt.registerFactory<LicenseGuardViewModel>(
+    () => LicenseGuardViewModel(
+      watchLicense: getIt<WatchCurrentLicenseUseCase>(),
+      refreshLicense: getIt<RefreshLicenseUseCase>(),
+      isSignedIn: getIt<IsSignedInUseCase>(),
+    ),
+  );
+  getIt.registerFactory<ProducerPlanViewModel>(
+    () => ProducerPlanViewModel(
+      getKeptCatalog: getIt<GetKeptProducerPlanCatalogUseCase>(),
+      refreshCatalog: getIt<RefreshProducerPlanCatalogUseCase>(),
     ),
   );
   getIt.registerFactory<IamViewModel>(

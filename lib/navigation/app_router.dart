@@ -19,6 +19,7 @@ import 'package:viora/features/profiles/presentation/ui/edit_profile_page.dart';
 import 'package:viora/features/subscription/presentation/ui/license_activation_page.dart';
 import 'package:viora/features/subscription/presentation/ui/license_gate_page.dart';
 import 'package:viora/features/subscription/presentation/ui/producer_plan_page.dart';
+import 'package:viora/features/subscription/presentation/ui/widgets/license_guard.dart';
 import 'package:viora/features/subscription/presentation/ui/widgets/license_status_widgets.dart';
 
 /// Composition root of navigation: the one place that knows the screens of every
@@ -66,7 +67,9 @@ final GoRouter appRouter = GoRouter(
     GoRoute(path: EditProfilePage.path, builder: (context, state) => const EditProfilePage()),
     GoRoute(path: ChangePasswordPage.path, builder: (context, state) => const ChangePasswordPage()),
     StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) => AppShell(navigationShell: navigationShell),
+      // The tabs and the screens opened over them need a license in force.
+      builder: (context, state, navigationShell) =>
+          LicenseGuard(child: AppShell(navigationShell: navigationShell)),
       branches: [
         for (final d in TopLevelDestination.values)
           StatefulShellBranch(
