@@ -51,6 +51,7 @@ import 'package:viora/features/subscription/infrastructure/repository/license_re
 import 'package:viora/features/subscription/infrastructure/repository/producer_plan_repository_impl.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_activation_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_gate_view_model.dart';
+import 'package:viora/features/subscription/presentation/viewmodel/license_guard_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_status_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/producer_plan_view_model.dart';
 
@@ -232,6 +233,13 @@ void _setupViewModels() {
     () => LicenseStatusViewModel(
       watchLicense: getIt<WatchCurrentLicenseUseCase>(),
       refreshLicense: getIt<RefreshLicenseUseCase>(),
+    ),
+  );
+  getIt.registerFactory<LicenseGuardViewModel>(
+    () => LicenseGuardViewModel(
+      watchLicense: getIt<WatchCurrentLicenseUseCase>(),
+      refreshLicense: getIt<RefreshLicenseUseCase>(),
+      isSignedIn: getIt<IsSignedInUseCase>(),
     ),
   );
   getIt.registerFactory<ProducerPlanViewModel>(
