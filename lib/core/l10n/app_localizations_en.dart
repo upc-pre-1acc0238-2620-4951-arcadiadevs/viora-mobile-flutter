@@ -720,4 +720,489 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get producerPlanCooperative => 'I have a cooperative code';
+
+  @override
+  String get cooperativeOffline =>
+      'No connection. Check your signal and try again.';
+
+  @override
+  String get cooperativeUnexpected => 'Something went wrong. Try again.';
+
+  @override
+  String get cooperativeNoLicense => 'Your license is not in force.';
+
+  @override
+  String get membersHeadline => 'Your\n*members.*';
+
+  @override
+  String membersVoice(Object seats, Object hectares) {
+    return 'You have $seats seats and $hectares ha left to invite more members.';
+  }
+
+  @override
+  String get membersVoiceFull =>
+      'Your license has no free seats left. Ask to expand it to invite more members.';
+
+  @override
+  String membersLicenseEyebrow(Object year) {
+    return 'License · Season $year';
+  }
+
+  @override
+  String membersSeatsOf(Object seats) {
+    return 'of $seats seats';
+  }
+
+  @override
+  String membersLegendMembers(Object count) {
+    return '$count members';
+  }
+
+  @override
+  String membersLegendPending(Object count) {
+    return '$count to redeem';
+  }
+
+  @override
+  String membersLegendFree(Object count) {
+    return '$count free';
+  }
+
+  @override
+  String get membersIssueCodes => 'Issue codes';
+
+  @override
+  String get membersCodesToRedeem => 'codes to redeem';
+
+  @override
+  String membersCodesExpire(int count, String date) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count expire on $date',
+      one: '1 expires on $date',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get membersCodesNone => 'None pending';
+
+  @override
+  String membersReservedOf(Object total) {
+    return 'reserved of $total ha';
+  }
+
+  @override
+  String membersRegistered(Object hectares) {
+    return '$hectares ha registered';
+  }
+
+  @override
+  String get membersSection => 'Members';
+
+  @override
+  String get membersSearchHint => 'Search by name or sector';
+
+  @override
+  String membersFilterAll(Object count) {
+    return 'All · $count';
+  }
+
+  @override
+  String membersFilterSharing(Object count) {
+    return 'Sharing · $count';
+  }
+
+  @override
+  String membersFilterWithdrawn(Object count) {
+    return 'Withdrew · $count';
+  }
+
+  @override
+  String membersPlots(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plots',
+      one: '1 plot',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get membersNoSharedData => 'No shared data';
+
+  @override
+  String get membersLinked => 'Linked';
+
+  @override
+  String membersWithdrawnOn(Object date) {
+    return 'Withdrew access · $date';
+  }
+
+  @override
+  String get membersNotSharing => 'Not sharing';
+
+  @override
+  String get membersEmpty =>
+      'No members yet. They show up here when they redeem a code.';
+
+  @override
+  String get membersNoMatch => 'No member matches your search.';
+
+  @override
+  String get memberTitle => 'Member';
+
+  @override
+  String memberSince(Object date) {
+    return 'Member since $date';
+  }
+
+  @override
+  String memberWithdrawnSince(Object date) {
+    return 'Stopped sharing on $date';
+  }
+
+  @override
+  String get memberWithdrawnTag => 'Withdrew access';
+
+  @override
+  String get memberPhone => 'Phone';
+
+  @override
+  String get memberEmail => 'Email';
+
+  @override
+  String get memberRegistered => 'Registered hectares';
+
+  @override
+  String memberRegisteredValue(Object registered, Object quota) {
+    return '$registered of $quota ha';
+  }
+
+  @override
+  String get memberCode => 'Link code';
+
+  @override
+  String memberCodeValue(Object code) {
+    return '$code · redeemed';
+  }
+
+  @override
+  String get memberCall => 'Call';
+
+  @override
+  String get memberWhatsapp => 'WhatsApp';
+
+  @override
+  String get memberPlots => 'Plots';
+
+  @override
+  String get memberWithdrawnNote =>
+      'You no longer see their data. Their plan goes on and their seat stays taken. To free it, write to Viora support.';
+
+  @override
+  String get memberNotSharingNote =>
+      'They didn\'t accept to share their data. Their plan goes on and takes a seat.';
+
+  @override
+  String memberPlotSummary(Object variety, Object hectares, Object sector) {
+    return '$variety · $hectares ha · $sector';
+  }
+
+  @override
+  String get memberPlotSectorPending => 'To confirm';
+
+  @override
+  String get riskOverload => 'Critical load';
+
+  @override
+  String get riskCriticalIncident => 'Critical incident';
+
+  @override
+  String get riskFrost => 'Frost expected';
+
+  @override
+  String get riskCritical => 'High risk';
+
+  @override
+  String get riskModerate => 'Watch';
+
+  @override
+  String get riskOptimal => 'Optimal';
+
+  @override
+  String get riskNoData => 'Not enough data';
+
+  @override
+  String get codesTitle => 'Activation codes';
+
+  @override
+  String codesSubtitle(Object organization, Object seats, Object hectares) {
+    return '$organization · $seats seats · $hectares ha';
+  }
+
+  @override
+  String get codesHeadline => 'Your\n*codes.*';
+
+  @override
+  String codesTabAvailable(Object count) {
+    return 'To redeem · $count';
+  }
+
+  @override
+  String codesTabRedeemed(Object count) {
+    return 'Redeemed · $count';
+  }
+
+  @override
+  String codesTabClosed(Object count) {
+    return 'Expired · $count';
+  }
+
+  @override
+  String codesIssuedOn(Object date) {
+    return 'Issued on $date';
+  }
+
+  @override
+  String codesExpiresIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Expires in $days days',
+      one: 'Expires tomorrow',
+      zero: 'Expires today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String codesExpiresOn(Object date) {
+    return 'Expires on $date';
+  }
+
+  @override
+  String codesExpiredOn(Object date) {
+    return 'Expired on $date';
+  }
+
+  @override
+  String get codesRevokedTag => 'Revoked';
+
+  @override
+  String codesPerCode(Object hectares) {
+    return '$hectares ha per code';
+  }
+
+  @override
+  String codesRedeemedBy(Object name, Object date) {
+    return '$name · $date';
+  }
+
+  @override
+  String get codesShare => 'Share';
+
+  @override
+  String get codesRevoke => 'Revoke';
+
+  @override
+  String codesFooterAvailable(Object seats, Object hectares) {
+    return 'You have $seats seats and $hectares ha left. Each code to redeem holds them until it expires or you revoke it.';
+  }
+
+  @override
+  String get codesFooterRedeemed =>
+      'A redeemed code can\'t be shared or revoked anymore. Only its reference is left.';
+
+  @override
+  String get codesFooterClosed =>
+      'An expired or revoked code gave its seat and hectares back to your license.';
+
+  @override
+  String get codesEmptyAvailable => 'You have no codes to redeem.';
+
+  @override
+  String get codesEmptyRedeemed => 'Nobody has redeemed a code yet.';
+
+  @override
+  String get codesEmptyClosed => 'There are no expired or revoked codes.';
+
+  @override
+  String get codesRevokedNotice => 'Code revoked';
+
+  @override
+  String get codesNotAvailable =>
+      'This code had already expired or been revoked.';
+
+  @override
+  String revokeTitle(Object code) {
+    return 'Revoke\n*$code?*';
+  }
+
+  @override
+  String revokeBody(Object hectares) {
+    return 'Nobody will be able to use it. Its seat and its $hectares ha go back to your license.';
+  }
+
+  @override
+  String revokeSeats(Object from, Object to) {
+    return 'seats · $from → $to ha';
+  }
+
+  @override
+  String get revokeAction => 'Revoke code';
+
+  @override
+  String get cooperativeCancel => 'Cancel';
+
+  @override
+  String get redeemedTitle => 'This code\n*was redeemed*';
+
+  @override
+  String redeemedBody(Object name, Object date) {
+    return '$name used it on $date. Redeemed codes can\'t be revoked.';
+  }
+
+  @override
+  String get redeemedBodyUnknown =>
+      'Someone used it recently. Redeemed codes can\'t be revoked.';
+
+  @override
+  String redeemedWhen(Object date) {
+    return 'redeemed on $date';
+  }
+
+  @override
+  String get redeemedSeeMembers => 'See members';
+
+  @override
+  String get redeemedUnderstood => 'Got it';
+
+  @override
+  String shareCodeMessage(Object organization, Object code, Object date) {
+    return 'Hi, this is your code to join $organization on Viora: $code. Redeem it in the Viora app, under \"I have a cooperative code\". It expires on $date.';
+  }
+
+  @override
+  String shareCodesMessage(Object organization, Object codes, Object date) {
+    return 'Codes of $organization on Viora, one per member:\n$codes\nEach one is redeemed in the Viora app, under \"I have a cooperative code\". They expire on $date.';
+  }
+
+  @override
+  String get issueHeadline => 'Issue\n*codes*';
+
+  @override
+  String issueSubtitle(Object organization, Object seats, Object hectares) {
+    return '$organization · $seats seats and $hectares ha free';
+  }
+
+  @override
+  String get issueQuantity => 'Quantity';
+
+  @override
+  String get issueQuantityCaption => 'codes · one per member';
+
+  @override
+  String get issueHectares => 'Hectares per code';
+
+  @override
+  String get issueHectaresSuggested => 'ha · suggested by your license';
+
+  @override
+  String get issueHectaresCaption => 'ha per code';
+
+  @override
+  String get issueValidity => 'Validity';
+
+  @override
+  String issueDays(Object days) {
+    return '$days days';
+  }
+
+  @override
+  String issuePreview(
+    Object seats,
+    Object fromHa,
+    Object toHa,
+    Object totalHa,
+    Object date,
+  ) {
+    return 'of $seats seats · $fromHa → $toHa of $totalHa ha. They expire on $date.';
+  }
+
+  @override
+  String issueSeatsExceeded(Object free) {
+    return 'over the $free free seats';
+  }
+
+  @override
+  String issueSeatsExceededBanner(Object seats, Object free) {
+    return 'of $seats seats: over your quota. Issue up to $free or ask to expand the license.';
+  }
+
+  @override
+  String issueAreaExceeded(Object hectares, Object free) {
+    return '$hectares ha are over the $free ha free';
+  }
+
+  @override
+  String issueAreaExceededBanner(Object free) {
+    return 'ha of $free free: over your quota. Lower the hectares or ask to expand the license.';
+  }
+
+  @override
+  String issueAction(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Issue $count codes',
+      one: 'Issue 1 code',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get issueUnavailable =>
+      'Codes can\'t be issued now. Let Viora support know.';
+
+  @override
+  String get issueDecrease => 'Decrease';
+
+  @override
+  String get issueIncrease => 'Increase';
+
+  @override
+  String issuedHeadline(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count codes\n*ready.*',
+      one: '1 code\n*ready.*',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String issuedVoice(Object hectares) {
+    return 'Share them with your members: each one activates an account, takes a seat and holds $hectares ha.';
+  }
+
+  @override
+  String issuedExpire(Object date) {
+    return 'They expire on $date';
+  }
+
+  @override
+  String get issuedCopy => 'Copy';
+
+  @override
+  String get issuedCopied => 'Copied';
+
+  @override
+  String get issuedShareWhatsapp => 'Share on WhatsApp';
+
+  @override
+  String get issuedSeeAll => 'See all codes';
 }

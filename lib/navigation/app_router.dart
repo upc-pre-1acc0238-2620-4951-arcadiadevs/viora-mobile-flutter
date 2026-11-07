@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,7 +8,12 @@ import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/navigation/placeholder_screen.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/codes_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/member_detail_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/members_page.dart';
 import 'package:viora/features/home/presentation/ui/home_page.dart';
+import 'package:viora/features/home/presentation/ui/widgets/home_greeting.dart';
 import 'package:viora/features/iam/presentation/ui/iam_page.dart';
 import 'package:viora/features/iam/presentation/ui/onboarding_page.dart';
 import 'package:viora/features/iam/presentation/ui/splash_page.dart';
@@ -27,7 +33,11 @@ import 'package:viora/features/subscription/presentation/ui/widgets/license_stat
 ///
 /// When a feature is ready, replace the `PlaceholderScreen` of its tab with the
 /// feature's root screen and add its detail routes inside the branch.
+/// The navigator over the shell: screens on it cover the tab bar.
+final _rootNavigator = GlobalKey<NavigatorState>();
+
 final GoRouter appRouter = GoRouter(
+  navigatorKey: _rootNavigator,
   initialLocation: SplashPage.path,
   routes: [
     GoRoute(
@@ -74,18 +84,63 @@ final GoRouter appRouter = GoRouter(
         for (final d in TopLevelDestination.values)
           StatefulShellBranch(
             routes: [
-              GoRoute(
-                path: d.path,
-                builder: (context, state) => d == TopLevelDestination.home
-                    ? HomePage(onOpenAccount: () => context.push(AccountPage.path))
-                    : PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
-              ),
+              if (d == TopLevelDestination.members)
+                _membersRoute(d.path)
+              else
+                GoRoute(
+                  path: d.path,
+                  builder: (context, state) => d == TopLevelDestination.home
+                      ? HomePage(onOpenAccount: () => context.push(AccountPage.path))
+                      : PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
+                ),
             ],
           ),
       ],
     ),
   ],
 );
+
+/// G40 · Socios and what opens from it: G41 · Socio, G42 · Códigos and G44 · Códigos generados,
+/// which covers the tab bar as in the design.
+GoRoute _membersRoute(String path) {
+  final codes = '$path/codes';
+  final issued = '$path/issued';
+  return GoRoute(
+    path: path,
+    builder: (context, state) => MembersPage(
+      header: HomeGreeting(onOpenAccount: () => context.push(AccountPage.path)),
+      onOpenMember: (id) => context.push('$path/$id'),
+      onOpenCodes: () => context.push<void>(codes),
+      onIssued: (args) => context.push<void>(issued, extra: args),
+    ),
+    routes: [
+      GoRoute(
+        path: 'codes',
+        builder: (context, state) => CodesPage(
+          onBack: () => context.pop(),
+          onIssued: (args) => context.push<void>(issued, extra: args),
+          onOpenMembers: () => context.go(path),
+        ),
+      ),
+      GoRoute(
+        path: 'issued',
+        parentNavigatorKey: _rootNavigator,
+        builder: (context, state) => IssuedCodesPage(
+          args: state.extra! as IssuedCodesArgs,
+          onClose: () => context.pop(),
+          onSeeAll: () => context.go(codes),
+        ),
+      ),
+      GoRoute(
+        path: MemberDetailPage.path,
+        builder: (context, state) => MemberDetailPage(
+          memberId: state.pathParameters['memberId']!,
+          onBack: () => context.pop(),
+        ),
+      ),
+    ],
+  );
+}
 
 /// A session that can no longer be renewed goes back to sign-in, from any screen.
 void openSignInWhenSessionExpires() {
