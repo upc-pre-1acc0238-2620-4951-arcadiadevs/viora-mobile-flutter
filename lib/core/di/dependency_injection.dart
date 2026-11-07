@@ -54,6 +54,20 @@ import 'package:viora/features/subscription/presentation/viewmodel/license_gate_
 import 'package:viora/features/subscription/presentation/viewmodel/license_guard_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_status_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/producer_plan_view_model.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_invitation_codes_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_license_capacity_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_member_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_members_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/issue_invitation_codes_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/revoke_invitation_code_use_case.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
+import 'package:viora/features/cooperative_operations/domain/repository/cooperative_repository.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_api.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/repository/cooperative_repository_impl.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/issue_codes_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/member_detail_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/members_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -62,7 +76,50 @@ void setupDependencies() {
   _setupIam();
   _setupProfiles();
   _setupSubscription();
+  _setupCooperativeOperations();
   _setupViewModels();
+}
+
+void _setupCooperativeOperations() {
+  getIt.registerLazySingleton<CooperativeApi>(() => CooperativeApi(client: getIt<ApiClient>()));
+  getIt.registerLazySingleton<CooperativeRepository>(
+    () => CooperativeRepositoryImpl(api: getIt<CooperativeApi>()),
+  );
+  getIt.registerLazySingleton(() => GetLicenseCapacityUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton(() => GetMembersUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton(() => GetMemberUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton(() => GetInvitationCodesUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton(() => IssueInvitationCodesUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton(() => RevokeInvitationCodeUseCase(repository: getIt<CooperativeRepository>()));
+
+  getIt.registerFactory<MembersViewModel>(
+    () => MembersViewModel(
+      getCapacity: getIt<GetLicenseCapacityUseCase>(),
+      getMembers: getIt<GetMembersUseCase>(),
+      getCodes: getIt<GetInvitationCodesUseCase>(),
+    ),
+  );
+  getIt.registerFactory<MemberDetailViewModel>(
+    () => MemberDetailViewModel(
+      getMember: getIt<GetMemberUseCase>(),
+      getCapacity: getIt<GetLicenseCapacityUseCase>(),
+    ),
+  );
+  getIt.registerFactory<CodesViewModel>(
+    () => CodesViewModel(
+      getCodes: getIt<GetInvitationCodesUseCase>(),
+      getCapacity: getIt<GetLicenseCapacityUseCase>(),
+      revokeCode: getIt<RevokeInvitationCodeUseCase>(),
+    ),
+  );
+  // G43 opens with the capacity G40 or G42 already read.
+  getIt.registerFactoryParam<IssueCodesViewModel, LicenseCapacity, void>(
+    (capacity, _) => IssueCodesViewModel(
+      capacity: capacity,
+      issueCodes: getIt<IssueInvitationCodesUseCase>(),
+      getCapacity: getIt<GetLicenseCapacityUseCase>(),
+    ),
+  );
 }
 
 void _setupSubscription() {
