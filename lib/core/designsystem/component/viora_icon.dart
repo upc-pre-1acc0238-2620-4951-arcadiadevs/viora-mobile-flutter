@@ -24,6 +24,13 @@ abstract final class VioraIcons {
   static const visibility = 'assets/icons/ic_visibility.svg';
   static const warning = 'assets/icons/ic_warning.svg';
   static const taskAlt = 'assets/icons/ic_task_alt.svg';
+  static const share = 'assets/icons/ic_share.svg';
+  static const search = 'assets/icons/ic_search.svg';
+  static const remove = 'assets/icons/ic_remove.svg';
+  static const smartphone = 'assets/icons/ic_smartphone.svg';
+  static const chat = 'assets/icons/ic_chat.svg';
+  static const info = 'assets/icons/ic_info.svg';
+  static const schedule = 'assets/icons/ic_schedule.svg';
   static const logoWordmarkMark = 'assets/icons/logo_wordmark_mark.svg';
   static const logoWordmarkLetters = 'assets/icons/logo_wordmark_letters.svg';
 }

@@ -1351,6 +1351,696 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I have a cooperative code'**
   String get producerPlanCooperative;
+
+  /// No description provided for @cooperativeOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection. Check your signal and try again.'**
+  String get cooperativeOffline;
+
+  /// No description provided for @cooperativeUnexpected.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get cooperativeUnexpected;
+
+  /// No description provided for @cooperativeNoLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'Your license is not in force.'**
+  String get cooperativeNoLicense;
+
+  /// No description provided for @membersHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your\n*members.*'**
+  String get membersHeadline;
+
+  /// No description provided for @membersVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {seats} seats and {hectares} ha left to invite more members.'**
+  String membersVoice(Object seats, Object hectares);
+
+  /// No description provided for @membersVoiceFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Your license has no free seats left. Ask to expand it to invite more members.'**
+  String get membersVoiceFull;
+
+  /// No description provided for @membersLicenseEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'License · Season {year}'**
+  String membersLicenseEyebrow(Object year);
+
+  /// No description provided for @membersSeatsOf.
+  ///
+  /// In en, this message translates to:
+  /// **'of {seats} seats'**
+  String membersSeatsOf(Object seats);
+
+  /// No description provided for @membersLegendMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} members'**
+  String membersLegendMembers(Object count);
+
+  /// No description provided for @membersLegendPending.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} to redeem'**
+  String membersLegendPending(Object count);
+
+  /// No description provided for @membersLegendFree.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} free'**
+  String membersLegendFree(Object count);
+
+  /// No description provided for @membersIssueCodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue codes'**
+  String get membersIssueCodes;
+
+  /// No description provided for @membersCodesToRedeem.
+  ///
+  /// In en, this message translates to:
+  /// **'codes to redeem'**
+  String get membersCodesToRedeem;
+
+  /// No description provided for @membersCodesExpire.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 expires on {date}} other{{count} expire on {date}}}'**
+  String membersCodesExpire(int count, String date);
+
+  /// No description provided for @membersCodesNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None pending'**
+  String get membersCodesNone;
+
+  /// No description provided for @membersReservedOf.
+  ///
+  /// In en, this message translates to:
+  /// **'reserved of {total} ha'**
+  String membersReservedOf(Object total);
+
+  /// No description provided for @membersRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'{hectares} ha registered'**
+  String membersRegistered(Object hectares);
+
+  /// No description provided for @membersSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get membersSection;
+
+  /// No description provided for @membersSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or sector'**
+  String get membersSearchHint;
+
+  /// No description provided for @membersFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All · {count}'**
+  String membersFilterAll(Object count);
+
+  /// No description provided for @membersFilterSharing.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing · {count}'**
+  String membersFilterSharing(Object count);
+
+  /// No description provided for @membersFilterWithdrawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrew · {count}'**
+  String membersFilterWithdrawn(Object count);
+
+  /// No description provided for @membersPlots.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 plot} other{{count} plots}}'**
+  String membersPlots(int count);
+
+  /// No description provided for @membersNoSharedData.
+  ///
+  /// In en, this message translates to:
+  /// **'No shared data'**
+  String get membersNoSharedData;
+
+  /// No description provided for @membersLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked'**
+  String get membersLinked;
+
+  /// No description provided for @membersWithdrawnOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrew access · {date}'**
+  String membersWithdrawnOn(Object date);
+
+  /// No description provided for @membersNotSharing.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sharing'**
+  String get membersNotSharing;
+
+  /// No description provided for @membersEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No members yet. They show up here when they redeem a code.'**
+  String get membersEmpty;
+
+  /// No description provided for @membersNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No member matches your search.'**
+  String get membersNoMatch;
+
+  /// No description provided for @memberTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get memberTitle;
+
+  /// No description provided for @memberSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since {date}'**
+  String memberSince(Object date);
+
+  /// No description provided for @memberWithdrawnSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped sharing on {date}'**
+  String memberWithdrawnSince(Object date);
+
+  /// No description provided for @memberWithdrawnTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrew access'**
+  String get memberWithdrawnTag;
+
+  /// No description provided for @memberPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get memberPhone;
+
+  /// No description provided for @memberEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get memberEmail;
+
+  /// No description provided for @memberRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered hectares'**
+  String get memberRegistered;
+
+  /// No description provided for @memberRegisteredValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{registered} of {quota} ha'**
+  String memberRegisteredValue(Object registered, Object quota);
+
+  /// No description provided for @memberCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Link code'**
+  String get memberCode;
+
+  /// No description provided for @memberCodeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{code} · redeemed'**
+  String memberCodeValue(Object code);
+
+  /// No description provided for @memberCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get memberCall;
+
+  /// No description provided for @memberWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get memberWhatsapp;
+
+  /// No description provided for @memberPlots.
+  ///
+  /// In en, this message translates to:
+  /// **'Plots'**
+  String get memberPlots;
+
+  /// No description provided for @memberWithdrawnNote.
+  ///
+  /// In en, this message translates to:
+  /// **'You no longer see their data. Their plan goes on and their seat stays taken. To free it, write to Viora support.'**
+  String get memberWithdrawnNote;
+
+  /// No description provided for @memberNotSharingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'They didn\'t accept to share their data. Their plan goes on and takes a seat.'**
+  String get memberNotSharingNote;
+
+  /// No description provided for @memberPlotSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{variety} · {hectares} ha · {sector}'**
+  String memberPlotSummary(Object variety, Object hectares, Object sector);
+
+  /// No description provided for @memberPlotSectorPending.
+  ///
+  /// In en, this message translates to:
+  /// **'To confirm'**
+  String get memberPlotSectorPending;
+
+  /// No description provided for @riskOverload.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical load'**
+  String get riskOverload;
+
+  /// No description provided for @riskCriticalIncident.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical incident'**
+  String get riskCriticalIncident;
+
+  /// No description provided for @riskFrost.
+  ///
+  /// In en, this message translates to:
+  /// **'Frost expected'**
+  String get riskFrost;
+
+  /// No description provided for @riskCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'High risk'**
+  String get riskCritical;
+
+  /// No description provided for @riskModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch'**
+  String get riskModerate;
+
+  /// No description provided for @riskOptimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Optimal'**
+  String get riskOptimal;
+
+  /// No description provided for @riskNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough data'**
+  String get riskNoData;
+
+  /// No description provided for @codesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Activation codes'**
+  String get codesTitle;
+
+  /// No description provided for @codesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{organization} · {seats} seats · {hectares} ha'**
+  String codesSubtitle(Object organization, Object seats, Object hectares);
+
+  /// No description provided for @codesHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your\n*codes.*'**
+  String get codesHeadline;
+
+  /// No description provided for @codesTabAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'To redeem · {count}'**
+  String codesTabAvailable(Object count);
+
+  /// No description provided for @codesTabRedeemed.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeemed · {count}'**
+  String codesTabRedeemed(Object count);
+
+  /// No description provided for @codesTabClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired · {count}'**
+  String codesTabClosed(Object count);
+
+  /// No description provided for @codesIssuedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued on {date}'**
+  String codesIssuedOn(Object date);
+
+  /// No description provided for @codesExpiresIn.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Expires today} =1{Expires tomorrow} other{Expires in {days} days}}'**
+  String codesExpiresIn(int days);
+
+  /// No description provided for @codesExpiresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires on {date}'**
+  String codesExpiresOn(Object date);
+
+  /// No description provided for @codesExpiredOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired on {date}'**
+  String codesExpiredOn(Object date);
+
+  /// No description provided for @codesRevokedTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked'**
+  String get codesRevokedTag;
+
+  /// No description provided for @codesPerCode.
+  ///
+  /// In en, this message translates to:
+  /// **'{hectares} ha per code'**
+  String codesPerCode(Object hectares);
+
+  /// No description provided for @codesRedeemedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} · {date}'**
+  String codesRedeemedBy(Object name, Object date);
+
+  /// No description provided for @codesShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get codesShare;
+
+  /// No description provided for @codesRevoke.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke'**
+  String get codesRevoke;
+
+  /// No description provided for @codesFooterAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {seats} seats and {hectares} ha left. Each code to redeem holds them until it expires or you revoke it.'**
+  String codesFooterAvailable(Object seats, Object hectares);
+
+  /// No description provided for @codesFooterRedeemed.
+  ///
+  /// In en, this message translates to:
+  /// **'A redeemed code can\'t be shared or revoked anymore. Only its reference is left.'**
+  String get codesFooterRedeemed;
+
+  /// No description provided for @codesFooterClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'An expired or revoked code gave its seat and hectares back to your license.'**
+  String get codesFooterClosed;
+
+  /// No description provided for @codesEmptyAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'You have no codes to redeem.'**
+  String get codesEmptyAvailable;
+
+  /// No description provided for @codesEmptyRedeemed.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody has redeemed a code yet.'**
+  String get codesEmptyRedeemed;
+
+  /// No description provided for @codesEmptyClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no expired or revoked codes.'**
+  String get codesEmptyClosed;
+
+  /// No description provided for @codesRevokedNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Code revoked'**
+  String get codesRevokedNotice;
+
+  /// No description provided for @codesNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This code had already expired or been revoked.'**
+  String get codesNotAvailable;
+
+  /// No description provided for @revokeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke\n*{code}?*'**
+  String revokeTitle(Object code);
+
+  /// No description provided for @revokeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody will be able to use it. Its seat and its {hectares} ha go back to your license.'**
+  String revokeBody(Object hectares);
+
+  /// No description provided for @revokeSeats.
+  ///
+  /// In en, this message translates to:
+  /// **'seats · {from} → {to} ha'**
+  String revokeSeats(Object from, Object to);
+
+  /// No description provided for @revokeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke code'**
+  String get revokeAction;
+
+  /// No description provided for @cooperativeCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cooperativeCancel;
+
+  /// No description provided for @redeemedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This code\n*was redeemed*'**
+  String get redeemedTitle;
+
+  /// No description provided for @redeemedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} used it on {date}. Redeemed codes can\'t be revoked.'**
+  String redeemedBody(Object name, Object date);
+
+  /// No description provided for @redeemedBodyUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone used it recently. Redeemed codes can\'t be revoked.'**
+  String get redeemedBodyUnknown;
+
+  /// No description provided for @redeemedWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'redeemed on {date}'**
+  String redeemedWhen(Object date);
+
+  /// No description provided for @redeemedSeeMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'See members'**
+  String get redeemedSeeMembers;
+
+  /// No description provided for @redeemedUnderstood.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get redeemedUnderstood;
+
+  /// No description provided for @shareCodeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi, this is your code to join {organization} on Viora: {code}. Redeem it in the Viora app, under \"I have a cooperative code\". It expires on {date}.'**
+  String shareCodeMessage(Object organization, Object code, Object date);
+
+  /// No description provided for @shareCodesMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Codes of {organization} on Viora, one per member:\n{codes}\nEach one is redeemed in the Viora app, under \"I have a cooperative code\". They expire on {date}.'**
+  String shareCodesMessage(Object organization, Object codes, Object date);
+
+  /// No description provided for @issueHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue\n*codes*'**
+  String get issueHeadline;
+
+  /// No description provided for @issueSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{organization} · {seats} seats and {hectares} ha free'**
+  String issueSubtitle(Object organization, Object seats, Object hectares);
+
+  /// No description provided for @issueQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get issueQuantity;
+
+  /// No description provided for @issueQuantityCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'codes · one per member'**
+  String get issueQuantityCaption;
+
+  /// No description provided for @issueHectares.
+  ///
+  /// In en, this message translates to:
+  /// **'Hectares per code'**
+  String get issueHectares;
+
+  /// No description provided for @issueHectaresSuggested.
+  ///
+  /// In en, this message translates to:
+  /// **'ha · suggested by your license'**
+  String get issueHectaresSuggested;
+
+  /// No description provided for @issueHectaresCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'ha per code'**
+  String get issueHectaresCaption;
+
+  /// No description provided for @issueValidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Validity'**
+  String get issueValidity;
+
+  /// No description provided for @issueDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String issueDays(Object days);
+
+  /// No description provided for @issuePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'of {seats} seats · {fromHa} → {toHa} of {totalHa} ha. They expire on {date}.'**
+  String issuePreview(
+    Object seats,
+    Object fromHa,
+    Object toHa,
+    Object totalHa,
+    Object date,
+  );
+
+  /// No description provided for @issueSeatsExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'over the {free} free seats'**
+  String issueSeatsExceeded(Object free);
+
+  /// No description provided for @issueSeatsExceededBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'of {seats} seats: over your quota. Issue up to {free} or ask to expand the license.'**
+  String issueSeatsExceededBanner(Object seats, Object free);
+
+  /// No description provided for @issueAreaExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'{hectares} ha are over the {free} ha free'**
+  String issueAreaExceeded(Object hectares, Object free);
+
+  /// No description provided for @issueAreaExceededBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'ha of {free} free: over your quota. Lower the hectares or ask to expand the license.'**
+  String issueAreaExceededBanner(Object free);
+
+  /// No description provided for @issueAction.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Issue 1 code} other{Issue {count} codes}}'**
+  String issueAction(int count);
+
+  /// No description provided for @issueUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Codes can\'t be issued now. Let Viora support know.'**
+  String get issueUnavailable;
+
+  /// No description provided for @issueDecrease.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease'**
+  String get issueDecrease;
+
+  /// No description provided for @issueIncrease.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase'**
+  String get issueIncrease;
+
+  /// No description provided for @issuedHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 code\n*ready.*} other{{count} codes\n*ready.*}}'**
+  String issuedHeadline(int count);
+
+  /// No description provided for @issuedVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Share them with your members: each one activates an account, takes a seat and holds {hectares} ha.'**
+  String issuedVoice(Object hectares);
+
+  /// No description provided for @issuedExpire.
+  ///
+  /// In en, this message translates to:
+  /// **'They expire on {date}'**
+  String issuedExpire(Object date);
+
+  /// No description provided for @issuedCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get issuedCopy;
+
+  /// No description provided for @issuedCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get issuedCopied;
+
+  /// No description provided for @issuedShareWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'Share on WhatsApp'**
+  String get issuedShareWhatsapp;
+
+  /// No description provided for @issuedSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all codes'**
+  String get issuedSeeAll;
 }
 
 class _AppLocalizationsDelegate
