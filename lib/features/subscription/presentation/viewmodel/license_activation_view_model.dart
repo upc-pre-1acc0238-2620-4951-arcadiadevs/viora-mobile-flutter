@@ -51,10 +51,6 @@ class LicenseActivationViewModel extends Cubit<LicenseActivationUiState> {
     }
   }
 
-  /// Contacting Viora before hiring: the team hasn't chosen yet between an email and a link,
-  /// so the button is in place and does nothing until then.
-  void contactSales() {}
-
   Future<void> signOut() async {
     await signOutUseCase.execute();
     if (!isClosed) emit(state.copyWith(signedOut: true));

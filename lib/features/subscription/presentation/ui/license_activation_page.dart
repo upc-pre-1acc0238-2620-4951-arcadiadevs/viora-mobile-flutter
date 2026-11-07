@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:viora/core/designsystem/component/viora_button.dart';
 import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/spacing.dart';
@@ -21,6 +22,9 @@ class LicenseActivationPage extends StatelessWidget {
   const LicenseActivationPage({super.key});
 
   static const path = '/license/activation';
+
+  /// Organizations that haven't hired Viora yet ask for a quote on the landing page.
+  static final quoteUrl = Uri.parse('https://viora-landing-page-sable.vercel.app/#quote');
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +124,13 @@ class _NoLicense extends StatelessWidget {
             onPressed: state.canActivate ? viewModel.activate : null,
           ),
           const SizedBox(height: Spacing.xs),
-          VioraTextButton(label: l10n.licenseContact, onPressed: viewModel.contactSales),
+          VioraTextButton(
+            label: l10n.licenseContact,
+            onPressed: () => launchUrl(
+              LicenseActivationPage.quoteUrl,
+              mode: LaunchMode.externalApplication,
+            ),
+          ),
           const SizedBox(height: 2),
           VioraTextButton(label: l10n.accountSignOut, onPressed: viewModel.signOut),
         ],
