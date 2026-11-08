@@ -20,6 +20,9 @@ abstract final class VioraTabBarDefaults {
   static const double bubbleSize = 60;
   static const double barInnerPadding = 8;
 
+  /// Height of the fade the shell paints behind the bar, from the bottom of the screen.
+  static const double fadeHeight = 150;
+
   /// Bottom padding every tab screen must reserve so the floating bar never hides
   /// content.
   static const double contentBottomPadding = barHeight + bottomMargin + Spacing.md;
