@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' show MapboxOptions;
 
 import 'package:viora/core/designsystem/theme/app_theme.dart';
 import 'package:viora/core/di/dependency_injection.dart';
@@ -8,9 +9,14 @@ import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/locale/app_language.dart';
 import 'package:viora/navigation/app_router.dart';
 
+/// Public Mapbox token (pk.…), kept out of git like in the Kotlin app. It comes from
+/// dart_defines.json: flutter run --dart-define-from-file=dart_defines.json
+const _mapboxPublicToken = String.fromEnvironment('VIORA_MAPBOX_PUBLIC_TOKEN');
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  MapboxOptions.setAccessToken(_mapboxPublicToken);
   setupDependencies();
   openSignInWhenSessionExpires();
   forgetAccountDataWhenSessionEnds();
