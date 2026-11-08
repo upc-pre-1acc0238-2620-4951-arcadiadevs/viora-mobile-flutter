@@ -350,6 +350,39 @@ class FigureLine extends StatelessWidget {
   }
 }
 
+/// «Llamar» and «WhatsApp»: a soft pill with an icon and its label.
+class ContactButton extends StatelessWidget {
+  const ContactButton({super.key, required this.label, required this.iconAsset, required this.color, required this.onPressed});
+
+  final String label;
+  final String iconAsset;
+  final Color color;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color,
+      shape: const StadiumBorder(),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onPressed,
+        child: SizedBox(
+          height: 52,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              VioraIcon(iconAsset, size: 20, color: VioraColors.neutral900),
+              const SizedBox(width: Spacing.xs),
+              Text(label, style: Theme.of(context).textTheme.titleSmall),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// What failed, and a way to try again.
 class CooperativeFailureView extends StatelessWidget {
   const CooperativeFailureView({super.key, required this.failure, required this.onRetry});

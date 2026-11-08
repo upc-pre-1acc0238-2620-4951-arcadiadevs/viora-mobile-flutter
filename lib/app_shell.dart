@@ -25,7 +25,7 @@ class AppShell extends StatelessWidget {
             left: 0,
             right: 0,
             bottom: 0,
-            height: 150,
+            height: VioraTabBarDefaults.fadeHeight,
             child: IgnorePointer(
               child: DecoratedBox(
                 decoration: BoxDecoration(
