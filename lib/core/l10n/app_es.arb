@@ -18,7 +18,13 @@
   "accountNotificationsOn": "Activadas",
   "accountNotificationsOff": "Desactivadas",
   "accountVersion": "Viora {version} · Android · iOS",
-  "@accountVersion": {"placeholders": {"version": {"type": "String"}}},
+  "@accountVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "accountDetailsSaved": "Cambios guardados",
   "accountPasswordChanged": "Contraseña actualizada",
   "accountDetailsTitle": "Datos personales",
@@ -27,9 +33,24 @@
   "accountFullNamePlaceholder": "Escribe tu nombre",
   "accountFullNameRequired": "Tu nombre es obligatorio.",
   "accountPhoneLabel": "Celular · {country} {dialCode}",
-  "@accountPhoneLabel": {"placeholders": {"country": {"type": "String"}, "dialCode": {"type": "String"}}},
+  "@accountPhoneLabel": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "dialCode": {
+        "type": "String"
+      }
+    }
+  },
   "accountPhoneHelper": "Formato internacional: {example}",
-  "@accountPhoneHelper": {"placeholders": {"example": {"type": "String"}}},
+  "@accountPhoneHelper": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
   "accountEmailHelper": "Verificado · se usa para entrar a Viora",
   "accountSaveChanges": "Guardar cambios",
   "accountSaveOffline": "Sin conexión: tus cambios no se guardaron. Inténtalo de nuevo.",
@@ -184,14 +205,35 @@
   "licenseOrganization": "Organización",
   "licenseQuota": "Cupo",
   "licenseQuotaValue": "{seats, plural, =1{1 plaza} other{{seats} plazas}} · {hectares} ha",
-  "@licenseQuotaValue": {"placeholders": {"seats": {"type": "int"}, "hectares": {"type": "String"}}},
+  "@licenseQuotaValue": {
+    "placeholders": {
+      "seats": {
+        "type": "int"
+      },
+      "hectares": {
+        "type": "String"
+      }
+    }
+  },
   "licenseValidity": "Vigencia",
   "licenseValidUntil": "Hasta el {date}",
-  "@licenseValidUntil": {"placeholders": {"date": {"type": "String"}}},
+  "@licenseValidUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "licenseGoHome": "Ir al inicio",
   "licenseActiveBadge": "Licencia activa",
   "licenseRoleOfOrganization": " · {organization}",
-  "@licenseRoleOfOrganization": {"placeholders": {"organization": {"type": "String"}}},
+  "@licenseRoleOfOrganization": {
+    "placeholders": {
+      "organization": {
+        "type": "String"
+      }
+    }
+  },
   "licenseCheckFailedTitle": "No pudimos revisar\n*tu licencia.*",
   "licenseRetry": "Reintentar",
   "licenseErrorOffline": "Sin conexión. Revisa tu señal e inténtalo de nuevo.",
@@ -201,21 +243,51 @@
   "producerPlanTitle": "Plan\n*Productor*",
   "producerPlanHectares": "TUS HECTÁREAS",
   "producerPlanIncrease": "Aumentar {step} ha",
-  "@producerPlanIncrease": {"placeholders": {"step": {"type": "String"}}},
+  "@producerPlanIncrease": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanDecrease": "Disminuir {step} ha",
-  "@producerPlanDecrease": {"placeholders": {"step": {"type": "String"}}},
+  "@producerPlanDecrease": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanIncludes": "INCLUYE",
   "producerPlanBenefitBbi": "Diagnóstico de vecería (BBI)",
   "producerPlanBenefitClimate": "Frío acumulado y alertas de estrés hídrico",
   "producerPlanBenefitSampling": "Muestreo sin señal y prescripción de aclareo",
   "producerPlanBenefitCapacity": "Hasta {hectares} ha registradas en tus lotes",
-  "@producerPlanBenefitCapacity": {"placeholders": {"hectares": {"type": "String"}}},
+  "@producerPlanBenefitCapacity": {
+    "placeholders": {
+      "hectares": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanTotal": "TOTAL ANUAL ESTIMADO",
   "producerPlanMonthly": "Equivale a {amount} al mes · Pago anual",
-  "@producerPlanMonthly": {"placeholders": {"amount": {"type": "String"}}},
+  "@producerPlanMonthly": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanTaxIncluded": "Incluye IGV",
   "producerPlanUpdated": "Catálogo actualizado: {timestamp}",
-  "@producerPlanUpdated": {"placeholders": {"timestamp": {"type": "String"}}},
+  "@producerPlanUpdated": {
+    "placeholders": {
+      "timestamp": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanSavedCopy": "Información guardada. Actualiza para verificar las condiciones vigentes.",
   "producerPlanLoading": "Actualizando las condiciones del plan…",
   "producerPlanEmpty": "No hay planes disponibles. Actualiza el catálogo para volver a consultar.",
@@ -333,5 +405,113 @@
   "issuedCopy": "Copiar",
   "issuedCopied": "Copiado",
   "issuedShareWhatsapp": "Compartir por WhatsApp",
-  "issuedSeeAll": "Ver todos los códigos"
+  "issuedSeeAll": "Ver todos los códigos",
+  "riskMap": "Mapa",
+  "riskList": "Lista",
+  "riskYou": "Tú",
+  "riskGpsOff": "Sin ubicación · mostramos todo el valle",
+  "riskLevelCritical": "Crítico",
+  "riskLevelModerate": "Moderado",
+  "riskLevelNoData": "Sin datos",
+  "riskCountCritical": "críticas",
+  "riskCountModerate": "moderadas",
+  "riskCountOptimal": "óptimas",
+  "riskCountNoData": "sin datos",
+  "riskChipCritical": "{count, plural, =1{1 crítica} other{{count} críticas}}",
+  "riskNearEyebrow": "Cerca de ti · GPS ± {meters} m",
+  "riskNearTitle": "A menos de 5 km",
+  "riskNearAction": "Ver visitas por cercanía",
+  "riskNearSubtitle": "Cerca de ti · {plots}",
+  "riskSectorEyebrow": "Filtro por sector",
+  "riskSectorAction": "Ver parcelas del sector",
+  "riskSectorSubtitle": "Sector · {plots}",
+  "riskPlotEyebrow": "Lote elegido en el mapa",
+  "riskPlotAction": "Ver lote",
+  "riskPlotCount": "{count, plural, =1{1 parcela socia} other{{count} parcelas socias}}",
+  "riskPlotCountShort": "{count, plural, =1{1 parcela} other{{count} parcelas}}",
+  "riskGroupFreshness": "{plots} · {updated}",
+  "riskUpdatedNow": "actualizado ahora",
+  "riskUpdatedMinutes": "actualizado hace {minutes} min",
+  "riskUpdatedAt": "actualizado el {date}",
+  "riskUpdatedUnknown": "sin fecha de lectura",
+  "riskTileCritical": "parcelas críticas",
+  "riskTileOverload": "sobrecarga > 30 %",
+  "riskTileFrost": "helada ≤ 1,5 °C en 48 h",
+  "riskTileOverloadPlot": "sobrecarga",
+  "riskTilePrescribed": "aclareo prescrito",
+  "riskTileDaysLeft": "días para aclarar",
+  "riskPercent": "{value} %",
+  "riskHectares": "{value} ha",
+  "riskPickerTitle": "Elige un\n*sector.*",
+  "riskPendingTitle": "Por confirmar",
+  "riskPendingSummary": "{plots} · revisar el sector",
+  "riskUnassignedTitle": "Sin sector",
+  "riskReview": "Revisar",
+  "riskSummaryCritical": "{plots} · {count, plural, =1{1 crítica} other{{count} críticas}}",
+  "riskSummaryModerate": "{plots} · {count, plural, =1{1 moderada} other{{count} moderadas}}",
+  "riskSummaryNoData": "{plots} · sin muestreo válido",
+  "riskSummaryOptimal": "{plots} · sin riesgo",
+  "riskEmptyTitle": "Aún no hay\n*lotes.*",
+  "riskEmptyBody": "Aparecerán aquí cuando tus socios acepten compartir sus datos y registren sus lotes.",
+  "riskListTitle": "Riesgo del\n*valle, hoy.*",
+  "riskMostCritical": "Más crítico",
+  "riskPermissionTitle": "¿Te ubicamos\n*en el mapa?*",
+  "riskPermissionBody": "Con tu GPS te mostramos en el mapa y ordenamos las parcelas por cercanía. Solo lo usamos mientras miras el mapa.",
+  "riskPermissionAllow": "Permitir ubicación",
+  "riskPermissionLater": "Ahora no",
+  "riskScopeEmpty": "No hay parcelas que mostrar aquí.",
+  "riskPriorityTitle": "Por prioridad",
+  "riskOrderNearest": "Más cerca primero",
+  "riskOrderPriority": "Prioridad primero",
+  "riskRestTitle": "Resto del sector",
+  "riskRestModerate": "Alerta de atención activa",
+  "riskRestOptimal": "Carga dentro del objetivo, sin heladas",
+  "riskRestNoData": "Sin muestreo válido esta campaña",
+  "riskTogether": "{first} y {second} están a menos de 1,5 km: puedes verlos en una sola salida.",
+  "riskHeroEyebrow": "Semáforo del sector · {level}",
+  "riskHeroCritical": "de {total} parcelas en rojo",
+  "riskHeroModerate": "de {total} parcelas en ámbar",
+  "riskHeroOptimal": "de {total} parcelas óptimas",
+  "riskHeroNoData": "de {total} parcelas sin datos",
+  "riskLegend": "{level} {count}",
+  "riskFrostDetail": "Mínima de {value} °C el {day}",
+  "riskDistance": "a {value} km",
+  "riskProposedSector": "escribió «{name}»",
+  "riskReasonOverload": "Sobrecarga {value} %",
+  "riskReasonFrost": "Helada {value} °C · {day}",
+  "riskDossierAction": "Ver expediente provisional",
+  "riskReadOnly": "Solo lectura",
+  "riskReadAt": "Actualizado {when}",
+  "riskToday": "hoy, {time}",
+  "riskLoadTitle": "Carga frutal",
+  "riskLoadUnit": "Frutos por brote",
+  "riskLoadEstimated": "Estimada",
+  "riskLoadTarget": "Objetivo sostenible",
+  "riskTonsAfterThinning": "t/ha estimadas tras aclarar",
+  "riskOverloadNotice": "{percent} % más fruta de la que el árbol sostiene. Si no se regula, la vecería se prolonga y {year} sería un año OFF fuerte.",
+  "riskSampleBasis": "Basado en {trees} árboles · ronda del {day}",
+  "riskPrescriptionEyebrow": "Prescripción · aclareo",
+  "riskPrescriptionUnit": "de los frutos",
+  "riskPrescriptionBody": "Prescrito a {name}: quitar {count} de cada 10 frutitos, empezando por las ramas más cargadas.",
+  "riskWindowFrom": "Desde {day}",
+  "riskWindowUntil": "Hasta {day}",
+  "riskWindowClosed": "La ventana ya cerró",
+  "riskWindowOpens": "Abre el {day}",
+  "riskWindowDaysLeft": "{count, plural, =0{Último día} =1{Queda 1 día} other{Quedan {count} días}}",
+  "riskThinningMissing": "Aclareo aún sin registrar",
+  "riskThinningDone": "Aclareo registrado el {day}",
+  "riskBearingEyebrow": "Alternancia · dato informativo",
+  "riskBearingBand": "BBI · alternancia {band}",
+  "riskBearingHigh": "alta",
+  "riskBearingModerate": "moderada",
+  "riskBearingLow": "leve",
+  "riskBearingNote": "No cambia el color del semáforo.",
+  "riskNoDataTitle": "Sin datos\n*suficientes*",
+  "riskNoDataBody": "Esta parcela aún no tiene un muestreo de cuajado válido esta campaña. Sin él no calculamos su carga: queda en gris, nunca en verde.",
+  "riskNoDataSampling": "Muestreo de cuajado",
+  "riskNoDataSamplingValue": "{sampled} de {required} árboles",
+  "riskNoDataLoadValue": "se estima tras el muestreo",
+  "riskNoDataPrescription": "Prescripción de aclareo",
+  "riskNoDataPrescriptionValue": "pendiente",
+  "riskNoDataVoice": "Escríbele a {name}: con {trees} árboles muestreados ya podremos evaluar su parcela."
 }

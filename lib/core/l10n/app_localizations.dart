@@ -2041,6 +2041,654 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See all codes'**
   String get issuedSeeAll;
+
+  /// No description provided for @riskMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get riskMap;
+
+  /// No description provided for @riskList.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get riskList;
+
+  /// No description provided for @riskYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get riskYou;
+
+  /// No description provided for @riskGpsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'No location · showing the whole valley'**
+  String get riskGpsOff;
+
+  /// No description provided for @riskLevelCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get riskLevelCritical;
+
+  /// No description provided for @riskLevelModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get riskLevelModerate;
+
+  /// No description provided for @riskLevelNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get riskLevelNoData;
+
+  /// No description provided for @riskCountCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'critical'**
+  String get riskCountCritical;
+
+  /// No description provided for @riskCountModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'moderate'**
+  String get riskCountModerate;
+
+  /// No description provided for @riskCountOptimal.
+  ///
+  /// In en, this message translates to:
+  /// **'optimal'**
+  String get riskCountOptimal;
+
+  /// No description provided for @riskCountNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'no data'**
+  String get riskCountNoData;
+
+  /// No description provided for @riskChipCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{{count} critical}}'**
+  String riskChipCritical(int count);
+
+  /// No description provided for @riskNearEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Near you · GPS ± {meters} m'**
+  String riskNearEyebrow(Object meters);
+
+  /// No description provided for @riskNearTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Within 5 km'**
+  String get riskNearTitle;
+
+  /// No description provided for @riskNearAction.
+  ///
+  /// In en, this message translates to:
+  /// **'See visits by distance'**
+  String get riskNearAction;
+
+  /// No description provided for @riskNearSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Near you · {plots}'**
+  String riskNearSubtitle(Object plots);
+
+  /// No description provided for @riskSectorEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sector filter'**
+  String get riskSectorEyebrow;
+
+  /// No description provided for @riskSectorAction.
+  ///
+  /// In en, this message translates to:
+  /// **'See the sector\'s plots'**
+  String get riskSectorAction;
+
+  /// No description provided for @riskSectorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sector · {plots}'**
+  String riskSectorSubtitle(Object plots);
+
+  /// No description provided for @riskPlotEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Plot chosen on the map'**
+  String get riskPlotEyebrow;
+
+  /// No description provided for @riskPlotAction.
+  ///
+  /// In en, this message translates to:
+  /// **'See plot'**
+  String get riskPlotAction;
+
+  /// No description provided for @riskPlotCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 member plot} other{{count} member plots}}'**
+  String riskPlotCount(int count);
+
+  /// No description provided for @riskPlotCountShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 plot} other{{count} plots}}'**
+  String riskPlotCountShort(int count);
+
+  /// No description provided for @riskGroupFreshness.
+  ///
+  /// In en, this message translates to:
+  /// **'{plots} · {updated}'**
+  String riskGroupFreshness(Object plots, Object updated);
+
+  /// No description provided for @riskUpdatedNow.
+  ///
+  /// In en, this message translates to:
+  /// **'updated just now'**
+  String get riskUpdatedNow;
+
+  /// No description provided for @riskUpdatedMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'updated {minutes} min ago'**
+  String riskUpdatedMinutes(Object minutes);
+
+  /// No description provided for @riskUpdatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'updated on {date}'**
+  String riskUpdatedAt(Object date);
+
+  /// No description provided for @riskUpdatedUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'no reading date'**
+  String get riskUpdatedUnknown;
+
+  /// No description provided for @riskTileCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'critical plots'**
+  String get riskTileCritical;
+
+  /// No description provided for @riskTileOverload.
+  ///
+  /// In en, this message translates to:
+  /// **'overload > 30%'**
+  String get riskTileOverload;
+
+  /// No description provided for @riskTileFrost.
+  ///
+  /// In en, this message translates to:
+  /// **'frost ≤ 1.5 °C in 48 h'**
+  String get riskTileFrost;
+
+  /// No description provided for @riskTileOverloadPlot.
+  ///
+  /// In en, this message translates to:
+  /// **'overload'**
+  String get riskTileOverloadPlot;
+
+  /// No description provided for @riskTilePrescribed.
+  ///
+  /// In en, this message translates to:
+  /// **'prescribed thinning'**
+  String get riskTilePrescribed;
+
+  /// No description provided for @riskTileDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'days left to thin'**
+  String get riskTileDaysLeft;
+
+  /// No description provided for @riskPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{value}%'**
+  String riskPercent(Object value);
+
+  /// No description provided for @riskHectares.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} ha'**
+  String riskHectares(Object value);
+
+  /// No description provided for @riskPickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a\n*sector.*'**
+  String get riskPickerTitle;
+
+  /// No description provided for @riskPendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'To confirm'**
+  String get riskPendingTitle;
+
+  /// No description provided for @riskPendingSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{plots} · review the sector'**
+  String riskPendingSummary(Object plots);
+
+  /// No description provided for @riskUnassignedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No sector'**
+  String get riskUnassignedTitle;
+
+  /// No description provided for @riskReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get riskReview;
+
+  /// No description provided for @riskSummaryCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'{plots} · {count, plural, other{{count} critical}}'**
+  String riskSummaryCritical(Object plots, int count);
+
+  /// No description provided for @riskSummaryModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'{plots} · {count, plural, other{{count} moderate}}'**
+  String riskSummaryModerate(Object plots, int count);
+
+  /// No description provided for @riskSummaryNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'{plots} · no valid sampling'**
+  String riskSummaryNoData(Object plots);
+
+  /// No description provided for @riskSummaryOptimal.
+  ///
+  /// In en, this message translates to:
+  /// **'{plots} · no risk'**
+  String riskSummaryOptimal(Object plots);
+
+  /// No description provided for @riskEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No plots\n*yet.*'**
+  String get riskEmptyTitle;
+
+  /// No description provided for @riskEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'They will appear here once your members agree to share their data and register their plots.'**
+  String get riskEmptyBody;
+
+  /// No description provided for @riskListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Valley risk,\n*today.*'**
+  String get riskListTitle;
+
+  /// No description provided for @riskMostCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Most critical'**
+  String get riskMostCritical;
+
+  /// No description provided for @riskPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shall we place you\n*on the map?*'**
+  String get riskPermissionTitle;
+
+  /// No description provided for @riskPermissionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'With your GPS we show you on the map and sort the plots by distance. We only use it while you look at the map.'**
+  String get riskPermissionBody;
+
+  /// No description provided for @riskPermissionAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow location'**
+  String get riskPermissionAllow;
+
+  /// No description provided for @riskPermissionLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get riskPermissionLater;
+
+  /// No description provided for @riskScopeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no plots to show here.'**
+  String get riskScopeEmpty;
+
+  /// No description provided for @riskPriorityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'By priority'**
+  String get riskPriorityTitle;
+
+  /// No description provided for @riskOrderNearest.
+  ///
+  /// In en, this message translates to:
+  /// **'Closest first'**
+  String get riskOrderNearest;
+
+  /// No description provided for @riskOrderPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority first'**
+  String get riskOrderPriority;
+
+  /// No description provided for @riskRestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest of the sector'**
+  String get riskRestTitle;
+
+  /// No description provided for @riskRestModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Active attention alert'**
+  String get riskRestModerate;
+
+  /// No description provided for @riskRestOptimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Load within target, no frost'**
+  String get riskRestOptimal;
+
+  /// No description provided for @riskRestNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No valid sampling this season'**
+  String get riskRestNoData;
+
+  /// No description provided for @riskTogether.
+  ///
+  /// In en, this message translates to:
+  /// **'{first} and {second} are within 1.5 km: you can see them on one trip.'**
+  String riskTogether(Object first, Object second);
+
+  /// No description provided for @riskHeroEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sector traffic light · {level}'**
+  String riskHeroEyebrow(Object level);
+
+  /// No description provided for @riskHeroCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'of {total} plots in red'**
+  String riskHeroCritical(Object total);
+
+  /// No description provided for @riskHeroModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'of {total} plots in amber'**
+  String riskHeroModerate(Object total);
+
+  /// No description provided for @riskHeroOptimal.
+  ///
+  /// In en, this message translates to:
+  /// **'of {total} optimal plots'**
+  String riskHeroOptimal(Object total);
+
+  /// No description provided for @riskHeroNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'of {total} plots without data'**
+  String riskHeroNoData(Object total);
+
+  /// No description provided for @riskLegend.
+  ///
+  /// In en, this message translates to:
+  /// **'{level} {count}'**
+  String riskLegend(Object level, Object count);
+
+  /// No description provided for @riskFrostDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Low of {value} °C on {day}'**
+  String riskFrostDetail(Object value, Object day);
+
+  /// No description provided for @riskDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} km away'**
+  String riskDistance(Object value);
+
+  /// No description provided for @riskProposedSector.
+  ///
+  /// In en, this message translates to:
+  /// **'wrote “{name}”'**
+  String riskProposedSector(Object name);
+
+  /// No description provided for @riskReasonOverload.
+  ///
+  /// In en, this message translates to:
+  /// **'Overload {value}%'**
+  String riskReasonOverload(Object value);
+
+  /// No description provided for @riskReasonFrost.
+  ///
+  /// In en, this message translates to:
+  /// **'Frost {value} °C · {day}'**
+  String riskReasonFrost(Object value, Object day);
+
+  /// No description provided for @riskDossierAction.
+  ///
+  /// In en, this message translates to:
+  /// **'See provisional dossier'**
+  String get riskDossierAction;
+
+  /// No description provided for @riskReadOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Read only'**
+  String get riskReadOnly;
+
+  /// No description provided for @riskReadAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {when}'**
+  String riskReadAt(Object when);
+
+  /// No description provided for @riskToday.
+  ///
+  /// In en, this message translates to:
+  /// **'today, {time}'**
+  String riskToday(Object time);
+
+  /// No description provided for @riskLoadTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fruit load'**
+  String get riskLoadTitle;
+
+  /// No description provided for @riskLoadUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Fruits per shoot'**
+  String get riskLoadUnit;
+
+  /// No description provided for @riskLoadEstimated.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated'**
+  String get riskLoadEstimated;
+
+  /// No description provided for @riskLoadTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustainable target'**
+  String get riskLoadTarget;
+
+  /// No description provided for @riskTonsAfterThinning.
+  ///
+  /// In en, this message translates to:
+  /// **'estimated t/ha after thinning'**
+  String get riskTonsAfterThinning;
+
+  /// No description provided for @riskOverloadNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% more fruit than the tree can carry. Left unregulated, alternate bearing goes on and {year} would be a strong OFF year.'**
+  String riskOverloadNotice(Object percent, Object year);
+
+  /// No description provided for @riskSampleBasis.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on {trees} trees · round of {day}'**
+  String riskSampleBasis(Object trees, Object day);
+
+  /// No description provided for @riskPrescriptionEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription · thinning'**
+  String get riskPrescriptionEyebrow;
+
+  /// No description provided for @riskPrescriptionUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'of the fruits'**
+  String get riskPrescriptionUnit;
+
+  /// No description provided for @riskPrescriptionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescribed to {name}: remove {count} of every 10 fruitlets, starting with the most loaded branches.'**
+  String riskPrescriptionBody(Object name, Object count);
+
+  /// No description provided for @riskWindowFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From {day}'**
+  String riskWindowFrom(Object day);
+
+  /// No description provided for @riskWindowUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Until {day}'**
+  String riskWindowUntil(Object day);
+
+  /// No description provided for @riskWindowClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'The window has closed'**
+  String get riskWindowClosed;
+
+  /// No description provided for @riskWindowOpens.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens on {day}'**
+  String riskWindowOpens(Object day);
+
+  /// No description provided for @riskWindowDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Last day} =1{1 day left} other{{count} days left}}'**
+  String riskWindowDaysLeft(int count);
+
+  /// No description provided for @riskThinningMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinning not registered yet'**
+  String get riskThinningMissing;
+
+  /// No description provided for @riskThinningDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinning registered on {day}'**
+  String riskThinningDone(Object day);
+
+  /// No description provided for @riskBearingEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Alternate bearing · for information'**
+  String get riskBearingEyebrow;
+
+  /// No description provided for @riskBearingBand.
+  ///
+  /// In en, this message translates to:
+  /// **'BBI · {band} alternation'**
+  String riskBearingBand(Object band);
+
+  /// No description provided for @riskBearingHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'high'**
+  String get riskBearingHigh;
+
+  /// No description provided for @riskBearingModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'moderate'**
+  String get riskBearingModerate;
+
+  /// No description provided for @riskBearingLow.
+  ///
+  /// In en, this message translates to:
+  /// **'mild'**
+  String get riskBearingLow;
+
+  /// No description provided for @riskBearingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'It doesn\'t change the traffic light.'**
+  String get riskBearingNote;
+
+  /// No description provided for @riskNoDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough\n*data*'**
+  String get riskNoDataTitle;
+
+  /// No description provided for @riskNoDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This plot has no valid fruit-set sampling this season yet. Without it we can\'t work out its load: it stays grey, never green.'**
+  String get riskNoDataBody;
+
+  /// No description provided for @riskNoDataSampling.
+  ///
+  /// In en, this message translates to:
+  /// **'Fruit-set sampling'**
+  String get riskNoDataSampling;
+
+  /// No description provided for @riskNoDataSamplingValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{sampled} of {required} trees'**
+  String riskNoDataSamplingValue(Object sampled, Object required);
+
+  /// No description provided for @riskNoDataLoadValue.
+  ///
+  /// In en, this message translates to:
+  /// **'estimated after sampling'**
+  String get riskNoDataLoadValue;
+
+  /// No description provided for @riskNoDataPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinning prescription'**
+  String get riskNoDataPrescription;
+
+  /// No description provided for @riskNoDataPrescriptionValue.
+  ///
+  /// In en, this message translates to:
+  /// **'pending'**
+  String get riskNoDataPrescriptionValue;
+
+  /// No description provided for @riskNoDataVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Write to {name}: with {trees} trees sampled we can assess their plot.'**
+  String riskNoDataVoice(Object name, Object trees);
 }
 
 class _AppLocalizationsDelegate

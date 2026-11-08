@@ -58,16 +58,26 @@ import 'package:viora/features/cooperative_operations/application/usecase/get_in
 import 'package:viora/features/cooperative_operations/application/usecase/get_license_capacity_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_member_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_members_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plot_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plots_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/issue_invitation_codes_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/revoke_invitation_code_use_case.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/cooperative_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_api.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/local/device_location_repository.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/cooperative_repository_impl.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/repository/risk_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/issue_codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/member_detail_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/members_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_map_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_plot_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/sector_detail_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -77,6 +87,7 @@ void setupDependencies() {
   _setupProfiles();
   _setupSubscription();
   _setupCooperativeOperations();
+  _setupTerritorialRisk();
   _setupViewModels();
 }
 
@@ -120,6 +131,29 @@ void _setupCooperativeOperations() {
       getCapacity: getIt<GetLicenseCapacityUseCase>(),
     ),
   );
+}
+
+void _setupTerritorialRisk() {
+  getIt.registerLazySingleton<RiskApi>(() => RiskApi(client: getIt<ApiClient>()));
+  getIt.registerLazySingleton<RiskRepository>(() => RiskRepositoryImpl(api: getIt<RiskApi>()));
+  // One instance: G22 reuses the place the map found.
+  getIt.registerLazySingleton<LocationRepository>(() => DeviceLocationRepository());
+  getIt.registerLazySingleton(() => GetRiskPlotsUseCase(repository: getIt<RiskRepository>()));
+  getIt.registerLazySingleton(() => GetRiskPlotUseCase(repository: getIt<RiskRepository>()));
+  getIt.registerLazySingleton(() => HasActiveSectorAlertsUseCase(repository: getIt<RiskRepository>()));
+
+  getIt.registerFactory<RiskMapViewModel>(
+    () => RiskMapViewModel(
+      getPlots: getIt<GetRiskPlotsUseCase>(),
+      getPlot: getIt<GetRiskPlotUseCase>(),
+      hasActiveAlerts: getIt<HasActiveSectorAlertsUseCase>(),
+      location: getIt<LocationRepository>(),
+    ),
+  );
+  getIt.registerFactory<SectorDetailViewModel>(
+    () => SectorDetailViewModel(getPlots: getIt<GetRiskPlotsUseCase>(), location: getIt<LocationRepository>()),
+  );
+  getIt.registerFactory<RiskPlotViewModel>(() => RiskPlotViewModel(getPlot: getIt<GetRiskPlotUseCase>()));
 }
 
 void _setupSubscription() {

@@ -12,6 +12,9 @@ import 'package:viora/features/cooperative_operations/presentation/ui/codes_page
 import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/member_detail_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/members_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/risk_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/risk_plot_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/sector_detail_page.dart';
 import 'package:viora/features/home/presentation/ui/home_page.dart';
 import 'package:viora/features/home/presentation/ui/widgets/home_greeting.dart';
 import 'package:viora/features/iam/presentation/ui/iam_page.dart';
@@ -86,6 +89,8 @@ final GoRouter appRouter = GoRouter(
             routes: [
               if (d == TopLevelDestination.members)
                 _membersRoute(d.path)
+              else if (d == TopLevelDestination.risk)
+                _riskRoute(d.path)
               else
                 GoRoute(
                   path: d.path,
@@ -136,7 +141,55 @@ GoRoute _membersRoute(String path) {
         builder: (context, state) => MemberDetailPage(
           memberId: state.pathParameters['memberId']!,
           onBack: () => context.pop(),
+          onOpenPlot: (plotId) => context.push('$path/${state.pathParameters['memberId']}/plots/$plotId'),
         ),
+        routes: [_plotRoute((state) => '$path/${state.pathParameters['memberId']}')],
+      ),
+    ],
+  );
+}
+
+/// G20 · Riesgo territorial and what opens from it: G22 · Detalle del sector and G23 · Parcela del
+/// socio. T14 (alerts) and T16 (provisional dossier) are placeholders until those screens land.
+GoRoute _riskRoute(String path) {
+  return GoRoute(
+    path: path,
+    builder: (context, state) => RiskPage(
+      onOpenAlerts: () => context.push('$path/alerts'),
+      onOpenScope: (scope) => context.push('$path/sectors/$scope'),
+      onOpenPlot: (plotId) => context.push('$path/plots/$plotId'),
+    ),
+    routes: [
+      GoRoute(
+        path: 'alerts',
+        builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).homeAlerts),
+      ),
+      GoRoute(
+        path: SectorDetailPage.path,
+        builder: (context, state) => SectorDetailPage(
+          scope: state.pathParameters['scope']!,
+          onBack: () => context.pop(),
+          onOpenPlot: (plotId) => context.push('$path/plots/$plotId'),
+        ),
+      ),
+      _plotRoute((state) => path),
+    ],
+  );
+}
+
+/// G23 · Parcela del socio under [parent], with T16 opening from it.
+GoRoute _plotRoute(String Function(GoRouterState) parent) {
+  return GoRoute(
+    path: RiskPlotPage.path,
+    builder: (context, state) => RiskPlotPage(
+      plotId: state.pathParameters['plotId']!,
+      onBack: () => context.pop(),
+      onOpenDossier: () => context.push('${parent(state)}/plots/${state.pathParameters['plotId']}/dossier'),
+    ),
+    routes: [
+      GoRoute(
+        path: 'dossier',
+        builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).riskDossierAction),
       ),
     ],
   );

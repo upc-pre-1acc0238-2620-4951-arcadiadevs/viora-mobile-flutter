@@ -22,3 +22,14 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+// Mapbox's plugin expects the Kotlin built into AGP 9, but this project still has it off
+// (android.builtInKotlin=false) because other plugins apply kotlin-android themselves.
+// So only that subproject gets Kotlin applied here, right after its Android plugin.
+subprojects {
+    if (name == "mapbox_maps_flutter_mobile") {
+        pluginManager.withPlugin("com.android.library") {
+            pluginManager.apply("org.jetbrains.kotlin.android")
+        }
+    }
+}

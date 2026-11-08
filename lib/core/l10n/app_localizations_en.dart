@@ -1205,4 +1205,447 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get issuedSeeAll => 'See all codes';
+
+  @override
+  String get riskMap => 'Map';
+
+  @override
+  String get riskList => 'List';
+
+  @override
+  String get riskYou => 'You';
+
+  @override
+  String get riskGpsOff => 'No location · showing the whole valley';
+
+  @override
+  String get riskLevelCritical => 'Critical';
+
+  @override
+  String get riskLevelModerate => 'Moderate';
+
+  @override
+  String get riskLevelNoData => 'No data';
+
+  @override
+  String get riskCountCritical => 'critical';
+
+  @override
+  String get riskCountModerate => 'moderate';
+
+  @override
+  String get riskCountOptimal => 'optimal';
+
+  @override
+  String get riskCountNoData => 'no data';
+
+  @override
+  String riskChipCritical(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count critical',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String riskNearEyebrow(Object meters) {
+    return 'Near you · GPS ± $meters m';
+  }
+
+  @override
+  String get riskNearTitle => 'Within 5 km';
+
+  @override
+  String get riskNearAction => 'See visits by distance';
+
+  @override
+  String riskNearSubtitle(Object plots) {
+    return 'Near you · $plots';
+  }
+
+  @override
+  String get riskSectorEyebrow => 'Sector filter';
+
+  @override
+  String get riskSectorAction => 'See the sector\'s plots';
+
+  @override
+  String riskSectorSubtitle(Object plots) {
+    return 'Sector · $plots';
+  }
+
+  @override
+  String get riskPlotEyebrow => 'Plot chosen on the map';
+
+  @override
+  String get riskPlotAction => 'See plot';
+
+  @override
+  String riskPlotCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count member plots',
+      one: '1 member plot',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String riskPlotCountShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plots',
+      one: '1 plot',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String riskGroupFreshness(Object plots, Object updated) {
+    return '$plots · $updated';
+  }
+
+  @override
+  String get riskUpdatedNow => 'updated just now';
+
+  @override
+  String riskUpdatedMinutes(Object minutes) {
+    return 'updated $minutes min ago';
+  }
+
+  @override
+  String riskUpdatedAt(Object date) {
+    return 'updated on $date';
+  }
+
+  @override
+  String get riskUpdatedUnknown => 'no reading date';
+
+  @override
+  String get riskTileCritical => 'critical plots';
+
+  @override
+  String get riskTileOverload => 'overload > 30%';
+
+  @override
+  String get riskTileFrost => 'frost ≤ 1.5 °C in 48 h';
+
+  @override
+  String get riskTileOverloadPlot => 'overload';
+
+  @override
+  String get riskTilePrescribed => 'prescribed thinning';
+
+  @override
+  String get riskTileDaysLeft => 'days left to thin';
+
+  @override
+  String riskPercent(Object value) {
+    return '$value%';
+  }
+
+  @override
+  String riskHectares(Object value) {
+    return '$value ha';
+  }
+
+  @override
+  String get riskPickerTitle => 'Choose a\n*sector.*';
+
+  @override
+  String get riskPendingTitle => 'To confirm';
+
+  @override
+  String riskPendingSummary(Object plots) {
+    return '$plots · review the sector';
+  }
+
+  @override
+  String get riskUnassignedTitle => 'No sector';
+
+  @override
+  String get riskReview => 'Review';
+
+  @override
+  String riskSummaryCritical(Object plots, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count critical',
+    );
+    return '$plots · $_temp0';
+  }
+
+  @override
+  String riskSummaryModerate(Object plots, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count moderate',
+    );
+    return '$plots · $_temp0';
+  }
+
+  @override
+  String riskSummaryNoData(Object plots) {
+    return '$plots · no valid sampling';
+  }
+
+  @override
+  String riskSummaryOptimal(Object plots) {
+    return '$plots · no risk';
+  }
+
+  @override
+  String get riskEmptyTitle => 'No plots\n*yet.*';
+
+  @override
+  String get riskEmptyBody =>
+      'They will appear here once your members agree to share their data and register their plots.';
+
+  @override
+  String get riskListTitle => 'Valley risk,\n*today.*';
+
+  @override
+  String get riskMostCritical => 'Most critical';
+
+  @override
+  String get riskPermissionTitle => 'Shall we place you\n*on the map?*';
+
+  @override
+  String get riskPermissionBody =>
+      'With your GPS we show you on the map and sort the plots by distance. We only use it while you look at the map.';
+
+  @override
+  String get riskPermissionAllow => 'Allow location';
+
+  @override
+  String get riskPermissionLater => 'Not now';
+
+  @override
+  String get riskScopeEmpty => 'There are no plots to show here.';
+
+  @override
+  String get riskPriorityTitle => 'By priority';
+
+  @override
+  String get riskOrderNearest => 'Closest first';
+
+  @override
+  String get riskOrderPriority => 'Priority first';
+
+  @override
+  String get riskRestTitle => 'Rest of the sector';
+
+  @override
+  String get riskRestModerate => 'Active attention alert';
+
+  @override
+  String get riskRestOptimal => 'Load within target, no frost';
+
+  @override
+  String get riskRestNoData => 'No valid sampling this season';
+
+  @override
+  String riskTogether(Object first, Object second) {
+    return '$first and $second are within 1.5 km: you can see them on one trip.';
+  }
+
+  @override
+  String riskHeroEyebrow(Object level) {
+    return 'Sector traffic light · $level';
+  }
+
+  @override
+  String riskHeroCritical(Object total) {
+    return 'of $total plots in red';
+  }
+
+  @override
+  String riskHeroModerate(Object total) {
+    return 'of $total plots in amber';
+  }
+
+  @override
+  String riskHeroOptimal(Object total) {
+    return 'of $total optimal plots';
+  }
+
+  @override
+  String riskHeroNoData(Object total) {
+    return 'of $total plots without data';
+  }
+
+  @override
+  String riskLegend(Object level, Object count) {
+    return '$level $count';
+  }
+
+  @override
+  String riskFrostDetail(Object value, Object day) {
+    return 'Low of $value °C on $day';
+  }
+
+  @override
+  String riskDistance(Object value) {
+    return '$value km away';
+  }
+
+  @override
+  String riskProposedSector(Object name) {
+    return 'wrote “$name”';
+  }
+
+  @override
+  String riskReasonOverload(Object value) {
+    return 'Overload $value%';
+  }
+
+  @override
+  String riskReasonFrost(Object value, Object day) {
+    return 'Frost $value °C · $day';
+  }
+
+  @override
+  String get riskDossierAction => 'See provisional dossier';
+
+  @override
+  String get riskReadOnly => 'Read only';
+
+  @override
+  String riskReadAt(Object when) {
+    return 'Updated $when';
+  }
+
+  @override
+  String riskToday(Object time) {
+    return 'today, $time';
+  }
+
+  @override
+  String get riskLoadTitle => 'Fruit load';
+
+  @override
+  String get riskLoadUnit => 'Fruits per shoot';
+
+  @override
+  String get riskLoadEstimated => 'Estimated';
+
+  @override
+  String get riskLoadTarget => 'Sustainable target';
+
+  @override
+  String get riskTonsAfterThinning => 'estimated t/ha after thinning';
+
+  @override
+  String riskOverloadNotice(Object percent, Object year) {
+    return '$percent% more fruit than the tree can carry. Left unregulated, alternate bearing goes on and $year would be a strong OFF year.';
+  }
+
+  @override
+  String riskSampleBasis(Object trees, Object day) {
+    return 'Based on $trees trees · round of $day';
+  }
+
+  @override
+  String get riskPrescriptionEyebrow => 'Prescription · thinning';
+
+  @override
+  String get riskPrescriptionUnit => 'of the fruits';
+
+  @override
+  String riskPrescriptionBody(Object name, Object count) {
+    return 'Prescribed to $name: remove $count of every 10 fruitlets, starting with the most loaded branches.';
+  }
+
+  @override
+  String riskWindowFrom(Object day) {
+    return 'From $day';
+  }
+
+  @override
+  String riskWindowUntil(Object day) {
+    return 'Until $day';
+  }
+
+  @override
+  String get riskWindowClosed => 'The window has closed';
+
+  @override
+  String riskWindowOpens(Object day) {
+    return 'Opens on $day';
+  }
+
+  @override
+  String riskWindowDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+      zero: 'Last day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get riskThinningMissing => 'Thinning not registered yet';
+
+  @override
+  String riskThinningDone(Object day) {
+    return 'Thinning registered on $day';
+  }
+
+  @override
+  String get riskBearingEyebrow => 'Alternate bearing · for information';
+
+  @override
+  String riskBearingBand(Object band) {
+    return 'BBI · $band alternation';
+  }
+
+  @override
+  String get riskBearingHigh => 'high';
+
+  @override
+  String get riskBearingModerate => 'moderate';
+
+  @override
+  String get riskBearingLow => 'mild';
+
+  @override
+  String get riskBearingNote => 'It doesn\'t change the traffic light.';
+
+  @override
+  String get riskNoDataTitle => 'Not enough\n*data*';
+
+  @override
+  String get riskNoDataBody =>
+      'This plot has no valid fruit-set sampling this season yet. Without it we can\'t work out its load: it stays grey, never green.';
+
+  @override
+  String get riskNoDataSampling => 'Fruit-set sampling';
+
+  @override
+  String riskNoDataSamplingValue(Object sampled, Object required) {
+    return '$sampled of $required trees';
+  }
+
+  @override
+  String get riskNoDataLoadValue => 'estimated after sampling';
+
+  @override
+  String get riskNoDataPrescription => 'Thinning prescription';
+
+  @override
+  String get riskNoDataPrescriptionValue => 'pending';
+
+  @override
+  String riskNoDataVoice(Object name, Object trees) {
+    return 'Write to $name: with $trees trees sampled we can assess their plot.';
+  }
 }
