@@ -21,12 +21,15 @@ import 'package:viora/features/cooperative_operations/presentation/viewmodel/mem
 /// G41 · Socio: contact, hectares, link code and plots of one member; only the link code
 /// while they don't share (G41 · Retiró el acceso).
 class MemberDetailPage extends StatelessWidget {
-  const MemberDetailPage({super.key, required this.memberId, required this.onBack});
+  const MemberDetailPage({super.key, required this.memberId, required this.onBack, required this.onOpenPlot});
 
   static const path = ':memberId';
 
   final String memberId;
   final VoidCallback onBack;
+
+  /// G23 · Parcela del socio.
+  final ValueChanged<String> onOpenPlot;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,7 @@ class MemberDetailPage extends StatelessWidget {
         builder: (context, state) => MemberDetailContent(
           state: state,
           onBack: onBack,
+          onOpenPlot: onOpenPlot,
           onRetry: () => context.read<MemberDetailViewModel>().load(memberId),
           onCall: (phone) => launchUrl(Uri(scheme: 'tel', path: phone)),
           onWhatsapp: (phone) => launchUrl(
@@ -54,6 +58,7 @@ class MemberDetailContent extends StatelessWidget {
     super.key,
     required this.state,
     required this.onBack,
+    this.onOpenPlot,
     required this.onRetry,
     required this.onCall,
     required this.onWhatsapp,
@@ -61,6 +66,7 @@ class MemberDetailContent extends StatelessWidget {
 
   final MemberDetailUiState state;
   final VoidCallback onBack;
+  final ValueChanged<String>? onOpenPlot;
   final VoidCallback onRetry;
   final ValueChanged<String> onCall;
   final ValueChanged<String> onWhatsapp;
@@ -127,7 +133,7 @@ class MemberDetailContent extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: _ContactButton(
+                      child: ContactButton(
                         label: l10n.memberCall,
                         iconAsset: VioraIcons.smartphone,
                         color: VioraColors.neutral0,
@@ -136,7 +142,7 @@ class MemberDetailContent extends StatelessWidget {
                     ),
                     const SizedBox(width: Spacing.sm),
                     Expanded(
-                      child: _ContactButton(
+                      child: ContactButton(
                         label: l10n.memberWhatsapp,
                         iconAsset: VioraIcons.chat,
                         color: VioraColors.green200,
@@ -158,7 +164,7 @@ class MemberDetailContent extends StatelessWidget {
                 VioraSectionHeader(title: l10n.memberPlots, count: member.plots.length),
                 const SizedBox(height: Spacing.sm),
                 for (final plot in member.plots) ...[
-                  _PlotRow(plot: plot),
+                  _PlotRow(plot: plot, onTap: onOpenPlot == null ? null : () => onOpenPlot!(plot.id)),
                   const SizedBox(height: Spacing.xs),
                 ],
               ],
@@ -268,42 +274,11 @@ class _InfoRow extends StatelessWidget {
   }
 }
 
-class _ContactButton extends StatelessWidget {
-  const _ContactButton({required this.label, required this.iconAsset, required this.color, required this.onPressed});
-
-  final String label;
-  final String iconAsset;
-  final Color color;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color,
-      shape: const StadiumBorder(),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onPressed,
-        child: SizedBox(
-          height: 52,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              VioraIcon(iconAsset, size: 20, color: VioraColors.neutral900),
-              const SizedBox(width: Spacing.xs),
-              Text(label, style: Theme.of(context).textTheme.titleSmall),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _PlotRow extends StatelessWidget {
-  const _PlotRow({required this.plot});
+  const _PlotRow({required this.plot, this.onTap});
 
   final MemberPlot plot;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -313,6 +288,7 @@ class _PlotRow extends StatelessWidget {
     final (label, tone, icon) = _risk(l10n, plot);
     return VioraCard(
       padding: const EdgeInsets.fromLTRB(Spacing.md, 14, Spacing.md, 14),
+      onTap: onTap,
       child: Row(
         children: [
           DecoratedBox(
@@ -348,6 +324,7 @@ class _PlotRow extends StatelessWidget {
               ],
             ),
           ),
+          if (onTap != null) const VioraIcon(VioraIcons.chevronRight, size: 22, color: VioraColors.neutral700),
         ],
       ),
     );

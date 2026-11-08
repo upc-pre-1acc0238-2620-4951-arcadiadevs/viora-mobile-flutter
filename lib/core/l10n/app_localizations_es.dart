@@ -1208,4 +1208,450 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get issuedSeeAll => 'Ver todos los códigos';
+
+  @override
+  String get riskMap => 'Mapa';
+
+  @override
+  String get riskList => 'Lista';
+
+  @override
+  String get riskYou => 'Tú';
+
+  @override
+  String get riskGpsOff => 'Sin ubicación · mostramos todo el valle';
+
+  @override
+  String get riskLevelCritical => 'Crítico';
+
+  @override
+  String get riskLevelModerate => 'Moderado';
+
+  @override
+  String get riskLevelNoData => 'Sin datos';
+
+  @override
+  String get riskCountCritical => 'críticas';
+
+  @override
+  String get riskCountModerate => 'moderadas';
+
+  @override
+  String get riskCountOptimal => 'óptimas';
+
+  @override
+  String get riskCountNoData => 'sin datos';
+
+  @override
+  String riskChipCritical(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count críticas',
+      one: '1 crítica',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String riskNearEyebrow(Object meters) {
+    return 'Cerca de ti · GPS ± $meters m';
+  }
+
+  @override
+  String get riskNearTitle => 'A menos de 5 km';
+
+  @override
+  String get riskNearAction => 'Ver visitas por cercanía';
+
+  @override
+  String riskNearSubtitle(Object plots) {
+    return 'Cerca de ti · $plots';
+  }
+
+  @override
+  String get riskSectorEyebrow => 'Filtro por sector';
+
+  @override
+  String get riskSectorAction => 'Ver parcelas del sector';
+
+  @override
+  String riskSectorSubtitle(Object plots) {
+    return 'Sector · $plots';
+  }
+
+  @override
+  String get riskPlotEyebrow => 'Lote elegido en el mapa';
+
+  @override
+  String get riskPlotAction => 'Ver lote';
+
+  @override
+  String riskPlotCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count parcelas socias',
+      one: '1 parcela socia',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String riskPlotCountShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count parcelas',
+      one: '1 parcela',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String riskGroupFreshness(Object plots, Object updated) {
+    return '$plots · $updated';
+  }
+
+  @override
+  String get riskUpdatedNow => 'actualizado ahora';
+
+  @override
+  String riskUpdatedMinutes(Object minutes) {
+    return 'actualizado hace $minutes min';
+  }
+
+  @override
+  String riskUpdatedAt(Object date) {
+    return 'actualizado el $date';
+  }
+
+  @override
+  String get riskUpdatedUnknown => 'sin fecha de lectura';
+
+  @override
+  String get riskTileCritical => 'parcelas críticas';
+
+  @override
+  String get riskTileOverload => 'sobrecarga > 30 %';
+
+  @override
+  String get riskTileFrost => 'helada ≤ 1,5 °C en 48 h';
+
+  @override
+  String get riskTileOverloadPlot => 'sobrecarga';
+
+  @override
+  String get riskTilePrescribed => 'aclareo prescrito';
+
+  @override
+  String get riskTileDaysLeft => 'días para aclarar';
+
+  @override
+  String riskPercent(Object value) {
+    return '$value %';
+  }
+
+  @override
+  String riskHectares(Object value) {
+    return '$value ha';
+  }
+
+  @override
+  String get riskPickerTitle => 'Elige un\n*sector.*';
+
+  @override
+  String get riskPendingTitle => 'Por confirmar';
+
+  @override
+  String riskPendingSummary(Object plots) {
+    return '$plots · revisar el sector';
+  }
+
+  @override
+  String get riskUnassignedTitle => 'Sin sector';
+
+  @override
+  String get riskReview => 'Revisar';
+
+  @override
+  String riskSummaryCritical(Object plots, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count críticas',
+      one: '1 crítica',
+    );
+    return '$plots · $_temp0';
+  }
+
+  @override
+  String riskSummaryModerate(Object plots, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count moderadas',
+      one: '1 moderada',
+    );
+    return '$plots · $_temp0';
+  }
+
+  @override
+  String riskSummaryNoData(Object plots) {
+    return '$plots · sin muestreo válido';
+  }
+
+  @override
+  String riskSummaryOptimal(Object plots) {
+    return '$plots · sin riesgo';
+  }
+
+  @override
+  String get riskEmptyTitle => 'Aún no hay\n*lotes.*';
+
+  @override
+  String get riskEmptyBody =>
+      'Aparecerán aquí cuando tus socios acepten compartir sus datos y registren sus lotes.';
+
+  @override
+  String get riskListTitle => 'Riesgo del\n*valle, hoy.*';
+
+  @override
+  String get riskMostCritical => 'Más crítico';
+
+  @override
+  String get riskPermissionTitle => '¿Te ubicamos\n*en el mapa?*';
+
+  @override
+  String get riskPermissionBody =>
+      'Con tu GPS te mostramos en el mapa y ordenamos las parcelas por cercanía. Solo lo usamos mientras miras el mapa.';
+
+  @override
+  String get riskPermissionAllow => 'Permitir ubicación';
+
+  @override
+  String get riskPermissionLater => 'Ahora no';
+
+  @override
+  String get riskScopeEmpty => 'No hay parcelas que mostrar aquí.';
+
+  @override
+  String get riskPriorityTitle => 'Por prioridad';
+
+  @override
+  String get riskOrderNearest => 'Más cerca primero';
+
+  @override
+  String get riskOrderPriority => 'Prioridad primero';
+
+  @override
+  String get riskRestTitle => 'Resto del sector';
+
+  @override
+  String get riskRestModerate => 'Alerta de atención activa';
+
+  @override
+  String get riskRestOptimal => 'Carga dentro del objetivo, sin heladas';
+
+  @override
+  String get riskRestNoData => 'Sin muestreo válido esta campaña';
+
+  @override
+  String riskTogether(Object first, Object second) {
+    return '$first y $second están a menos de 1,5 km: puedes verlos en una sola salida.';
+  }
+
+  @override
+  String riskHeroEyebrow(Object level) {
+    return 'Semáforo del sector · $level';
+  }
+
+  @override
+  String riskHeroCritical(Object total) {
+    return 'de $total parcelas en rojo';
+  }
+
+  @override
+  String riskHeroModerate(Object total) {
+    return 'de $total parcelas en ámbar';
+  }
+
+  @override
+  String riskHeroOptimal(Object total) {
+    return 'de $total parcelas óptimas';
+  }
+
+  @override
+  String riskHeroNoData(Object total) {
+    return 'de $total parcelas sin datos';
+  }
+
+  @override
+  String riskLegend(Object level, Object count) {
+    return '$level $count';
+  }
+
+  @override
+  String riskFrostDetail(Object value, Object day) {
+    return 'Mínima de $value °C el $day';
+  }
+
+  @override
+  String riskDistance(Object value) {
+    return 'a $value km';
+  }
+
+  @override
+  String riskProposedSector(Object name) {
+    return 'escribió «$name»';
+  }
+
+  @override
+  String riskReasonOverload(Object value) {
+    return 'Sobrecarga $value %';
+  }
+
+  @override
+  String riskReasonFrost(Object value, Object day) {
+    return 'Helada $value °C · $day';
+  }
+
+  @override
+  String get riskDossierAction => 'Ver expediente provisional';
+
+  @override
+  String get riskReadOnly => 'Solo lectura';
+
+  @override
+  String riskReadAt(Object when) {
+    return 'Actualizado $when';
+  }
+
+  @override
+  String riskToday(Object time) {
+    return 'hoy, $time';
+  }
+
+  @override
+  String get riskLoadTitle => 'Carga frutal';
+
+  @override
+  String get riskLoadUnit => 'Frutos por brote';
+
+  @override
+  String get riskLoadEstimated => 'Estimada';
+
+  @override
+  String get riskLoadTarget => 'Objetivo sostenible';
+
+  @override
+  String get riskTonsAfterThinning => 't/ha estimadas tras aclarar';
+
+  @override
+  String riskOverloadNotice(Object percent, Object year) {
+    return '$percent % más fruta de la que el árbol sostiene. Si no se regula, la vecería se prolonga y $year sería un año OFF fuerte.';
+  }
+
+  @override
+  String riskSampleBasis(Object trees, Object day) {
+    return 'Basado en $trees árboles · ronda del $day';
+  }
+
+  @override
+  String get riskPrescriptionEyebrow => 'Prescripción · aclareo';
+
+  @override
+  String get riskPrescriptionUnit => 'de los frutos';
+
+  @override
+  String riskPrescriptionBody(Object name, Object count) {
+    return 'Prescrito a $name: quitar $count de cada 10 frutitos, empezando por las ramas más cargadas.';
+  }
+
+  @override
+  String riskWindowFrom(Object day) {
+    return 'Desde $day';
+  }
+
+  @override
+  String riskWindowUntil(Object day) {
+    return 'Hasta $day';
+  }
+
+  @override
+  String get riskWindowClosed => 'La ventana ya cerró';
+
+  @override
+  String riskWindowOpens(Object day) {
+    return 'Abre el $day';
+  }
+
+  @override
+  String riskWindowDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Quedan $count días',
+      one: 'Queda 1 día',
+      zero: 'Último día',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get riskThinningMissing => 'Aclareo aún sin registrar';
+
+  @override
+  String riskThinningDone(Object day) {
+    return 'Aclareo registrado el $day';
+  }
+
+  @override
+  String get riskBearingEyebrow => 'Alternancia · dato informativo';
+
+  @override
+  String riskBearingBand(Object band) {
+    return 'BBI · alternancia $band';
+  }
+
+  @override
+  String get riskBearingHigh => 'alta';
+
+  @override
+  String get riskBearingModerate => 'moderada';
+
+  @override
+  String get riskBearingLow => 'leve';
+
+  @override
+  String get riskBearingNote => 'No cambia el color del semáforo.';
+
+  @override
+  String get riskNoDataTitle => 'Sin datos\n*suficientes*';
+
+  @override
+  String get riskNoDataBody =>
+      'Esta parcela aún no tiene un muestreo de cuajado válido esta campaña. Sin él no calculamos su carga: queda en gris, nunca en verde.';
+
+  @override
+  String get riskNoDataSampling => 'Muestreo de cuajado';
+
+  @override
+  String riskNoDataSamplingValue(Object sampled, Object required) {
+    return '$sampled de $required árboles';
+  }
+
+  @override
+  String get riskNoDataLoadValue => 'se estima tras el muestreo';
+
+  @override
+  String get riskNoDataPrescription => 'Prescripción de aclareo';
+
+  @override
+  String get riskNoDataPrescriptionValue => 'pendiente';
+
+  @override
+  String riskNoDataVoice(Object name, Object trees) {
+    return 'Escríbele a $name: con $trees árboles muestreados ya podremos evaluar su parcela.';
+  }
 }

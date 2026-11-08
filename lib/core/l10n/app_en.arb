@@ -25,7 +25,13 @@
   "accountNotificationsOn": "On",
   "accountNotificationsOff": "Off",
   "accountVersion": "Viora {version} · Android · iOS",
-  "@accountVersion": {"placeholders": {"version": {"type": "String"}}},
+  "@accountVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "accountDetailsSaved": "Changes saved",
   "accountPasswordChanged": "Password updated",
   "accountDetailsTitle": "Personal details",
@@ -34,9 +40,24 @@
   "accountFullNamePlaceholder": "Enter your name",
   "accountFullNameRequired": "Your name is required.",
   "accountPhoneLabel": "Mobile · {country} {dialCode}",
-  "@accountPhoneLabel": {"placeholders": {"country": {"type": "String"}, "dialCode": {"type": "String"}}},
+  "@accountPhoneLabel": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "dialCode": {
+        "type": "String"
+      }
+    }
+  },
   "accountPhoneHelper": "International format: {example}",
-  "@accountPhoneHelper": {"placeholders": {"example": {"type": "String"}}},
+  "@accountPhoneHelper": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
   "accountEmailHelper": "Verified · used to sign in to Viora",
   "accountSaveChanges": "Save changes",
   "accountSaveOffline": "No connection: your changes weren't saved. Try again.",
@@ -243,14 +264,35 @@
   "licenseOrganization": "Organization",
   "licenseQuota": "Quota",
   "licenseQuotaValue": "{seats, plural, =1{1 seat} other{{seats} seats}} · {hectares} ha",
-  "@licenseQuotaValue": {"placeholders": {"seats": {"type": "int"}, "hectares": {"type": "String"}}},
+  "@licenseQuotaValue": {
+    "placeholders": {
+      "seats": {
+        "type": "int"
+      },
+      "hectares": {
+        "type": "String"
+      }
+    }
+  },
   "licenseValidity": "Valid",
   "licenseValidUntil": "Until {date}",
-  "@licenseValidUntil": {"placeholders": {"date": {"type": "String"}}},
+  "@licenseValidUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "licenseGoHome": "Go to home",
   "licenseActiveBadge": "Active license",
   "licenseRoleOfOrganization": " · {organization}",
-  "@licenseRoleOfOrganization": {"placeholders": {"organization": {"type": "String"}}},
+  "@licenseRoleOfOrganization": {
+    "placeholders": {
+      "organization": {
+        "type": "String"
+      }
+    }
+  },
   "licenseCheckFailedTitle": "We couldn't check\n*your license.*",
   "licenseRetry": "Try again",
   "licenseErrorOffline": "No connection. Check your signal and try again.",
@@ -260,21 +302,51 @@
   "producerPlanTitle": "Plan\n*Producer*",
   "producerPlanHectares": "YOUR HECTARES",
   "producerPlanIncrease": "Increase by {step} ha",
-  "@producerPlanIncrease": {"placeholders": {"step": {"type": "String"}}},
+  "@producerPlanIncrease": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanDecrease": "Decrease by {step} ha",
-  "@producerPlanDecrease": {"placeholders": {"step": {"type": "String"}}},
+  "@producerPlanDecrease": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanIncludes": "INCLUDES",
   "producerPlanBenefitBbi": "Alternate bearing diagnosis (BBI)",
   "producerPlanBenefitClimate": "Accumulated chill and water stress alerts",
   "producerPlanBenefitSampling": "Offline sampling and thinning prescription",
   "producerPlanBenefitCapacity": "Up to {hectares} ha registered in your plots",
-  "@producerPlanBenefitCapacity": {"placeholders": {"hectares": {"type": "String"}}},
+  "@producerPlanBenefitCapacity": {
+    "placeholders": {
+      "hectares": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanTotal": "ESTIMATED ANNUAL TOTAL",
   "producerPlanMonthly": "Equivalent to {amount} per month · Paid annually",
-  "@producerPlanMonthly": {"placeholders": {"amount": {"type": "String"}}},
+  "@producerPlanMonthly": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanTaxIncluded": "Includes IGV",
   "producerPlanUpdated": "Catalog updated: {timestamp}",
-  "@producerPlanUpdated": {"placeholders": {"timestamp": {"type": "String"}}},
+  "@producerPlanUpdated": {
+    "placeholders": {
+      "timestamp": {
+        "type": "String"
+      }
+    }
+  },
   "producerPlanSavedCopy": "Saved information. Refresh to check the latest conditions.",
   "producerPlanLoading": "Updating plan conditions…",
   "producerPlanEmpty": "No plans are available. Refresh the catalog to check again.",
@@ -284,7 +356,16 @@
   "cooperativeNoLicense": "Your license is not in force.",
   "membersHeadline": "Your\n*members.*",
   "membersVoice": "You have {seats} seats and {hectares} ha left to invite more members.",
-  "@membersVoice": {"placeholders": {"seats": {"type": "Object"}, "hectares": {"type": "Object"}}},
+  "@membersVoice": {
+    "placeholders": {
+      "seats": {
+        "type": "Object"
+      },
+      "hectares": {
+        "type": "Object"
+      }
+    }
+  },
   "membersVoiceFull": "Your license has no free seats left. Ask to expand it to invite more members.",
   "membersLicenseEyebrow": "License · Season {year}",
   "membersSeatsOf": "of {seats} seats",
@@ -294,7 +375,16 @@
   "membersIssueCodes": "Issue codes",
   "membersCodesToRedeem": "codes to redeem",
   "membersCodesExpire": "{count, plural, =1{1 expires on {date}} other{{count} expire on {date}}}",
-  "@membersCodesExpire": {"placeholders": {"count": {"type": "int"}, "date": {"type": "String"}}},
+  "@membersCodesExpire": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "membersCodesNone": "None pending",
   "membersReservedOf": "reserved of {total} ha",
   "membersRegistered": "{hectares} ha registered",
@@ -304,7 +394,13 @@
   "membersFilterSharing": "Sharing · {count}",
   "membersFilterWithdrawn": "Withdrew · {count}",
   "membersPlots": "{count, plural, =1{1 plot} other{{count} plots}}",
-  "@membersPlots": {"placeholders": {"count": {"type": "int"}}},
+  "@membersPlots": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "membersNoSharedData": "No shared data",
   "membersLinked": "Linked",
   "membersWithdrawnOn": "Withdrew access · {date}",
@@ -319,7 +415,16 @@
   "memberEmail": "Email",
   "memberRegistered": "Registered hectares",
   "memberRegisteredValue": "{registered} of {quota} ha",
-  "@memberRegisteredValue": {"placeholders": {"registered": {"type": "Object"}, "quota": {"type": "Object"}}},
+  "@memberRegisteredValue": {
+    "placeholders": {
+      "registered": {
+        "type": "Object"
+      },
+      "quota": {
+        "type": "Object"
+      }
+    }
+  },
   "memberCode": "Link code",
   "memberCodeValue": "{code} · redeemed",
   "memberCall": "Call",
@@ -328,7 +433,19 @@
   "memberWithdrawnNote": "You no longer see their data. Their plan goes on and their seat stays taken. To free it, write to Viora support.",
   "memberNotSharingNote": "They didn't accept to share their data. Their plan goes on and takes a seat.",
   "memberPlotSummary": "{variety} · {hectares} ha · {sector}",
-  "@memberPlotSummary": {"placeholders": {"variety": {"type": "Object"}, "hectares": {"type": "Object"}, "sector": {"type": "Object"}}},
+  "@memberPlotSummary": {
+    "placeholders": {
+      "variety": {
+        "type": "Object"
+      },
+      "hectares": {
+        "type": "Object"
+      },
+      "sector": {
+        "type": "Object"
+      }
+    }
+  },
   "memberPlotSectorPending": "To confirm",
   "riskOverload": "Critical load",
   "riskCriticalIncident": "Critical incident",
@@ -339,24 +456,60 @@
   "riskNoData": "Not enough data",
   "codesTitle": "Activation codes",
   "codesSubtitle": "{organization} · {seats} seats · {hectares} ha",
-  "@codesSubtitle": {"placeholders": {"organization": {"type": "Object"}, "seats": {"type": "Object"}, "hectares": {"type": "Object"}}},
+  "@codesSubtitle": {
+    "placeholders": {
+      "organization": {
+        "type": "Object"
+      },
+      "seats": {
+        "type": "Object"
+      },
+      "hectares": {
+        "type": "Object"
+      }
+    }
+  },
   "codesHeadline": "Your\n*codes.*",
   "codesTabAvailable": "To redeem · {count}",
   "codesTabRedeemed": "Redeemed · {count}",
   "codesTabClosed": "Expired · {count}",
   "codesIssuedOn": "Issued on {date}",
   "codesExpiresIn": "{days, plural, =0{Expires today} =1{Expires tomorrow} other{Expires in {days} days}}",
-  "@codesExpiresIn": {"placeholders": {"days": {"type": "int"}}},
+  "@codesExpiresIn": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "codesExpiresOn": "Expires on {date}",
   "codesExpiredOn": "Expired on {date}",
   "codesRevokedTag": "Revoked",
   "codesPerCode": "{hectares} ha per code",
   "codesRedeemedBy": "{name} · {date}",
-  "@codesRedeemedBy": {"placeholders": {"name": {"type": "Object"}, "date": {"type": "Object"}}},
+  "@codesRedeemedBy": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      },
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
   "codesShare": "Share",
   "codesRevoke": "Revoke",
   "codesFooterAvailable": "You have {seats} seats and {hectares} ha left. Each code to redeem holds them until it expires or you revoke it.",
-  "@codesFooterAvailable": {"placeholders": {"seats": {"type": "Object"}, "hectares": {"type": "Object"}}},
+  "@codesFooterAvailable": {
+    "placeholders": {
+      "seats": {
+        "type": "Object"
+      },
+      "hectares": {
+        "type": "Object"
+      }
+    }
+  },
   "codesFooterRedeemed": "A redeemed code can't be shared or revoked anymore. Only its reference is left.",
   "codesFooterClosed": "An expired or revoked code gave its seat and hectares back to your license.",
   "codesEmptyAvailable": "You have no codes to redeem.",
@@ -367,23 +520,77 @@
   "revokeTitle": "Revoke\n*{code}?*",
   "revokeBody": "Nobody will be able to use it. Its seat and its {hectares} ha go back to your license.",
   "revokeSeats": "seats · {from} → {to} ha",
-  "@revokeSeats": {"placeholders": {"from": {"type": "Object"}, "to": {"type": "Object"}}},
+  "@revokeSeats": {
+    "placeholders": {
+      "from": {
+        "type": "Object"
+      },
+      "to": {
+        "type": "Object"
+      }
+    }
+  },
   "revokeAction": "Revoke code",
   "cooperativeCancel": "Cancel",
   "redeemedTitle": "This code\n*was redeemed*",
   "redeemedBody": "{name} used it on {date}. Redeemed codes can't be revoked.",
-  "@redeemedBody": {"placeholders": {"name": {"type": "Object"}, "date": {"type": "Object"}}},
+  "@redeemedBody": {
+    "placeholders": {
+      "name": {
+        "type": "Object"
+      },
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
   "redeemedBodyUnknown": "Someone used it recently. Redeemed codes can't be revoked.",
   "redeemedWhen": "redeemed on {date}",
   "redeemedSeeMembers": "See members",
   "redeemedUnderstood": "Got it",
   "shareCodeMessage": "Hi, this is your code to join {organization} on Viora: {code}. Redeem it in the Viora app, under \"I have a cooperative code\". It expires on {date}.",
-  "@shareCodeMessage": {"placeholders": {"organization": {"type": "Object"}, "code": {"type": "Object"}, "date": {"type": "Object"}}},
+  "@shareCodeMessage": {
+    "placeholders": {
+      "organization": {
+        "type": "Object"
+      },
+      "code": {
+        "type": "Object"
+      },
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
   "shareCodesMessage": "Codes of {organization} on Viora, one per member:\n{codes}\nEach one is redeemed in the Viora app, under \"I have a cooperative code\". They expire on {date}.",
-  "@shareCodesMessage": {"placeholders": {"organization": {"type": "Object"}, "codes": {"type": "Object"}, "date": {"type": "Object"}}},
+  "@shareCodesMessage": {
+    "placeholders": {
+      "organization": {
+        "type": "Object"
+      },
+      "codes": {
+        "type": "Object"
+      },
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
   "issueHeadline": "Issue\n*codes*",
   "issueSubtitle": "{organization} · {seats} seats and {hectares} ha free",
-  "@issueSubtitle": {"placeholders": {"organization": {"type": "Object"}, "seats": {"type": "Object"}, "hectares": {"type": "Object"}}},
+  "@issueSubtitle": {
+    "placeholders": {
+      "organization": {
+        "type": "Object"
+      },
+      "seats": {
+        "type": "Object"
+      },
+      "hectares": {
+        "type": "Object"
+      }
+    }
+  },
   "issueQuantity": "Quantity",
   "issueQuantityCaption": "codes · one per member",
   "issueHectares": "Hectares per code",
@@ -392,24 +599,284 @@
   "issueValidity": "Validity",
   "issueDays": "{days} days",
   "issuePreview": "of {seats} seats · {fromHa} → {toHa} of {totalHa} ha. They expire on {date}.",
-  "@issuePreview": {"placeholders": {"seats": {"type": "Object"}, "fromHa": {"type": "Object"}, "toHa": {"type": "Object"}, "totalHa": {"type": "Object"}, "date": {"type": "Object"}}},
+  "@issuePreview": {
+    "placeholders": {
+      "seats": {
+        "type": "Object"
+      },
+      "fromHa": {
+        "type": "Object"
+      },
+      "toHa": {
+        "type": "Object"
+      },
+      "totalHa": {
+        "type": "Object"
+      },
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
   "issueSeatsExceeded": "over the {free} free seats",
   "issueSeatsExceededBanner": "of {seats} seats: over your quota. Issue up to {free} or ask to expand the license.",
-  "@issueSeatsExceededBanner": {"placeholders": {"seats": {"type": "Object"}, "free": {"type": "Object"}}},
+  "@issueSeatsExceededBanner": {
+    "placeholders": {
+      "seats": {
+        "type": "Object"
+      },
+      "free": {
+        "type": "Object"
+      }
+    }
+  },
   "issueAreaExceeded": "{hectares} ha are over the {free} ha free",
-  "@issueAreaExceeded": {"placeholders": {"hectares": {"type": "Object"}, "free": {"type": "Object"}}},
+  "@issueAreaExceeded": {
+    "placeholders": {
+      "hectares": {
+        "type": "Object"
+      },
+      "free": {
+        "type": "Object"
+      }
+    }
+  },
   "issueAreaExceededBanner": "ha of {free} free: over your quota. Lower the hectares or ask to expand the license.",
   "issueAction": "{count, plural, =1{Issue 1 code} other{Issue {count} codes}}",
-  "@issueAction": {"placeholders": {"count": {"type": "int"}}},
+  "@issueAction": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "issueUnavailable": "Codes can't be issued now. Let Viora support know.",
   "issueDecrease": "Decrease",
   "issueIncrease": "Increase",
   "issuedHeadline": "{count, plural, =1{1 code\n*ready.*} other{{count} codes\n*ready.*}}",
-  "@issuedHeadline": {"placeholders": {"count": {"type": "int"}}},
+  "@issuedHeadline": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "issuedVoice": "Share them with your members: each one activates an account, takes a seat and holds {hectares} ha.",
   "issuedExpire": "They expire on {date}",
   "issuedCopy": "Copy",
   "issuedCopied": "Copied",
   "issuedShareWhatsapp": "Share on WhatsApp",
-  "issuedSeeAll": "See all codes"
+  "issuedSeeAll": "See all codes",
+  "riskMap": "Map",
+  "riskList": "List",
+  "riskYou": "You",
+  "riskGpsOff": "No location · showing the whole valley",
+  "riskLevelCritical": "Critical",
+  "riskLevelModerate": "Moderate",
+  "riskLevelNoData": "No data",
+  "riskCountCritical": "critical",
+  "riskCountModerate": "moderate",
+  "riskCountOptimal": "optimal",
+  "riskCountNoData": "no data",
+  "riskChipCritical": "{count, plural, other{{count} critical}}",
+  "@riskChipCritical": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "riskNearEyebrow": "Near you · GPS ± {meters} m",
+  "riskNearTitle": "Within 5 km",
+  "riskNearAction": "See visits by distance",
+  "riskNearSubtitle": "Near you · {plots}",
+  "riskSectorEyebrow": "Sector filter",
+  "riskSectorAction": "See the sector's plots",
+  "riskSectorSubtitle": "Sector · {plots}",
+  "riskPlotEyebrow": "Plot chosen on the map",
+  "riskPlotAction": "See plot",
+  "riskPlotCount": "{count, plural, =1{1 member plot} other{{count} member plots}}",
+  "@riskPlotCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "riskPlotCountShort": "{count, plural, =1{1 plot} other{{count} plots}}",
+  "@riskPlotCountShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "riskGroupFreshness": "{plots} · {updated}",
+  "@riskGroupFreshness": {
+    "placeholders": {
+      "plots": {},
+      "updated": {}
+    }
+  },
+  "riskUpdatedNow": "updated just now",
+  "riskUpdatedMinutes": "updated {minutes} min ago",
+  "riskUpdatedAt": "updated on {date}",
+  "riskUpdatedUnknown": "no reading date",
+  "riskTileCritical": "critical plots",
+  "riskTileOverload": "overload > 30%",
+  "riskTileFrost": "frost ≤ 1.5 °C in 48 h",
+  "riskTileOverloadPlot": "overload",
+  "riskTilePrescribed": "prescribed thinning",
+  "riskTileDaysLeft": "days left to thin",
+  "riskPercent": "{value}%",
+  "riskHectares": "{value} ha",
+  "riskPickerTitle": "Choose a\n*sector.*",
+  "riskPendingTitle": "To confirm",
+  "riskPendingSummary": "{plots} · review the sector",
+  "riskUnassignedTitle": "No sector",
+  "riskReview": "Review",
+  "riskSummaryCritical": "{plots} · {count, plural, other{{count} critical}}",
+  "@riskSummaryCritical": {
+    "placeholders": {
+      "plots": {},
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "riskSummaryModerate": "{plots} · {count, plural, other{{count} moderate}}",
+  "@riskSummaryModerate": {
+    "placeholders": {
+      "plots": {},
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "riskSummaryNoData": "{plots} · no valid sampling",
+  "riskSummaryOptimal": "{plots} · no risk",
+  "riskEmptyTitle": "No plots\n*yet.*",
+  "riskEmptyBody": "They will appear here once your members agree to share their data and register their plots.",
+  "riskListTitle": "Valley risk,\n*today.*",
+  "riskMostCritical": "Most critical",
+  "riskPermissionTitle": "Shall we place you\n*on the map?*",
+  "riskPermissionBody": "With your GPS we show you on the map and sort the plots by distance. We only use it while you look at the map.",
+  "riskPermissionAllow": "Allow location",
+  "riskPermissionLater": "Not now",
+  "riskScopeEmpty": "There are no plots to show here.",
+  "riskPriorityTitle": "By priority",
+  "riskOrderNearest": "Closest first",
+  "riskOrderPriority": "Priority first",
+  "riskRestTitle": "Rest of the sector",
+  "riskRestModerate": "Active attention alert",
+  "riskRestOptimal": "Load within target, no frost",
+  "riskRestNoData": "No valid sampling this season",
+  "riskTogether": "{first} and {second} are within 1.5 km: you can see them on one trip.",
+  "@riskTogether": {
+    "placeholders": {
+      "first": {},
+      "second": {}
+    }
+  },
+  "riskHeroEyebrow": "Sector traffic light · {level}",
+  "riskHeroCritical": "of {total} plots in red",
+  "riskHeroModerate": "of {total} plots in amber",
+  "riskHeroOptimal": "of {total} optimal plots",
+  "riskHeroNoData": "of {total} plots without data",
+  "riskLegend": "{level} {count}",
+  "@riskLegend": {
+    "placeholders": {
+      "level": {},
+      "count": {}
+    }
+  },
+  "riskFrostDetail": "Low of {value} °C on {day}",
+  "@riskFrostDetail": {
+    "placeholders": {
+      "value": {},
+      "day": {}
+    }
+  },
+  "riskDistance": "{value} km away",
+  "riskProposedSector": "wrote “{name}”",
+  "riskReasonOverload": "Overload {value}%",
+  "riskReasonFrost": "Frost {value} °C · {day}",
+  "@riskReasonFrost": {
+    "placeholders": {
+      "value": {},
+      "day": {}
+    }
+  },
+  "riskDossierAction": "See provisional dossier",
+  "riskReadOnly": "Read only",
+  "riskReadAt": "Updated {when}",
+  "riskToday": "today, {time}",
+  "riskLoadTitle": "Fruit load",
+  "riskLoadUnit": "Fruits per shoot",
+  "riskLoadEstimated": "Estimated",
+  "riskLoadTarget": "Sustainable target",
+  "riskTonsAfterThinning": "estimated t/ha after thinning",
+  "riskOverloadNotice": "{percent}% more fruit than the tree can carry. Left unregulated, alternate bearing goes on and {year} would be a strong OFF year.",
+  "@riskOverloadNotice": {
+    "placeholders": {
+      "percent": {},
+      "year": {}
+    }
+  },
+  "riskSampleBasis": "Based on {trees} trees · round of {day}",
+  "@riskSampleBasis": {
+    "placeholders": {
+      "trees": {},
+      "day": {}
+    }
+  },
+  "riskPrescriptionEyebrow": "Prescription · thinning",
+  "riskPrescriptionUnit": "of the fruits",
+  "riskPrescriptionBody": "Prescribed to {name}: remove {count} of every 10 fruitlets, starting with the most loaded branches.",
+  "@riskPrescriptionBody": {
+    "placeholders": {
+      "name": {},
+      "count": {}
+    }
+  },
+  "riskWindowFrom": "From {day}",
+  "riskWindowUntil": "Until {day}",
+  "riskWindowClosed": "The window has closed",
+  "riskWindowOpens": "Opens on {day}",
+  "riskWindowDaysLeft": "{count, plural, =0{Last day} =1{1 day left} other{{count} days left}}",
+  "@riskWindowDaysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "riskThinningMissing": "Thinning not registered yet",
+  "riskThinningDone": "Thinning registered on {day}",
+  "riskBearingEyebrow": "Alternate bearing · for information",
+  "riskBearingBand": "BBI · {band} alternation",
+  "riskBearingHigh": "high",
+  "riskBearingModerate": "moderate",
+  "riskBearingLow": "mild",
+  "riskBearingNote": "It doesn't change the traffic light.",
+  "riskNoDataTitle": "Not enough\n*data*",
+  "riskNoDataBody": "This plot has no valid fruit-set sampling this season yet. Without it we can't work out its load: it stays grey, never green.",
+  "riskNoDataSampling": "Fruit-set sampling",
+  "riskNoDataSamplingValue": "{sampled} of {required} trees",
+  "@riskNoDataSamplingValue": {
+    "placeholders": {
+      "sampled": {},
+      "required": {}
+    }
+  },
+  "riskNoDataLoadValue": "estimated after sampling",
+  "riskNoDataPrescription": "Thinning prescription",
+  "riskNoDataPrescriptionValue": "pending",
+  "riskNoDataVoice": "Write to {name}: with {trees} trees sampled we can assess their plot.",
+  "@riskNoDataVoice": {
+    "placeholders": {
+      "name": {},
+      "trees": {}
+    }
+  }
 }
