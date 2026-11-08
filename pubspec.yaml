@@ -1,7 +1,7 @@
 name: viora
 description: "Viora — app móvil Flutter (plataforma de manejo de carga y vecería del olivo)."
 publish_to: 'none'
-version: 0.9.0+6
+version: 0.10.0+7
 
 environment:
   sdk: ^3.13.5
