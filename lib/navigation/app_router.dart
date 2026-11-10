@@ -96,7 +96,10 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: d.path,
                   builder: (context, state) => d == TopLevelDestination.home
-                      ? HomePage(onOpenAccount: () => context.push(AccountPage.path))
+                      ? HomePage(
+                          onOpenAccount: () => context.push(AccountPage.path),
+                          onOpenAlerts: () => context.go(_alertsPath),
+                        )
                       : PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
                 ),
             ],
@@ -106,6 +109,10 @@ final GoRouter appRouter = GoRouter(
   ],
 );
 
+/// T14 · Alertas del gestor lives under the Riesgo tab; the bell of the other tabs takes the
+/// manager there, so going back lands on the map of the valley.
+final _alertsPath = '${TopLevelDestination.risk.path}/${ManagerAlertsPage.path}';
+
 /// G40 · Socios and what opens from it: G41 · Socio, G42 · Códigos and G44 · Códigos generados,
 /// which covers the tab bar as in the design.
 GoRoute _membersRoute(String path) {
@@ -114,7 +121,10 @@ GoRoute _membersRoute(String path) {
   return GoRoute(
     path: path,
     builder: (context, state) => MembersPage(
-      header: HomeGreeting(onOpenAccount: () => context.push(AccountPage.path)),
+      header: HomeGreeting(
+        onOpenAccount: () => context.push(AccountPage.path),
+        onOpenAlerts: () => context.go(_alertsPath),
+      ),
       onOpenMember: (id) => context.push('$path/$id'),
       onOpenCodes: () => context.push<void>(codes),
       onIssued: (args) => context.push<void>(issued, extra: args),
