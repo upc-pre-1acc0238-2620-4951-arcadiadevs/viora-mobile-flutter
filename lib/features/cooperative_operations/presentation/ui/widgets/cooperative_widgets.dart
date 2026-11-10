@@ -10,26 +10,31 @@ import 'package:viora/core/designsystem/theme/typography.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
 
-/// The bar of G41 and G42: back on the left, the title and its subtitle centered. [notice]
-/// takes the title's place for a moment, as the "Código revocado" pill.
+/// The bar of G41, G42 and T14: back on the left, the title and its subtitle centered, and an
+/// optional [trailing] button on the right. [notice] takes the title's place for a moment, as
+/// the "Código revocado" pill.
 class CooperativeTopBar extends StatelessWidget {
   const CooperativeTopBar({
     super.key,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.onBack,
     this.notice,
+    this.trailing,
   });
 
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final VoidCallback onBack;
   final String? notice;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final notice = this.notice;
+    final subtitle = this.subtitle;
+    final trailing = this.trailing;
     return SizedBox(
       height: Spacing.minTouchTarget,
       child: Stack(
@@ -54,16 +59,18 @@ class CooperativeTopBar extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(title, style: textTheme.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
-                        Text(
-                          subtitle,
-                          style: textTheme.bodySmall?.copyWith(color: VioraColors.neutral600),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        if (subtitle != null)
+                          Text(
+                            subtitle,
+                            style: textTheme.bodySmall?.copyWith(color: VioraColors.neutral600),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                       ],
                     ),
             ),
           ),
+          if (trailing != null) Align(alignment: Alignment.centerRight, child: trailing),
         ],
       ),
     );

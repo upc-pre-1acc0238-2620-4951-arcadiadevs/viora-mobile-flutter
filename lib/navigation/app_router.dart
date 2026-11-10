@@ -10,6 +10,7 @@ import 'package:viora/core/navigation/placeholder_screen.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/manager_alerts_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/member_detail_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/members_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_page.dart';
@@ -95,7 +96,10 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: d.path,
                   builder: (context, state) => d == TopLevelDestination.home
-                      ? HomePage(onOpenAccount: () => context.push(AccountPage.path))
+                      ? HomePage(
+                          onOpenAccount: () => context.push(AccountPage.path),
+                          onOpenAlerts: () => context.go(_alertsPath),
+                        )
                       : PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
                 ),
             ],
@@ -105,6 +109,10 @@ final GoRouter appRouter = GoRouter(
   ],
 );
 
+/// T14 · Alertas del gestor lives under the Riesgo tab; the bell of the other tabs takes the
+/// manager there, so going back lands on the map of the valley.
+final _alertsPath = '${TopLevelDestination.risk.path}/${ManagerAlertsPage.path}';
+
 /// G40 · Socios and what opens from it: G41 · Socio, G42 · Códigos and G44 · Códigos generados,
 /// which covers the tab bar as in the design.
 GoRoute _membersRoute(String path) {
@@ -113,7 +121,10 @@ GoRoute _membersRoute(String path) {
   return GoRoute(
     path: path,
     builder: (context, state) => MembersPage(
-      header: HomeGreeting(onOpenAccount: () => context.push(AccountPage.path)),
+      header: HomeGreeting(
+        onOpenAccount: () => context.push(AccountPage.path),
+        onOpenAlerts: () => context.go(_alertsPath),
+      ),
       onOpenMember: (id) => context.push('$path/$id'),
       onOpenCodes: () => context.push<void>(codes),
       onIssued: (args) => context.push<void>(issued, extra: args),
@@ -149,20 +160,31 @@ GoRoute _membersRoute(String path) {
   );
 }
 
-/// G20 · Riesgo territorial and what opens from it: G22 · Detalle del sector and G23 · Parcela del
-/// socio. T14 (alerts) and T16 (provisional dossier) are placeholders until those screens land.
+/// G20 · Riesgo territorial and what opens from it: T14 · Alertas del gestor, G22 · Detalle del
+/// sector and G23 · Parcela del socio. The alert preferences and T16 (provisional dossier) are
+/// placeholders until those screens land.
 GoRoute _riskRoute(String path) {
   return GoRoute(
     path: path,
     builder: (context, state) => RiskPage(
-      onOpenAlerts: () => context.push('$path/alerts'),
+      onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
       onOpenScope: (scope) => context.push('$path/sectors/$scope'),
       onOpenPlot: (plotId) => context.push('$path/plots/$plotId'),
     ),
     routes: [
       GoRoute(
-        path: 'alerts',
-        builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).homeAlerts),
+        path: ManagerAlertsPage.path,
+        builder: (context, state) => ManagerAlertsPage(
+          onBack: () => context.pop(),
+          onOpenPreferences: () => context.push('$path/${ManagerAlertsPage.path}/preferences'),
+          onOpenSector: (sectorId) => context.push('$path/sectors/$sectorId'),
+        ),
+        routes: [
+          GoRoute(
+            path: 'preferences',
+            builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).alertsPreferences),
+          ),
+        ],
       ),
       GoRoute(
         path: SectorDetailPage.path,

@@ -1,6 +1,7 @@
 import 'package:viora/core/network/api_client.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_plot_dto.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/sector_alert_dto.dart';
 
 /// The plots of the members who share and the alerts of their sectors.
 class RiskApi {
@@ -17,4 +18,7 @@ class RiskApi {
 
   Future<bool> hasActiveAlerts() async =>
       (await client.getList('sector-alerts')).any((alert) => alert['status'] == 'ACTIVE');
+
+  Future<List<SectorAlertDto>> alerts() async =>
+      (await client.getList('sector-alerts')).map(SectorAlertDto.fromJson).toList();
 }

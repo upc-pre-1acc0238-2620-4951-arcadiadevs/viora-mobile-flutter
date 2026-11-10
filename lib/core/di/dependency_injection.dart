@@ -60,6 +60,7 @@ import 'package:viora/features/cooperative_operations/application/usecase/get_me
 import 'package:viora/features/cooperative_operations/application/usecase/get_members_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plot_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plots_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_sector_alerts_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/issue_invitation_codes_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/revoke_invitation_code_use_case.dart';
@@ -73,6 +74,7 @@ import 'package:viora/features/cooperative_operations/infrastructure/repository/
 import 'package:viora/features/cooperative_operations/infrastructure/repository/risk_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/issue_codes_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_alerts_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/member_detail_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/members_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_map_view_model.dart';
@@ -141,6 +143,7 @@ void _setupTerritorialRisk() {
   getIt.registerLazySingleton(() => GetRiskPlotsUseCase(repository: getIt<RiskRepository>()));
   getIt.registerLazySingleton(() => GetRiskPlotUseCase(repository: getIt<RiskRepository>()));
   getIt.registerLazySingleton(() => HasActiveSectorAlertsUseCase(repository: getIt<RiskRepository>()));
+  getIt.registerLazySingleton(() => GetSectorAlertsUseCase(repository: getIt<RiskRepository>()));
 
   getIt.registerFactory<RiskMapViewModel>(
     () => RiskMapViewModel(
@@ -154,6 +157,7 @@ void _setupTerritorialRisk() {
     () => SectorDetailViewModel(getPlots: getIt<GetRiskPlotsUseCase>(), location: getIt<LocationRepository>()),
   );
   getIt.registerFactory<RiskPlotViewModel>(() => RiskPlotViewModel(getPlot: getIt<GetRiskPlotUseCase>()));
+  getIt.registerFactory<ManagerAlertsViewModel>(() => ManagerAlertsViewModel(getAlerts: getIt<GetSectorAlertsUseCase>()));
 }
 
 void _setupSubscription() {
