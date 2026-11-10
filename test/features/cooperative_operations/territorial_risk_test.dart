@@ -9,6 +9,7 @@ import 'package:viora/features/cooperative_operations/application/usecase/has_ac
 import 'package:viora/features/cooperative_operations/domain/entity/cooperative_member.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_territory.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/sector_alert.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_plot_dto.dart';
@@ -100,7 +101,7 @@ class _FakeRisk implements RiskRepository {
   List<RiskPlot> plotsToReturn = const [];
   CooperativeFailure? plotsFailure;
   GeoCoordinate? lastOrigin;
-  bool alerts = false;
+  bool activeAlerts = false;
 
   @override
   Future<List<RiskPlot>> plots({GeoCoordinate? origin}) async {
@@ -114,7 +115,10 @@ class _FakeRisk implements RiskRepository {
   Future<RiskPlotDetail> plot(String id) async => _detail();
 
   @override
-  Future<bool> hasActiveAlerts() async => alerts;
+  Future<bool> hasActiveAlerts() async => activeAlerts;
+
+  @override
+  Future<List<SectorAlert>> alerts() async => const [];
 }
 
 class _FakeLocation implements LocationRepository {

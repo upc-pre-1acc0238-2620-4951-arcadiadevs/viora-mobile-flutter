@@ -1,4 +1,5 @@
 import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/sector_alert.dart';
 
 /// The territorial traffic light of the manager's license.
 abstract class RiskRepository {
@@ -10,6 +11,9 @@ abstract class RiskRepository {
 
   /// Whether any sector of the license has an active alert.
   Future<bool> hasActiveAlerts();
+
+  /// The alerts of the license's sectors: the active ones and those normalized in the last 7 days.
+  Future<List<SectorAlert>> alerts();
 }
 
 /// Where the manager stands, and how well the phone knows it.
