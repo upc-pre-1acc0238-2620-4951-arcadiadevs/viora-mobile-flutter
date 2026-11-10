@@ -1648,4 +1648,143 @@ class AppLocalizationsEn extends AppLocalizations {
   String riskNoDataVoice(Object name, Object trees) {
     return 'Write to $name: with $trees trees sampled we can assess their plot.';
   }
+
+  @override
+  String get alertsPreferences => 'Alert preferences';
+
+  @override
+  String alertsActive(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'active alerts',
+      one: 'active alert',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String alertsWhere(Object sectors, Object time) {
+    return 'In $sectors · updated $time';
+  }
+
+  @override
+  String alertsCalm(Object time) {
+    return 'Your sectors are calm · updated $time';
+  }
+
+  @override
+  String alertsSectorsJoin(Object first, Object last) {
+    return '$first and $last';
+  }
+
+  @override
+  String get alertsFilterCritical => 'Critical';
+
+  @override
+  String get alertsFilterAttention => 'Attention';
+
+  @override
+  String get alertsFilterNormalized => 'Normalized';
+
+  @override
+  String get alertsToday => 'Today';
+
+  @override
+  String get alertsYesterday => 'Yesterday';
+
+  @override
+  String get alertsNormalizedTitle => 'Normalized · last 7 days';
+
+  @override
+  String get alertsFilteredEmpty => 'No alerts in this group.';
+
+  @override
+  String get alertsChipCritical => 'Critical';
+
+  @override
+  String get alertsChipAttention => 'Attention';
+
+  @override
+  String get alertsAgoNow => 'Just now';
+
+  @override
+  String alertsAgoMinutes(int minutes) {
+    return '$minutes min ago';
+  }
+
+  @override
+  String alertsAgoHours(int hours) {
+    return '$hours h ago';
+  }
+
+  @override
+  String alertsSectorCriticalTitle(Object sector) {
+    return '$sector turned Critical';
+  }
+
+  @override
+  String alertsFrostTitle(Object sector) {
+    return 'Radiative frost in $sector';
+  }
+
+  @override
+  String alertsOverloadBody(Object producer, Object value, Object plots) {
+    return '$producer recorded an overload of $value %. $plots';
+  }
+
+  @override
+  String alertsIncidentBody(Object producer, Object plots) {
+    return '$producer reported a critical incident. $plots';
+  }
+
+  @override
+  String alertsRedPlots(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'There are now $count plots in red in the sector.',
+      one: 'There is now 1 plot in red in the sector.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String alertsFrostForecastBody(Object value, Object day) {
+    return 'Forecast low of $value °C on $day. Let the sector\'s members know.';
+  }
+
+  @override
+  String alertsFrostIncidentBody(Object producer, Object plot) {
+    return '$producer reported frost on $plot. Let the sector\'s members know.';
+  }
+
+  @override
+  String alertsFrostPlots(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plots exposed. Let the sector\'s members know.',
+      one: '1 plot exposed. Let the sector\'s members know.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get alertsOpenSector => 'Open sector';
+
+  @override
+  String alertsBackTo(Object sector, Object level) {
+    return '$sector went back to $level';
+  }
+
+  @override
+  String alertsFrostPassed(Object sector) {
+    return 'The frost passed in $sector';
+  }
+
+  @override
+  String alertsNormalizedPlain(Object sector) {
+    return '$sector normalized';
+  }
 }

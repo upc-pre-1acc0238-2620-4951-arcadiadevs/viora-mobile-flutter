@@ -1,5 +1,6 @@
 import 'package:viora/core/network/api_client.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/sector_alert.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/mapper/cooperative_error_mapper.dart';
@@ -19,6 +20,10 @@ class RiskRepositoryImpl implements RiskRepository {
 
   @override
   Future<bool> hasActiveAlerts() => _call(api.hasActiveAlerts);
+
+  @override
+  Future<List<SectorAlert>> alerts() =>
+      _call(() async => (await api.alerts()).map((dto) => dto.toDomain()).toList());
 
   Future<T> _call<T>(Future<T> Function() request) async {
     try {

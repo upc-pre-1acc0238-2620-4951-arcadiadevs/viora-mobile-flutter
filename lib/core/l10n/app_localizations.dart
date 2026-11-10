@@ -2689,6 +2689,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Write to {name}: with {trees} trees sampled we can assess their plot.'**
   String riskNoDataVoice(Object name, Object trees);
+
+  /// No description provided for @alertsPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert preferences'**
+  String get alertsPreferences;
+
+  /// No description provided for @alertsActive.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{active alert} other{active alerts}}'**
+  String alertsActive(int count);
+
+  /// No description provided for @alertsWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'In {sectors} · updated {time}'**
+  String alertsWhere(Object sectors, Object time);
+
+  /// No description provided for @alertsCalm.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sectors are calm · updated {time}'**
+  String alertsCalm(Object time);
+
+  /// No description provided for @alertsSectorsJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'{first} and {last}'**
+  String alertsSectorsJoin(Object first, Object last);
+
+  /// No description provided for @alertsFilterCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get alertsFilterCritical;
+
+  /// No description provided for @alertsFilterAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Attention'**
+  String get alertsFilterAttention;
+
+  /// No description provided for @alertsFilterNormalized.
+  ///
+  /// In en, this message translates to:
+  /// **'Normalized'**
+  String get alertsFilterNormalized;
+
+  /// No description provided for @alertsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get alertsToday;
+
+  /// No description provided for @alertsYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get alertsYesterday;
+
+  /// No description provided for @alertsNormalizedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Normalized · last 7 days'**
+  String get alertsNormalizedTitle;
+
+  /// No description provided for @alertsFilteredEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No alerts in this group.'**
+  String get alertsFilteredEmpty;
+
+  /// No description provided for @alertsChipCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get alertsChipCritical;
+
+  /// No description provided for @alertsChipAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Attention'**
+  String get alertsChipAttention;
+
+  /// No description provided for @alertsAgoNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get alertsAgoNow;
+
+  /// No description provided for @alertsAgoMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min ago'**
+  String alertsAgoMinutes(int minutes);
+
+  /// No description provided for @alertsAgoHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} h ago'**
+  String alertsAgoHours(int hours);
+
+  /// No description provided for @alertsSectorCriticalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{sector} turned Critical'**
+  String alertsSectorCriticalTitle(Object sector);
+
+  /// No description provided for @alertsFrostTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Radiative frost in {sector}'**
+  String alertsFrostTitle(Object sector);
+
+  /// No description provided for @alertsOverloadBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{producer} recorded an overload of {value} %. {plots}'**
+  String alertsOverloadBody(Object producer, Object value, Object plots);
+
+  /// No description provided for @alertsIncidentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{producer} reported a critical incident. {plots}'**
+  String alertsIncidentBody(Object producer, Object plots);
+
+  /// No description provided for @alertsRedPlots.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{There is now 1 plot in red in the sector.} other{There are now {count} plots in red in the sector.}}'**
+  String alertsRedPlots(int count);
+
+  /// No description provided for @alertsFrostForecastBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Forecast low of {value} °C on {day}. Let the sector\'s members know.'**
+  String alertsFrostForecastBody(Object value, Object day);
+
+  /// No description provided for @alertsFrostIncidentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{producer} reported frost on {plot}. Let the sector\'s members know.'**
+  String alertsFrostIncidentBody(Object producer, Object plot);
+
+  /// No description provided for @alertsFrostPlots.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 plot exposed. Let the sector\'s members know.} other{{count} plots exposed. Let the sector\'s members know.}}'**
+  String alertsFrostPlots(int count);
+
+  /// No description provided for @alertsOpenSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Open sector'**
+  String get alertsOpenSector;
+
+  /// No description provided for @alertsBackTo.
+  ///
+  /// In en, this message translates to:
+  /// **'{sector} went back to {level}'**
+  String alertsBackTo(Object sector, Object level);
+
+  /// No description provided for @alertsFrostPassed.
+  ///
+  /// In en, this message translates to:
+  /// **'The frost passed in {sector}'**
+  String alertsFrostPassed(Object sector);
+
+  /// No description provided for @alertsNormalizedPlain.
+  ///
+  /// In en, this message translates to:
+  /// **'{sector} normalized'**
+  String alertsNormalizedPlain(Object sector);
 }
 
 class _AppLocalizationsDelegate
