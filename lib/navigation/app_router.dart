@@ -10,6 +10,7 @@ import 'package:viora/core/navigation/placeholder_screen.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/manager_alerts_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/member_detail_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/members_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_page.dart';
@@ -149,20 +150,31 @@ GoRoute _membersRoute(String path) {
   );
 }
 
-/// G20 · Riesgo territorial and what opens from it: G22 · Detalle del sector and G23 · Parcela del
-/// socio. T14 (alerts) and T16 (provisional dossier) are placeholders until those screens land.
+/// G20 · Riesgo territorial and what opens from it: T14 · Alertas del gestor, G22 · Detalle del
+/// sector and G23 · Parcela del socio. The alert preferences and T16 (provisional dossier) are
+/// placeholders until those screens land.
 GoRoute _riskRoute(String path) {
   return GoRoute(
     path: path,
     builder: (context, state) => RiskPage(
-      onOpenAlerts: () => context.push('$path/alerts'),
+      onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
       onOpenScope: (scope) => context.push('$path/sectors/$scope'),
       onOpenPlot: (plotId) => context.push('$path/plots/$plotId'),
     ),
     routes: [
       GoRoute(
-        path: 'alerts',
-        builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).homeAlerts),
+        path: ManagerAlertsPage.path,
+        builder: (context, state) => ManagerAlertsPage(
+          onBack: () => context.pop(),
+          onOpenPreferences: () => context.push('$path/${ManagerAlertsPage.path}/preferences'),
+          onOpenSector: (sectorId) => context.push('$path/sectors/$sectorId'),
+        ),
+        routes: [
+          GoRoute(
+            path: 'preferences',
+            builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).alertsPreferences),
+          ),
+        ],
       ),
       GoRoute(
         path: SectorDetailPage.path,

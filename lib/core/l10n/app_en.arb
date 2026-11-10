@@ -878,5 +878,137 @@
       "name": {},
       "trees": {}
     }
+  },
+  "alertsPreferences": "Alert preferences",
+  "alertsActive": "{count, plural, =1{active alert} other{active alerts}}",
+  "@alertsActive": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "alertsWhere": "In {sectors} · updated {time}",
+  "@alertsWhere": {
+    "placeholders": {
+      "sectors": {},
+      "time": {}
+    }
+  },
+  "alertsCalm": "Your sectors are calm · updated {time}",
+  "@alertsCalm": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "alertsSectorsJoin": "{first} and {last}",
+  "@alertsSectorsJoin": {
+    "placeholders": {
+      "first": {},
+      "last": {}
+    }
+  },
+  "alertsFilterCritical": "Critical",
+  "alertsFilterAttention": "Attention",
+  "alertsFilterNormalized": "Normalized",
+  "alertsToday": "Today",
+  "alertsYesterday": "Yesterday",
+  "alertsNormalizedTitle": "Normalized · last 7 days",
+  "alertsFilteredEmpty": "No alerts in this group.",
+  "alertsChipCritical": "Critical",
+  "alertsChipAttention": "Attention",
+  "alertsAgoNow": "Just now",
+  "alertsAgoMinutes": "{minutes} min ago",
+  "@alertsAgoMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "alertsAgoHours": "{hours} h ago",
+  "@alertsAgoHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "alertsSectorCriticalTitle": "{sector} turned Critical",
+  "@alertsSectorCriticalTitle": {
+    "placeholders": {
+      "sector": {}
+    }
+  },
+  "alertsFrostTitle": "Radiative frost in {sector}",
+  "@alertsFrostTitle": {
+    "placeholders": {
+      "sector": {}
+    }
+  },
+  "alertsOverloadBody": "{producer} recorded an overload of {value} %. {plots}",
+  "@alertsOverloadBody": {
+    "placeholders": {
+      "producer": {},
+      "value": {},
+      "plots": {}
+    }
+  },
+  "alertsIncidentBody": "{producer} reported a critical incident. {plots}",
+  "@alertsIncidentBody": {
+    "placeholders": {
+      "producer": {},
+      "plots": {}
+    }
+  },
+  "alertsRedPlots": "{count, plural, =1{There is now 1 plot in red in the sector.} other{There are now {count} plots in red in the sector.}}",
+  "@alertsRedPlots": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "alertsFrostForecastBody": "Forecast low of {value} °C on {day}. Let the sector's members know.",
+  "@alertsFrostForecastBody": {
+    "placeholders": {
+      "value": {},
+      "day": {}
+    }
+  },
+  "alertsFrostIncidentBody": "{producer} reported frost on {plot}. Let the sector's members know.",
+  "@alertsFrostIncidentBody": {
+    "placeholders": {
+      "producer": {},
+      "plot": {}
+    }
+  },
+  "alertsFrostPlots": "{count, plural, =1{1 plot exposed. Let the sector's members know.} other{{count} plots exposed. Let the sector's members know.}}",
+  "@alertsFrostPlots": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "alertsOpenSector": "Open sector",
+  "alertsBackTo": "{sector} went back to {level}",
+  "@alertsBackTo": {
+    "placeholders": {
+      "sector": {},
+      "level": {}
+    }
+  },
+  "alertsFrostPassed": "The frost passed in {sector}",
+  "@alertsFrostPassed": {
+    "placeholders": {
+      "sector": {}
+    }
+  },
+  "alertsNormalizedPlain": "{sector} normalized",
+  "@alertsNormalizedPlain": {
+    "placeholders": {
+      "sector": {}
+    }
   }
 }
