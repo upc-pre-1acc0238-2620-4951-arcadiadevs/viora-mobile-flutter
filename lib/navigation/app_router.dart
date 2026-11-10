@@ -14,6 +14,7 @@ import 'package:viora/features/cooperative_operations/presentation/ui/manager_al
 import 'package:viora/features/cooperative_operations/presentation/ui/member_detail_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/members_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/provisional_dossier_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_plot_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/sector_detail_page.dart';
 import 'package:viora/features/home/presentation/ui/home_page.dart';
@@ -210,8 +211,11 @@ GoRoute _plotRoute(String Function(GoRouterState) parent) {
     ),
     routes: [
       GoRoute(
-        path: 'dossier',
-        builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).riskDossierAction),
+        path: ProvisionalDossierPage.path,
+        builder: (context, state) => ProvisionalDossierPage(
+          plotId: state.pathParameters['plotId']!,
+          onBack: () => context.pop(),
+        ),
       ),
     ],
   );

@@ -1793,4 +1793,105 @@ class AppLocalizationsEs extends AppLocalizations {
   String alertsNormalizedPlain(Object sector) {
     return '$sector se normalizó';
   }
+
+  @override
+  String get dossierTitle => 'Expediente técnico';
+
+  @override
+  String dossierSubtitle(Object plot, Object year) {
+    return '$plot · Campaña $year';
+  }
+
+  @override
+  String get dossierEyebrow => 'Expediente agronómico · Provisional';
+
+  @override
+  String get dossierCampaign => 'Campaña';
+
+  @override
+  String dossierCampaignValue(Object year) {
+    return '$year · en curso';
+  }
+
+  @override
+  String get dossierVarietyArea => 'Variedad y superficie';
+
+  @override
+  String get dossierLoad => 'Carga frutal';
+
+  @override
+  String dossierLoadValue(Object fruits) {
+    return '$fruits frutos/brote';
+  }
+
+  @override
+  String get dossierPrescription => 'Prescripción';
+
+  @override
+  String dossierPrescriptionValue(Object percent) {
+    return 'Aclareo $percent';
+  }
+
+  @override
+  String get dossierThinning => 'Aclareo registrado';
+
+  @override
+  String get dossierThinningMissing => 'Aún no';
+
+  @override
+  String get dossierClimate => 'Clima y telemetría';
+
+  @override
+  String dossierNodes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nodos',
+      one: '1 nodo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dossierDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count días de datos',
+      one: '1 día de datos',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dossierNotAvailable => 'No disponible';
+
+  @override
+  String get dossierProvisionalEyebrow => 'Provisional · No certificado';
+
+  @override
+  String dossierCutOff(Object when) {
+    return 'Corte $when';
+  }
+
+  @override
+  String get dossierProvisionalBody =>
+      'Refleja los datos de ese momento y puede cambiar. No tiene código de verificación: el expediente final lo sella el productor al cerrar la campaña.';
+
+  @override
+  String get dossierDownload => 'Descargar PDF';
+
+  @override
+  String get dossierShare => 'Compartir';
+
+  @override
+  String dossierShareSubject(Object plot) {
+    return 'Expediente provisional · $plot';
+  }
+
+  @override
+  String get dossierSaved => 'PDF guardado';
+
+  @override
+  String get dossierNotShared => 'Este socio ya no comparte la parcela.';
 }
