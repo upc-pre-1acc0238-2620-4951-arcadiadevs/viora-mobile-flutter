@@ -99,9 +99,10 @@ final GoRouter appRouter = GoRouter(
                   builder: (context, state) => d == TopLevelDestination.home
                       ? HomePage(
                           onOpenAccount: () => context.push(AccountPage.path),
-                          onOpenAlerts: () => context.go(_alertsPath),
+                          onOpenAlerts: () => context.push('${d.path}/${ManagerAlertsPage.path}'),
                         )
                       : PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
+                  routes: [if (d == TopLevelDestination.home) _alertsRoute(d.path)],
                 ),
             ],
           ),
@@ -109,10 +110,6 @@ final GoRouter appRouter = GoRouter(
     ),
   ],
 );
-
-/// T14 · Alertas del gestor lives under the Riesgo tab; the bell of the other tabs takes the
-/// manager there, so going back lands on the map of the valley.
-final _alertsPath = '${TopLevelDestination.risk.path}/${ManagerAlertsPage.path}';
 
 /// G40 · Socios and what opens from it: G41 · Socio, G42 · Códigos and G44 · Códigos generados,
 /// which covers the tab bar as in the design.
@@ -124,13 +121,14 @@ GoRoute _membersRoute(String path) {
     builder: (context, state) => MembersPage(
       header: HomeGreeting(
         onOpenAccount: () => context.push(AccountPage.path),
-        onOpenAlerts: () => context.go(_alertsPath),
+        onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
       ),
       onOpenMember: (id) => context.push('$path/$id'),
       onOpenCodes: () => context.push<void>(codes),
       onIssued: (args) => context.push<void>(issued, extra: args),
     ),
     routes: [
+      _alertsRoute(path),
       GoRoute(
         path: 'codes',
         builder: (context, state) => CodesPage(
@@ -162,8 +160,8 @@ GoRoute _membersRoute(String path) {
 }
 
 /// G20 · Riesgo territorial and what opens from it: T14 · Alertas del gestor, G22 · Detalle del
-/// sector and G23 · Parcela del socio. The alert preferences and T16 (provisional dossier) are
-/// placeholders until those screens land.
+/// sector, G23 · Parcela del socio and T16 · Expediente técnico. The alert preferences are a
+/// placeholder until that screen lands.
 GoRoute _riskRoute(String path) {
   return GoRoute(
     path: path,
@@ -173,30 +171,47 @@ GoRoute _riskRoute(String path) {
       onOpenPlot: (plotId) => context.push('$path/plots/$plotId'),
     ),
     routes: [
-      GoRoute(
-        path: ManagerAlertsPage.path,
-        builder: (context, state) => ManagerAlertsPage(
-          onBack: () => context.pop(),
-          onOpenPreferences: () => context.push('$path/${ManagerAlertsPage.path}/preferences'),
-          onOpenSector: (sectorId) => context.push('$path/sectors/$sectorId'),
-        ),
-        routes: [
-          GoRoute(
-            path: 'preferences',
-            builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).alertsPreferences),
-          ),
-        ],
-      ),
-      GoRoute(
-        path: SectorDetailPage.path,
-        builder: (context, state) => SectorDetailPage(
-          scope: state.pathParameters['scope']!,
-          onBack: () => context.pop(),
-          onOpenPlot: (plotId) => context.push('$path/plots/$plotId'),
-        ),
-      ),
+      _alertsRoute(path),
+      _sectorRoute(path),
       _plotRoute((state) => path),
     ],
+  );
+}
+
+/// T14 · Alertas del gestor over the tab at [parent] whose bell opened it, so going back returns
+/// to that tab. The sectors and plots it opens stay on the same tab.
+GoRoute _alertsRoute(String parent) {
+  final alerts = '$parent/${ManagerAlertsPage.path}';
+  return GoRoute(
+    path: ManagerAlertsPage.path,
+    builder: (context, state) => ManagerAlertsPage(
+      onBack: () => context.pop(),
+      onOpenPreferences: () => context.push('$alerts/preferences'),
+      onOpenSector: (sectorId) => context.push('$alerts/sectors/$sectorId'),
+    ),
+    routes: [
+      GoRoute(
+        path: 'preferences',
+        builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).alertsPreferences),
+      ),
+      _sectorRoute(alerts, nestPlots: true),
+    ],
+  );
+}
+
+/// G22 · Detalle del sector under [parent]. On the map its plots open next to it, under
+/// [parent]; opened from an alert, with [nestPlots], they open under the sector itself.
+GoRoute _sectorRoute(String parent, {bool nestPlots = false}) {
+  String plotParent(GoRouterState state) =>
+      nestPlots ? '$parent/sectors/${state.pathParameters['scope']}' : parent;
+  return GoRoute(
+    path: SectorDetailPage.path,
+    builder: (context, state) => SectorDetailPage(
+      scope: state.pathParameters['scope']!,
+      onBack: () => context.pop(),
+      onOpenPlot: (plotId) => context.push('${plotParent(state)}/plots/$plotId'),
+    ),
+    routes: [if (nestPlots) _plotRoute(plotParent)],
   );
 }
 
