@@ -1010,5 +1010,39 @@
     "placeholders": {
       "sector": {}
     }
-  }
+  },
+  "dossierTitle": "Technical dossier",
+  "dossierSubtitle": "{plot} · {year} season",
+  "dossierEyebrow": "Agronomic dossier · Provisional",
+  "dossierCampaign": "Season",
+  "dossierCampaignValue": "{year} · in progress",
+  "dossierVarietyArea": "Variety and area",
+  "dossierLoad": "Fruit load",
+  "dossierLoadValue": "{fruits} fruits/shoot",
+  "dossierPrescription": "Prescription",
+  "dossierPrescriptionValue": "Thin {percent}",
+  "dossierThinning": "Thinning registered",
+  "dossierThinningMissing": "Not yet",
+  "dossierClimate": "Climate and telemetry",
+  "dossierNodes": "{count, plural, =1{1 node} other{{count} nodes}}",
+  "@dossierNodes": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "dossierDays": "{count, plural, =1{1 day of data} other{{count} days of data}}",
+  "@dossierDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "dossierNotAvailable": "Not available",
+  "dossierProvisionalEyebrow": "Provisional · Not certified",
+  "dossierCutOff": "Cut-off {when}",
+  "dossierProvisionalBody": "It shows the data of that moment and may change. It has no verification code: the producer seals the final dossier when the season closes.",
+  "dossierDownload": "Download PDF",
+  "dossierShare": "Share",
+  "dossierShareSubject": "Provisional dossier · {plot}",
+  "dossierSaved": "PDF saved",
+  "dossierNotShared": "This member no longer shares the plot."
 }

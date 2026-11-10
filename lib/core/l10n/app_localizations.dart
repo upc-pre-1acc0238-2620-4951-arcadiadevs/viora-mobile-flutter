@@ -2863,6 +2863,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{sector} normalized'**
   String alertsNormalizedPlain(Object sector);
+
+  /// No description provided for @dossierTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical dossier'**
+  String get dossierTitle;
+
+  /// No description provided for @dossierSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{plot} · {year} season'**
+  String dossierSubtitle(Object plot, Object year);
+
+  /// No description provided for @dossierEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Agronomic dossier · Provisional'**
+  String get dossierEyebrow;
+
+  /// No description provided for @dossierCampaign.
+  ///
+  /// In en, this message translates to:
+  /// **'Season'**
+  String get dossierCampaign;
+
+  /// No description provided for @dossierCampaignValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{year} · in progress'**
+  String dossierCampaignValue(Object year);
+
+  /// No description provided for @dossierVarietyArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Variety and area'**
+  String get dossierVarietyArea;
+
+  /// No description provided for @dossierLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Fruit load'**
+  String get dossierLoad;
+
+  /// No description provided for @dossierLoadValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{fruits} fruits/shoot'**
+  String dossierLoadValue(Object fruits);
+
+  /// No description provided for @dossierPrescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription'**
+  String get dossierPrescription;
+
+  /// No description provided for @dossierPrescriptionValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Thin {percent}'**
+  String dossierPrescriptionValue(Object percent);
+
+  /// No description provided for @dossierThinning.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinning registered'**
+  String get dossierThinning;
+
+  /// No description provided for @dossierThinningMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet'**
+  String get dossierThinningMissing;
+
+  /// No description provided for @dossierClimate.
+  ///
+  /// In en, this message translates to:
+  /// **'Climate and telemetry'**
+  String get dossierClimate;
+
+  /// No description provided for @dossierNodes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 node} other{{count} nodes}}'**
+  String dossierNodes(int count);
+
+  /// No description provided for @dossierDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day of data} other{{count} days of data}}'**
+  String dossierDays(int count);
+
+  /// No description provided for @dossierNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available'**
+  String get dossierNotAvailable;
+
+  /// No description provided for @dossierProvisionalEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Provisional · Not certified'**
+  String get dossierProvisionalEyebrow;
+
+  /// No description provided for @dossierCutOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Cut-off {when}'**
+  String dossierCutOff(Object when);
+
+  /// No description provided for @dossierProvisionalBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It shows the data of that moment and may change. It has no verification code: the producer seals the final dossier when the season closes.'**
+  String get dossierProvisionalBody;
+
+  /// No description provided for @dossierDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download PDF'**
+  String get dossierDownload;
+
+  /// No description provided for @dossierShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get dossierShare;
+
+  /// No description provided for @dossierShareSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Provisional dossier · {plot}'**
+  String dossierShareSubject(Object plot);
+
+  /// No description provided for @dossierSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF saved'**
+  String get dossierSaved;
+
+  /// No description provided for @dossierNotShared.
+  ///
+  /// In en, this message translates to:
+  /// **'This member no longer shares the plot.'**
+  String get dossierNotShared;
 }
 
 class _AppLocalizationsDelegate

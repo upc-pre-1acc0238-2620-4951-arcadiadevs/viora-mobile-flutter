@@ -18,6 +18,11 @@ class CooperativeNoLicense extends CooperativeFailure {
   const CooperativeNoLicense();
 }
 
+/// The member stopped sharing the plot, or it isn't theirs anymore.
+class PlotNotShared extends CooperativeFailure {
+  const PlotNotShared();
+}
+
 /// Not enough free seats for the codes asked; [seatsFree] is what is left, when known.
 class NotEnoughSeats extends CooperativeFailure {
   const NotEnoughSeats(this.seatsFree);

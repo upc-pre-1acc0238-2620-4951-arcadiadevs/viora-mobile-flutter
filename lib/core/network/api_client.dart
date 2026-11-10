@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:http/http.dart' as http;
@@ -23,6 +24,16 @@ class ApiException implements Exception {
 /// The server couldn't be reached: no connection, a timeout or an unreadable answer.
 class ApiUnreachableException implements Exception {
   const ApiUnreachableException();
+}
+
+/// A document the server sends as it is, such as a PDF.
+class ApiFile {
+  const ApiFile({required this.bytes, this.fileName});
+
+  final Uint8List bytes;
+
+  /// The name the server suggests, when it gives one.
+  final String? fileName;
 }
 
 /// JSON client of the Viora backend: the base URL, the language, the session token and the
@@ -74,6 +85,19 @@ class ApiClient {
         await _authorizedBody((headers) => _client.get(_uri(path), headers: headers)),
       );
 
+  /// A GET whose answer is a file of the type [accept] names, such as `application/pdf`.
+  Future<ApiFile> getFile(String path, {required String accept}) async {
+    final response = await _authorizedResponse(
+      (headers) => _client.get(_uri(path), headers: {...headers, HttpHeaders.acceptHeader: accept}),
+    );
+    return ApiFile(bytes: response.bodyBytes, fileName: _fileName(response.headers['content-disposition']));
+  }
+
+  static String? _fileName(String? disposition) {
+    final match = RegExp(r'filename="?([^";]+)"?').firstMatch(disposition ?? '');
+    return match?.group(1);
+  }
+
   Uri _uri(String path) => Uri.parse('$baseUrl$path');
 
   Map<String, String> _headers(String? accessToken) => {
@@ -94,15 +118,20 @@ class ApiClient {
 
   Future<String> _authorizedBody(
     Future<http.Response> Function(Map<String, String> headers) request,
+  ) async =>
+      (await _authorizedResponse(request)).body;
+
+  Future<http.Response> _authorizedResponse(
+    Future<http.Response> Function(Map<String, String> headers) request,
   ) async {
     final accessToken = await _sessionStore?.accessToken();
     try {
-      return await _sendForBody(() => request(_headers(accessToken)));
+      return await _sendForResponse(() => request(_headers(accessToken)));
     } on ApiException catch (error) {
       if (error.status != 401 || accessToken == null) rethrow;
       final renewed = await _renewedToken(accessToken);
       if (renewed == null) rethrow;
-      return _sendForBody(() => request(_headers(renewed)));
+      return _sendForResponse(() => request(_headers(renewed)));
     }
   }
 
@@ -146,10 +175,10 @@ class ApiClient {
   }
 
   Future<Map<String, dynamic>> _send(Future<http.Response> Function() request) async =>
-      _decode(await _sendForBody(request));
+      _decode((await _sendForResponse(request)).body);
 
-  /// The raw body of a successful answer; an error status throws its [ApiException].
-  Future<String> _sendForBody(Future<http.Response> Function() request) async {
+  /// A successful answer; an error status throws its [ApiException].
+  Future<http.Response> _sendForResponse(Future<http.Response> Function() request) async {
     final http.Response response;
     try {
       response = await request().timeout(_timeout);
@@ -161,7 +190,7 @@ class ApiClient {
       throw const ApiUnreachableException();
     }
 
-    if (response.statusCode >= 200 && response.statusCode < 300) return response.body;
+    if (response.statusCode >= 200 && response.statusCode < 300) return response;
     final body = _decode(response.body);
     throw ApiException(
       response.statusCode,

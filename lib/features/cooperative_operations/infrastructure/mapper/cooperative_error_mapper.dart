@@ -14,6 +14,12 @@ abstract final class CooperativeErrorMapper {
         _ => const CooperativeUnexpected(),
       };
 
+  static CooperativeFailure dossier(ApiException error) => switch (error.status) {
+        403 => const CooperativeNoLicense(),
+        404 => const PlotNotShared(),
+        _ => const CooperativeUnexpected(),
+      };
+
   static CooperativeFailure issue(ApiException error) => switch (error.status) {
         409 when error.reason == _insufficientSeats =>
           NotEnoughSeats((error.body['seatsFree'] as num?)?.toInt()),
