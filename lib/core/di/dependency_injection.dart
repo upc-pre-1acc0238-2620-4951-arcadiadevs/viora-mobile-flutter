@@ -1,10 +1,42 @@
 import 'package:get_it/get_it.dart';
-
 import 'package:viora/core/database/app_database.dart';
 import 'package:viora/core/datastore/session_events.dart';
 import 'package:viora/core/datastore/session_store.dart';
 import 'package:viora/core/locale/app_language.dart';
 import 'package:viora/core/network/api_client.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_invitation_codes_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_license_capacity_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_member_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_members_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_provisional_dossier_pdf_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_provisional_dossier_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plot_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plots_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_sector_alerts_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/issue_invitation_codes_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/revoke_invitation_code_use_case.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
+import 'package:viora/features/cooperative_operations/domain/repository/cooperative_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/repository/dossier_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/local/device_document_exporter.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/local/device_location_repository.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_api.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/dossier_api.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_api.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/repository/cooperative_repository_impl.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/repository/dossier_repository_impl.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/repository/risk_repository_impl.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/issue_codes_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_alerts_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/member_detail_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/members_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/provisional_dossier_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_map_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_plot_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/sector_detail_view_model.dart';
 import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart';
 import 'package:viora/features/iam/application/usecase/change_password_use_case.dart';
 import 'package:viora/features/iam/application/usecase/check_password_reset_link_use_case.dart';
@@ -54,32 +86,6 @@ import 'package:viora/features/subscription/presentation/viewmodel/license_gate_
 import 'package:viora/features/subscription/presentation/viewmodel/license_guard_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_status_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/producer_plan_view_model.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/get_invitation_codes_use_case.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/get_license_capacity_use_case.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/get_member_use_case.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/get_members_use_case.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plot_use_case.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plots_use_case.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/get_sector_alerts_use_case.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/issue_invitation_codes_use_case.dart';
-import 'package:viora/features/cooperative_operations/application/usecase/revoke_invitation_code_use_case.dart';
-import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
-import 'package:viora/features/cooperative_operations/domain/repository/cooperative_repository.dart';
-import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
-import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_api.dart';
-import 'package:viora/features/cooperative_operations/infrastructure/local/device_location_repository.dart';
-import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_api.dart';
-import 'package:viora/features/cooperative_operations/infrastructure/repository/cooperative_repository_impl.dart';
-import 'package:viora/features/cooperative_operations/infrastructure/repository/risk_repository_impl.dart';
-import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
-import 'package:viora/features/cooperative_operations/presentation/viewmodel/issue_codes_view_model.dart';
-import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_alerts_view_model.dart';
-import 'package:viora/features/cooperative_operations/presentation/viewmodel/member_detail_view_model.dart';
-import 'package:viora/features/cooperative_operations/presentation/viewmodel/members_view_model.dart';
-import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_map_view_model.dart';
-import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_plot_view_model.dart';
-import 'package:viora/features/cooperative_operations/presentation/viewmodel/sector_detail_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -158,6 +164,19 @@ void _setupTerritorialRisk() {
   );
   getIt.registerFactory<RiskPlotViewModel>(() => RiskPlotViewModel(getPlot: getIt<GetRiskPlotUseCase>()));
   getIt.registerFactory<ManagerAlertsViewModel>(() => ManagerAlertsViewModel(getAlerts: getIt<GetSectorAlertsUseCase>()));
+
+  getIt.registerLazySingleton<DossierApi>(() => DossierApi(client: getIt<ApiClient>()));
+  getIt.registerLazySingleton<DossierRepository>(() => DossierRepositoryImpl(api: getIt<DossierApi>()));
+  getIt.registerLazySingleton<DocumentExporter>(() => const DeviceDocumentExporter());
+  getIt.registerLazySingleton(() => GetProvisionalDossierUseCase(repository: getIt<DossierRepository>()));
+  getIt.registerLazySingleton(() => GetProvisionalDossierPdfUseCase(repository: getIt<DossierRepository>()));
+  getIt.registerFactory<ProvisionalDossierViewModel>(
+    () => ProvisionalDossierViewModel(
+      getDossier: getIt<GetProvisionalDossierUseCase>(),
+      getPdf: getIt<GetProvisionalDossierPdfUseCase>(),
+      exporter: getIt<DocumentExporter>(),
+    ),
+  );
 }
 
 void _setupSubscription() {

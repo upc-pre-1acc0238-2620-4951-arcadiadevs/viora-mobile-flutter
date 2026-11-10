@@ -67,6 +67,30 @@ void main() {
     );
   });
 
+  test('a file answer keeps its bytes and the name the server gives it, asked with its type', () async {
+    final pdf = [0x25, 0x50, 0x44, 0x46, 0x2d, 0xff];
+    final file = await client((request) async {
+      if (isRefresh(request)) return renewed();
+      return request.headers['authorization'] == 'Bearer new-access'
+          ? http.Response.bytes(pdf, 200, headers: {
+              'content-type': 'application/pdf',
+              'content-disposition': 'attachment; filename="expediente-provisional-la-yarada-02-2026.pdf"',
+            })
+          : http.Response('', 401);
+    }).getFile('member-plots/p1/provisional-dossier', accept: 'application/pdf');
+
+    expect(file.bytes, pdf);
+    expect(file.fileName, 'expediente-provisional-la-yarada-02-2026.pdf');
+    expect(requests.last.headers['accept'], 'application/pdf');
+  });
+
+  test('a file error keeps its status even without a body', () async {
+    await expectLater(
+      client((_) async => http.Response('', 404)).getFile('member-plots/p1/provisional-dossier', accept: 'application/pdf'),
+      throwsA(isA<ApiException>().having((error) => error.status, 'status', 404)),
+    );
+  });
+
   test('sends the access token of the session', () async {
     await client((_) async => http.Response('{}', 200)).get('plots');
 

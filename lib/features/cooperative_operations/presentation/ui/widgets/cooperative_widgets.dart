@@ -422,5 +422,6 @@ String cooperativeFailureMessage(AppLocalizations l10n, CooperativeFailure failu
       CooperativeNoLicense() => l10n.cooperativeNoLicense,
       CodesUnavailable() => l10n.issueUnavailable,
       CodeNotAvailable() => l10n.codesNotAvailable,
+      PlotNotShared() => l10n.dossierNotShared,
       _ => l10n.cooperativeUnexpected,
     };

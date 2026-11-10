@@ -25,6 +25,7 @@ abstract final class VioraIcons {
   static const warning = 'assets/icons/ic_warning.svg';
   static const taskAlt = 'assets/icons/ic_task_alt.svg';
   static const share = 'assets/icons/ic_share.svg';
+  static const download = 'assets/icons/ic_download.svg';
   static const search = 'assets/icons/ic_search.svg';
   static const remove = 'assets/icons/ic_remove.svg';
   static const smartphone = 'assets/icons/ic_smartphone.svg';

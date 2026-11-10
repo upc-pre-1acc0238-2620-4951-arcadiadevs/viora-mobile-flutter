@@ -1787,4 +1787,105 @@ class AppLocalizationsEn extends AppLocalizations {
   String alertsNormalizedPlain(Object sector) {
     return '$sector normalized';
   }
+
+  @override
+  String get dossierTitle => 'Technical dossier';
+
+  @override
+  String dossierSubtitle(Object plot, Object year) {
+    return '$plot · $year season';
+  }
+
+  @override
+  String get dossierEyebrow => 'Agronomic dossier · Provisional';
+
+  @override
+  String get dossierCampaign => 'Season';
+
+  @override
+  String dossierCampaignValue(Object year) {
+    return '$year · in progress';
+  }
+
+  @override
+  String get dossierVarietyArea => 'Variety and area';
+
+  @override
+  String get dossierLoad => 'Fruit load';
+
+  @override
+  String dossierLoadValue(Object fruits) {
+    return '$fruits fruits/shoot';
+  }
+
+  @override
+  String get dossierPrescription => 'Prescription';
+
+  @override
+  String dossierPrescriptionValue(Object percent) {
+    return 'Thin $percent';
+  }
+
+  @override
+  String get dossierThinning => 'Thinning registered';
+
+  @override
+  String get dossierThinningMissing => 'Not yet';
+
+  @override
+  String get dossierClimate => 'Climate and telemetry';
+
+  @override
+  String dossierNodes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count nodes',
+      one: '1 node',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dossierDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days of data',
+      one: '1 day of data',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dossierNotAvailable => 'Not available';
+
+  @override
+  String get dossierProvisionalEyebrow => 'Provisional · Not certified';
+
+  @override
+  String dossierCutOff(Object when) {
+    return 'Cut-off $when';
+  }
+
+  @override
+  String get dossierProvisionalBody =>
+      'It shows the data of that moment and may change. It has no verification code: the producer seals the final dossier when the season closes.';
+
+  @override
+  String get dossierDownload => 'Download PDF';
+
+  @override
+  String get dossierShare => 'Share';
+
+  @override
+  String dossierShareSubject(Object plot) {
+    return 'Provisional dossier · $plot';
+  }
+
+  @override
+  String get dossierSaved => 'PDF saved';
+
+  @override
+  String get dossierNotShared => 'This member no longer shares the plot.';
 }
