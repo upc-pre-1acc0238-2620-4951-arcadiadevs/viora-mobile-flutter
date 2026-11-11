@@ -27,6 +27,7 @@ class CooperativeMemberDto {
         registeredAreaHa: _number(json['registeredAreaHa']) ?? 0,
         sectorNames: (json['sectorNames'] as List?)?.whereType<String>().toList() ?? const [],
         worstRisk: PlotRisk.parse(json['worstRiskLevel'] as String?),
+        unsampledPlots: (json['unsampledPlots'] as num?)?.toInt() ?? 0,
       );
 }
 
