@@ -824,6 +824,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String membersFilterUnsampled(Object count) {
+    return 'Sin muestreo · $count';
+  }
+
+  @override
   String membersPlots(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

@@ -1484,6 +1484,12 @@ abstract class AppLocalizations {
   /// **'Withdrew · {count}'**
   String membersFilterWithdrawn(Object count);
 
+  /// No description provided for @membersFilterUnsampled.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sampled · {count}'**
+  String membersFilterUnsampled(Object count);
+
   /// No description provided for @membersPlots.
   ///
   /// In en, this message translates to:

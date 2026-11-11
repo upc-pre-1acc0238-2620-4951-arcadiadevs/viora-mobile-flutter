@@ -393,6 +393,7 @@
   "membersFilterAll": "All · {count}",
   "membersFilterSharing": "Sharing · {count}",
   "membersFilterWithdrawn": "Withdrew · {count}",
+  "membersFilterUnsampled": "Not sampled · {count}",
   "membersPlots": "{count, plural, =1{1 plot} other{{count} plots}}",
   "@membersPlots": {
     "placeholders": {
