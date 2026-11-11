@@ -257,19 +257,25 @@ class _Row extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 13),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(child: Text(label, style: textTheme.bodyMedium?.copyWith(color: VioraColors.neutral700))),
-          const SizedBox(width: Spacing.sm),
-          Flexible(
-            child: Text(
-              value,
-              textAlign: TextAlign.end,
-              style: textTheme.titleSmall?.copyWith(color: color ?? VioraColors.neutral900),
+      child: LayoutBuilder(
+        builder: (context, constraints) => Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // The label takes what it needs, up to 45 %, and the value the rest, so it keeps to one line.
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.45),
+              child: Text(label, style: textTheme.bodyMedium?.copyWith(color: VioraColors.neutral700)),
             ),
-          ),
-        ],
+            const SizedBox(width: Spacing.sm),
+            Expanded(
+              child: Text(
+                value,
+                textAlign: TextAlign.end,
+                style: textTheme.titleSmall?.copyWith(color: color ?? VioraColors.neutral900),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
