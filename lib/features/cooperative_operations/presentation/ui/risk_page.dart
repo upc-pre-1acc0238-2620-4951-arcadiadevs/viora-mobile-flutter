@@ -155,7 +155,7 @@ class RiskPageContent extends StatelessWidget {
       );
     }
     if (state.showList) {
-      return _SectorListView(state: state, top: top, onRefresh: onRetry, onOpenScope: onOpenScope);
+      return _SectorListView(state: state, now: now, top: top, onRefresh: onRetry, onOpenScope: onOpenScope);
     }
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -172,7 +172,9 @@ class RiskPageContent extends StatelessWidget {
                   children: [
                     top,
                     const SizedBox(height: Spacing.sm),
-                    if (state.gpsOff && state.location == null)
+                    if (state.savedAt != null)
+                      _offlinePill(context, state, now)!
+                    else if (state.gpsOff && state.location == null)
                       const _GpsOffPill()
                     else
                       RiskCountsStrip(group: state.territory.valley),
@@ -417,7 +419,7 @@ class _PanelState extends State<_Panel> {
     } else if (plot != null) {
       content = _PlotPanel(plot: plot, detail: state.selectedDetail, now: widget.now, onOpen: widget.onOpenPlot);
     } else if (sector != null) {
-      content = _SectorPanel(sector: sector, now: widget.now, onOpen: widget.onOpenScope);
+      content = _SectorPanel(sector: sector, savedAt: state.savedAt, now: widget.now, onOpen: widget.onOpenScope);
     } else if (state.location != null && nearby.total > 0) {
       content = _NearbyPanel(state: state, now: widget.now, onOpen: () => widget.onOpenScope(RiskScopes.nearby));
     } else {
@@ -624,7 +626,7 @@ class _NearbyPanel extends StatelessWidget {
         _PanelHeader(
           eyebrow: l10n.riskNearEyebrow(accuracy),
           title: l10n.riskNearTitle,
-          subtitle: _freshness(l10n, group, now),
+          subtitle: _freshness(context, group, state.savedAt, now),
           risk: group.level,
         ),
         _GroupBody(group: group, actionLabel: l10n.riskNearAction, onAction: onOpen),
@@ -633,13 +635,29 @@ class _NearbyPanel extends StatelessWidget {
   }
 }
 
-String _freshness(AppLocalizations l10n, RiskGroup group, DateTime now) =>
-    l10n.riskGroupFreshness(l10n.riskPlotCount(group.total), formatUpdatedAgo(l10n, group.evaluatedAt, now));
+/// «18 parcelas socias · actualizado hace 5 min», or «· guardado hoy, 7:40» without a connection.
+String _freshness(BuildContext context, RiskGroup group, DateTime? savedAt, DateTime now) {
+  final l10n = AppLocalizations.of(context);
+  final when = savedAt == null
+      ? formatUpdatedAgo(l10n, group.evaluatedAt, now)
+      : l10n.riskSavedAt(formatReadAt(l10n, savedAt, now, Localizations.localeOf(context).toLanguageTag()));
+  return l10n.riskGroupFreshness(l10n.riskPlotCount(group.total), when);
+}
+
+/// G20 · Sin conexión: «Sin conexión · último estado de hoy, 7:40». Null while the map is fresh.
+Widget? _offlinePill(BuildContext context, RiskMapUiState state, DateTime now) {
+  final savedAt = state.savedAt;
+  if (savedAt == null) return null;
+  final l10n = AppLocalizations.of(context);
+  final locale = Localizations.localeOf(context).toLanguageTag();
+  return OfflinePill(text: formatOffline(l10n, l10n.offlineWhatState, savedAt, now, locale));
+}
 
 class _SectorPanel extends StatelessWidget {
-  const _SectorPanel({required this.sector, required this.now, required this.onOpen});
+  const _SectorPanel({required this.sector, required this.savedAt, required this.now, required this.onOpen});
 
   final RiskSector sector;
+  final DateTime? savedAt;
   final DateTime now;
   final ValueChanged<String> onOpen;
 
@@ -653,7 +671,7 @@ class _SectorPanel extends StatelessWidget {
         _PanelHeader(
           eyebrow: l10n.riskSectorEyebrow,
           title: sector.name,
-          subtitle: _freshness(l10n, sector.group, now),
+          subtitle: _freshness(context, sector.group, savedAt, now),
           risk: sector.group.level,
         ),
         _GroupBody(group: sector.group, actionLabel: l10n.riskSectorAction, onAction: () => onOpen(sector.id)),
@@ -861,9 +879,16 @@ class _EmptyPanel extends StatelessWidget {
 
 /// G20 · Lista de sectores, the most urgent first.
 class _SectorListView extends StatelessWidget {
-  const _SectorListView({required this.state, required this.top, required this.onRefresh, required this.onOpenScope});
+  const _SectorListView({
+    required this.state,
+    required this.now,
+    required this.top,
+    required this.onRefresh,
+    required this.onOpenScope,
+  });
 
   final RiskMapUiState state;
+  final DateTime now;
   final Widget top;
   final VoidCallback onRefresh;
   final ValueChanged<String> onOpenScope;
@@ -891,7 +916,10 @@ class _SectorListView extends StatelessWidget {
               const SizedBox(height: Spacing.lg),
               VioraEditorialTitle(l10n.riskListTitle, fontSize: 44, lineHeight: 50),
               const SizedBox(height: Spacing.md),
-              Align(alignment: Alignment.centerLeft, child: RiskCountsStrip(group: territory.valley)),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: _offlinePill(context, state, now) ?? RiskCountsStrip(group: territory.valley),
+              ),
               const SizedBox(height: Spacing.md),
               if (state.loading)
                 const Padding(

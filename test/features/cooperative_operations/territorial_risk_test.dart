@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plot_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plots_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
@@ -12,6 +13,7 @@ import 'package:viora/features/cooperative_operations/domain/entity/risk_territo
 import 'package:viora/features/cooperative_operations/domain/entity/sector_alert.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/valueobject/kept.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_plot_dto.dart';
 import 'package:viora/features/cooperative_operations/presentation/risk_map_features.dart';
 import 'package:viora/features/cooperative_operations/presentation/state/risk_map_ui_state.dart';
@@ -119,6 +121,15 @@ class _FakeRisk implements RiskRepository {
 
   @override
   Future<List<SectorAlert>> alerts() async => const [];
+
+  /// The map kept from the last read, for G20 · Sin conexión.
+  Kept<List<RiskPlot>>? kept;
+
+  @override
+  Future<Kept<List<RiskPlot>>?> keptPlots() async => kept;
+
+  @override
+  Future<Kept<List<SectorAlert>>?> keptAlerts() async => null;
 }
 
 class _FakeLocation implements LocationRepository {
@@ -152,6 +163,7 @@ class _FakeLocation implements LocationRepository {
 
 RiskMapViewModel _viewModel(_FakeRisk risk, _FakeLocation location) => RiskMapViewModel(
       getPlots: GetRiskPlotsUseCase(repository: risk),
+      getKeptPlots: GetKeptRiskPlotsUseCase(repository: risk),
       getPlot: GetRiskPlotUseCase(repository: risk),
       hasActiveAlerts: HasActiveSectorAlertsUseCase(repository: risk),
       location: location,
@@ -521,6 +533,37 @@ void main() {
       final first = _viewModel(risk, location);
       await first.start();
       expect(first.state.failure, isA<CooperativeOffline>());
+    });
+
+    test('without connection the map on screen is marked with when it was read', () async {
+      final viewModel = _viewModel(risk, location);
+      await viewModel.start();
+      expect(viewModel.state.savedAt, isNull);
+      final readAt = viewModel.state.readAt;
+
+      risk.plotsFailure = const CooperativeOffline();
+      await viewModel.refresh();
+
+      expect(viewModel.state.savedAt, readAt);
+      expect(viewModel.state.failure, isNull);
+
+      risk.plotsFailure = null;
+      await viewModel.refresh();
+      expect(viewModel.state.savedAt, isNull);
+    });
+
+    test('opened without connection, it shows the map kept from the last read', () async {
+      final savedAt = DateTime(2026, 11, 11, 7, 40);
+      risk
+        ..plotsFailure = const CooperativeOffline()
+        ..kept = Kept([_plot('kept')], savedAt);
+      final viewModel = _viewModel(risk, location);
+
+      await viewModel.start();
+
+      expect(viewModel.state.failure, isNull);
+      expect(viewModel.state.plots.single.id, 'kept');
+      expect(viewModel.state.savedAt, savedAt);
     });
 
     test('a plot that is gone after a refresh stops being the chosen one', () async {

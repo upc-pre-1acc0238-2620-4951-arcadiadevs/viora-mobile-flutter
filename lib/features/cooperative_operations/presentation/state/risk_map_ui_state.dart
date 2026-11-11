@@ -17,6 +17,8 @@ class RiskMapUiState {
     this.selectedPlotId,
     this.selectedDetail,
     this.hasActiveAlerts = false,
+    this.readAt,
+    this.savedAt,
   });
 
   final bool loading;
@@ -36,6 +38,13 @@ class RiskMapUiState {
   /// What the panel adds about the chosen plot, once read.
   final RiskPlotDetail? selectedDetail;
   final bool hasActiveAlerts;
+
+  /// When the plots on screen were read from the server.
+  final DateTime? readAt;
+
+  /// Without a connection: when the plots on screen were saved (G20 · Sin conexión). Null while
+  /// they are fresh.
+  final DateTime? savedAt;
 
   RiskTerritory get territory => RiskTerritory(plots);
 
@@ -63,6 +72,8 @@ class RiskMapUiState {
     String? Function()? selectedPlotId,
     RiskPlotDetail? Function()? selectedDetail,
     bool? hasActiveAlerts,
+    DateTime? readAt,
+    DateTime? Function()? savedAt,
   }) =>
       RiskMapUiState(
         loading: loading ?? this.loading,
@@ -76,5 +87,7 @@ class RiskMapUiState {
         selectedPlotId: selectedPlotId == null ? this.selectedPlotId : selectedPlotId(),
         selectedDetail: selectedDetail == null ? this.selectedDetail : selectedDetail(),
         hasActiveAlerts: hasActiveAlerts ?? this.hasActiveAlerts,
+        readAt: readAt ?? this.readAt,
+        savedAt: savedAt == null ? this.savedAt : savedAt(),
       );
 }

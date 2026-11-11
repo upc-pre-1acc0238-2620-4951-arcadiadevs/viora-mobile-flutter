@@ -11,6 +11,7 @@ class ManagerAlertsUiState {
     this.failure,
     this.alerts = const [],
     this.readAt,
+    this.offline = false,
     this.filter,
   });
 
@@ -18,8 +19,11 @@ class ManagerAlertsUiState {
   final CooperativeFailure? failure;
   final List<SectorAlert> alerts;
 
-  /// When the list was read, for «actualizado 7:40 a. m.».
+  /// When the list was read, for «actualizado 7:40 a. m.»; without a connection, when it was saved.
   final DateTime? readAt;
+
+  /// The list is the one kept from the last read, since there is no connection.
+  final bool offline;
 
   /// Null shows every alert.
   final AlertFilter? filter;
@@ -53,7 +57,14 @@ class ManagerAlertsUiState {
   List<SectorAlert> get visibleNormalized => filter == null || filter == AlertFilter.normalized ? normalized : const [];
 
   ManagerAlertsUiState withFilter(AlertFilter? filter) =>
-      ManagerAlertsUiState(loading: loading, failure: failure, alerts: alerts, readAt: readAt, filter: filter);
+      ManagerAlertsUiState(
+        loading: loading,
+        failure: failure,
+        alerts: alerts,
+        readAt: readAt,
+        offline: offline,
+        filter: filter,
+      );
 }
 
 /// The calendar day on the phone, as a number that sorts; an alert without a date goes last.

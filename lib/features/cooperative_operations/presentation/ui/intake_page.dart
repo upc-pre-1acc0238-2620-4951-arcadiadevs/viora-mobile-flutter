@@ -16,6 +16,7 @@ import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/intake_forecast.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
+import 'package:viora/features/cooperative_operations/presentation/cooperative_formats.dart';
 import 'package:viora/features/cooperative_operations/presentation/state/intake_ui_state.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/manager_home_sections.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/widgets/cooperative_widgets.dart';
@@ -66,6 +67,7 @@ class IntakePageContent extends StatelessWidget {
     required this.onChooseCampaign,
     required this.onOpenAlerts,
     required this.onOpenMembers,
+    this.now,
   });
 
   final IntakeUiState state;
@@ -74,6 +76,9 @@ class IntakePageContent extends StatelessWidget {
   final VoidCallback onChooseCampaign;
   final VoidCallback onOpenAlerts;
   final VoidCallback onOpenMembers;
+
+  /// The clock for «hoy» in the offline pill; the phone's by default.
+  final DateTime? now;
 
   @override
   Widget build(BuildContext context) {
@@ -127,9 +132,11 @@ class IntakePageContent extends StatelessWidget {
   List<Widget> _forecast(BuildContext context, IntakeForecast forecast) {
     final l10n = AppLocalizations.of(context);
     final settled = forecast.kind == IntakeKind.settled;
+    final offline = _offline(context, forecast);
     if (!forecast.hasFigure) {
       return [
         VioraEditorialTitle(l10n.intakeHeadlineNoData, fontSize: 44, lineHeight: 46),
+        if (offline != null) ...[const SizedBox(height: 20), offline],
         const SizedBox(height: 20),
         _NoDataCard(forecast: forecast),
         if (!settled) ...[
@@ -149,8 +156,11 @@ class IntakePageContent extends StatelessWidget {
         fontSize: 44,
         lineHeight: 46,
       ),
-      const SizedBox(height: 14),
-      VioraVoice(text: _voice(l10n, forecast)),
+      // Without a connection the pill takes the place of the voice, as G30 · Sin conexión does.
+      if (offline != null) ...[const SizedBox(height: 20), offline] else ...[
+        const SizedBox(height: 14),
+        VioraVoice(text: _voice(l10n, forecast)),
+      ],
       const SizedBox(height: Spacing.md),
       _TotalCard(forecast: forecast),
       const SizedBox(height: 28),
@@ -162,6 +172,19 @@ class IntakePageContent extends StatelessWidget {
         _SectorsCard(forecast: forecast),
       ],
     ];
+  }
+
+  /// «Sin conexión · proyección del 26 sep, 18:10», only while the campaign on screen was kept.
+  Widget? _offline(BuildContext context, IntakeForecast forecast) {
+    final savedAt = state.savedAt;
+    if (savedAt == null) return null;
+    final l10n = AppLocalizations.of(context);
+    final what = forecast.kind == IntakeKind.settled ? l10n.offlineWhatIntake : l10n.offlineWhatProjection;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: OfflinePill(text: formatOffline(l10n, what, savedAt, now ?? DateTime.now(), locale)),
+    );
   }
 
   String _voice(AppLocalizations l10n, IntakeForecast forecast) {

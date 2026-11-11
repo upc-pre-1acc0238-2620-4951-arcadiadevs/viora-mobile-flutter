@@ -112,6 +112,21 @@ class ManagerAlertsContent extends StatelessWidget {
                 child: Center(child: CircularProgressIndicator(color: VioraColors.green800)),
               )
             else ...[
+              if (state.offline && state.readAt != null) ...[
+                const SizedBox(height: Spacing.sm),
+                // The same pill as G20 · Sin conexión: the list is the last one kept, with its date.
+                Center(
+                  child: OfflinePill(
+                    text: formatOffline(
+                      l10n,
+                      l10n.offlineWhatAlerts,
+                      state.readAt!,
+                      now,
+                      Localizations.localeOf(context).toLanguageTag(),
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: Spacing.sm),
               _Hero(state: state),
               const SizedBox(height: Spacing.lg),

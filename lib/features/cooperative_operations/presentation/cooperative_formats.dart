@@ -52,3 +52,10 @@ String formatReadAt(AppLocalizations l10n, DateTime at, DateTime now, String loc
   final time = DateFormat.Hm(locale).format(local);
   return daysUntil(local, now) == 0 ? l10n.riskToday(time) : '${formatDayMonth(local, locale)}, $time';
 }
+
+/// The pill of a screen without a connection: "Sin conexión · último estado de hoy, 7:40" or
+/// "Sin conexión · proyección del 26 sep, 18:10". [what] names what was kept.
+String formatOffline(AppLocalizations l10n, String what, DateTime at, DateTime now, String locale) {
+  final when = formatReadAt(l10n, at, now, locale);
+  return daysUntil(at.toLocal(), now) == 0 ? l10n.offlineToday(what, when) : l10n.offlineOn(what, when);
+}
