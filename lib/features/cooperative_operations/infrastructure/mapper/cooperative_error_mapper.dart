@@ -8,6 +8,8 @@ abstract final class CooperativeErrorMapper {
   static const _insufficientArea = 'subscription.license.insufficient_area';
   static const _alreadyRedeemed = 'subscription.invitation_code.already_redeemed';
   static const _notAvailable = 'subscription.invitation_code.not_available';
+  static const _nameTaken = 'territory.sector_zone.name_taken';
+  static const _notPending = 'territory.plot_sector.not_pending';
 
   static CooperativeFailure read(ApiException error) => switch (error.status) {
         403 => const CooperativeNoLicense(),
@@ -27,6 +29,14 @@ abstract final class CooperativeErrorMapper {
           NotEnoughArea((error.body['freeAreaHa'] as num?)?.toDouble()),
         403 => const CooperativeNoLicense(),
         503 => const CodesUnavailable(),
+        _ => const CooperativeUnexpected(),
+      };
+
+  static CooperativeFailure sector(ApiException error) => switch (error.status) {
+        409 when error.reason == _nameTaken => const SectorNameTaken(),
+        409 when error.reason == _notPending => const SectorAlreadyResolved(),
+        400 => const SectorNameInvalid(),
+        403 => const CooperativeNoLicense(),
         _ => const CooperativeUnexpected(),
       };
 
