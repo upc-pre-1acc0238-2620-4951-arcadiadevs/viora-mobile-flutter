@@ -167,7 +167,9 @@ class RiskPlotContent extends StatelessWidget {
 
   String _subtitle(AppLocalizations l10n, RiskPlotDetail plot, String locale) => [
         plot.name,
-        plot.sectorName ?? l10n.memberPlotSectorPending,
+        // The same words as the map's sheet: a sector to confirm is not the same as none.
+        plot.sectorName ??
+            (plot.placement == SectorPlacement.pending ? l10n.memberPlotSectorPending : l10n.riskUnassignedTitle),
         if (plot.areaHa != null) l10n.riskHectares(formatHectares(plot.areaHa!, locale)),
       ].join(' · ');
 }
