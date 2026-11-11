@@ -93,6 +93,7 @@ class RiskPlotDetailDto {
         areaHa: _number(json['areaHa']),
         // A sector the manager hasn't confirmed yet doesn't count as the plot's sector.
         sectorName: json['sectorStatus'] == 'PENDING' ? null : json['sectorZoneName'] as String?,
+        placement: SectorPlacement.parse(json['sectorStatus'] as String?),
         risk: PlotRisk.parse(json['riskLevel'] as String?),
         reasons: _reasons(json['reasons']),
         overloadPercent: _number(json['overloadPercent']),
