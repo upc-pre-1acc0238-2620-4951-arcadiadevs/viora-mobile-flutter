@@ -89,6 +89,9 @@ abstract final class RiskScopes {
   static const nearby = 'nearby';
   static const pending = 'pending';
   static const unassigned = 'unassigned';
+
+  /// «Visitas sugeridas» of the Home: every plot in red or amber.
+  static const visits = 'visits';
 }
 
 /// What the manager reads of their valley: the plots in the server's visit order.
@@ -104,6 +107,11 @@ class RiskTerritory {
       );
 
   RiskGroup get pending => RiskGroup(plots.where((plot) => plot.placement == SectorPlacement.pending).toList());
+
+  /// The plots that need a visit, red and amber, in the server's visit order.
+  RiskGroup get visits => RiskGroup(
+        plots.where((plot) => plot.risk == PlotRisk.critical || plot.risk == PlotRisk.moderate).toList(),
+      );
 
   /// The plots of members who never gave a sector.
   RiskGroup get unassigned => RiskGroup(

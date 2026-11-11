@@ -23,6 +23,7 @@ class SectorDetailViewModel extends Cubit<SectorDetailUiState> {
         RiskScopes.nearby => territory.nearby,
         RiskScopes.pending => territory.pending,
         RiskScopes.unassigned => territory.unassigned,
+        RiskScopes.visits => territory.visits,
         _ => sector?.group ?? const RiskGroup([]),
       };
       emit(SectorDetailUiState(

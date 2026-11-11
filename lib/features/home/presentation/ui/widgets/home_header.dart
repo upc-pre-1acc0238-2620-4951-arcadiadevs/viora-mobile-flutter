@@ -6,21 +6,22 @@ import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/spacing.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 
-/// Avatar, greeting with the organization and role, and alerts bell.
+/// Avatar, greeting with the organization and role («Cooperativa Olivar del Sur · técnico»),
+/// and alerts bell.
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
     super.key,
     required this.onOpenAlerts,
     required this.onOpenAccount,
     this.displayName,
-    this.subtitle,
+    this.organizationName,
     this.hasUnreadAlerts = false,
   });
 
   final VoidCallback onOpenAlerts;
   final VoidCallback onOpenAccount;
   final String? displayName;
-  final String? subtitle;
+  final String? organizationName;
   final bool hasUnreadAlerts;
 
   @override
@@ -28,7 +29,8 @@ class HomeHeader extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final l10n = AppLocalizations.of(context);
     final name = displayName?.trim() ?? '';
-    final subtitle = this.subtitle;
+    final organization = organizationName;
+    final subtitle = organization == null ? null : l10n.homeManagerSubtitle(organization);
 
     return Row(
       children: [

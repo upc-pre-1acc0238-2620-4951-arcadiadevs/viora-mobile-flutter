@@ -1888,4 +1888,153 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dossierNotShared => 'This member no longer shares the plot.';
+
+  @override
+  String homeManagerSubtitle(String organization) {
+    return '$organization · technician';
+  }
+
+  @override
+  String get homeVoiceNoPlots =>
+      'No member shares a plot yet: issue codes to invite them.';
+
+  @override
+  String homeVoiceOverload(String sector, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plots overloaded',
+      one: '1 plot overloaded',
+    );
+    return '$sector needs your visit: $_temp0.';
+  }
+
+  @override
+  String homeVoiceCritical(String sector, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plots in red',
+      one: '1 plot in red',
+    );
+    return '$sector needs your visit: $_temp0.';
+  }
+
+  @override
+  String homeVoiceCriticalValley(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plots in red are waiting for your visit.',
+      one: 'A plot in red is waiting for your visit.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String homeVoiceFrost(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plots',
+      one: '1 plot',
+    );
+    return 'Frost is coming: $_temp0 under 1.5 °C within 48 h.';
+  }
+
+  @override
+  String get homeVoiceCalm => 'Your valley is calm: no plot in red.';
+
+  @override
+  String homeValleyEyebrow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plots',
+      one: '1 plot',
+    );
+    return 'Valley traffic light · $_temp0';
+  }
+
+  @override
+  String homeValleyCritical(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'critical\nplots',
+      one: 'critical\nplot',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get homeOpenRisk => 'See territorial risk';
+
+  @override
+  String get homeLicenseTitle => 'Your license';
+
+  @override
+  String homeCampaign(String year) {
+    return 'Season $year';
+  }
+
+  @override
+  String get homeIntakeLabel => 'Intake';
+
+  @override
+  String homeTons(String tons) {
+    return '$tons t';
+  }
+
+  @override
+  String get homeIntakeProjected => 'projected';
+
+  @override
+  String get homeIntakeSettled => 'delivered';
+
+  @override
+  String get homeIntakeNoData => 'no samplings yet';
+
+  @override
+  String homeIntakeGreen(String tons) {
+    return '$tons t green';
+  }
+
+  @override
+  String homeIntakeBlack(String tons) {
+    return '$tons t black';
+  }
+
+  @override
+  String homeIntakeUnclassified(String tons) {
+    return '$tons t unclassified';
+  }
+
+  @override
+  String homeIntakeCoverage(int percent) {
+    return 'Coverage $percent %';
+  }
+
+  @override
+  String homeFrostAlerts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'frost alerts',
+      one: 'frost alert',
+    );
+    return '$_temp0\n≤ 1.5 °C within 48 h';
+  }
+
+  @override
+  String get homeSeatsLabel => 'seats of the license';
+
+  @override
+  String get homeVisitsTitle => 'Suggested visits';
+
+  @override
+  String get homeVisitsSeeAll => 'See all';
+
+  @override
+  String get homeVisitsNone => 'No plot needs a visit today.';
 }
