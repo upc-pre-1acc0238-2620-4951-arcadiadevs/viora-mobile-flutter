@@ -10,6 +10,7 @@ import 'package:viora/core/navigation/placeholder_screen.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/intake_page.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_territory.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/manager_alerts_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/manager_home_sections.dart';
@@ -98,6 +99,8 @@ final GoRouter appRouter = GoRouter(
                 _membersRoute(d.path)
               else if (d == TopLevelDestination.risk)
                 _riskRoute(d.path)
+              else if (d == TopLevelDestination.collection)
+                _intakeRoute(d.path)
               else
                 GoRoute(
                   path: d.path,
@@ -212,6 +215,18 @@ GoRoute _riskRoute(String path) {
       _sectorRoute(path),
       _plotRoute((state) => path),
     ],
+  );
+}
+
+/// G30 · Acopio and the alerts its bell opens. «Ver socios sin muestreo» goes to the members tab.
+GoRoute _intakeRoute(String path) {
+  return GoRoute(
+    path: path,
+    builder: (context, state) => IntakePage(
+      onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
+      onOpenMembers: () => context.go(TopLevelDestination.members.path),
+    ),
+    routes: [_alertsRoute(path)],
   );
 }
 

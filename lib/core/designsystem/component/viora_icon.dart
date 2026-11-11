@@ -36,6 +36,7 @@ abstract final class VioraIcons {
   static const tag = 'assets/icons/ic_tag.svg';
   static const contentCut = 'assets/icons/ic_content_cut.svg';
   static const settings = 'assets/icons/ic_settings.svg';
+  static const arrowDropDown = 'assets/icons/ic_arrow_drop_down.svg';
   static const logoWordmarkMark = 'assets/icons/logo_wordmark_mark.svg';
   static const logoWordmarkLetters = 'assets/icons/logo_wordmark_letters.svg';
 }

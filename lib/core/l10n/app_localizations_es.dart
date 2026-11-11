@@ -2174,4 +2174,213 @@ class AppLocalizationsEs extends AppLocalizations {
   String membersSectorsPending(int count) {
     return '$count por confirmar';
   }
+
+  @override
+  String intakeCampaign(String year) {
+    return 'Campaña $year';
+  }
+
+  @override
+  String get intakeChooseCampaign => 'Elegir campaña';
+
+  @override
+  String get intakeHeadlineProjected => 'Tu acopio,\n*proyectado.*';
+
+  @override
+  String get intakeHeadlineSettled => 'Tu acopio,\n*registrado.*';
+
+  @override
+  String get intakeHeadlineNoData => 'Tu acopio,\n*aún sin cifra.*';
+
+  @override
+  String intakeVoiceSufficient(int count) {
+    return 'Suma solo las parcelas estimables, sin extrapolar. Faltan $count por muestrear.';
+  }
+
+  @override
+  String get intakeVoiceAllSampled =>
+      'Suma solo las parcelas estimables, sin extrapolar.';
+
+  @override
+  String intakeVoicePreliminary(int percent) {
+    return 'Solo $percent % de las parcelas tiene muestreo: usa esta cifra con cautela para los contratos.';
+  }
+
+  @override
+  String get intakeVoiceSettled =>
+      'Es el acopio real que asentaron los socios desde que se unieron.';
+
+  @override
+  String intakeEyebrowProjection(String year) {
+    return 'PROYECCIÓN · CAMPAÑA $year';
+  }
+
+  @override
+  String intakeEyebrowSettled(String year) {
+    return 'ACOPIO REAL · CAMPAÑA $year';
+  }
+
+  @override
+  String get intakeTagSufficient => 'Cobertura suficiente';
+
+  @override
+  String get intakeTagPreliminary => 'Preliminar';
+
+  @override
+  String get intakeTagClosed => 'Cerrada';
+
+  @override
+  String get intakeTagPartial => 'Parcial';
+
+  @override
+  String get intakeTonsUnit => 'toneladas';
+
+  @override
+  String intakeUncertainty(int sampled, int plots) {
+    return 'Margen de incertidumbre elevado · $sampled de $plots parcelas';
+  }
+
+  @override
+  String get intakeGreenHistory => 'Verde · según historial';
+
+  @override
+  String get intakeBlackHistory => 'Negra · según historial';
+
+  @override
+  String get intakeGreenSettled => 'Verde · asentada';
+
+  @override
+  String get intakeBlackSettled => 'Negra · asentada';
+
+  @override
+  String intakePercent(int percent) {
+    return '$percent %';
+  }
+
+  @override
+  String intakeUnclassified(String tons, int percent) {
+    return '$tons t sin clasificar · $percent %';
+  }
+
+  @override
+  String get intakeCoverageLabel => 'COBERTURA DE MUESTREO';
+
+  @override
+  String get intakeSettledCoverageLabel => 'COSECHAS ASENTADAS';
+
+  @override
+  String intakeCoveragePlots(int sampled, int plots) {
+    return '$sampled de $plots parcelas';
+  }
+
+  @override
+  String intakeOf(int sampled, int plots) {
+    return '$sampled de $plots';
+  }
+
+  @override
+  String intakeThreshold(int percent) {
+    return '$percent % · umbral preliminar';
+  }
+
+  @override
+  String intakeCoverageSufficient(int estimable, int plots, int threshold) {
+    return '$estimable de $plots parcelas son estimables. Desde el $threshold % de muestreo la proyección deja de ser preliminar.';
+  }
+
+  @override
+  String intakeCoveragePreliminary(int estimable, int plots, int threshold) {
+    return '$estimable de $plots parcelas son estimables. La proyección es preliminar hasta llegar al $threshold % de muestreo.';
+  }
+
+  @override
+  String intakeMissingPlots(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Faltan $count para llegar.',
+      one: 'Falta 1 para llegar.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String intakeCoverageSettled(int settled, int plots, String year) {
+    return '$settled de $plots parcelas asentaron su cosecha de la campaña $year.';
+  }
+
+  @override
+  String get intakeBySector => 'Por sector';
+
+  @override
+  String intakeSectorSampled(int sampled, int plots) {
+    return '$sampled de $plots con muestreo';
+  }
+
+  @override
+  String intakeSectorSettled(int sampled, int plots) {
+    return '$sampled de $plots con cosecha';
+  }
+
+  @override
+  String intakeSectorNoData(int sampled, int plots) {
+    return '$sampled de $plots · sin datos';
+  }
+
+  @override
+  String intakeSectorPending(int sampled, int plots) {
+    return '$sampled de $plots · revisar sector';
+  }
+
+  @override
+  String get intakeNoDataTitle => 'Sin datos suficientes\npara proyectar';
+
+  @override
+  String intakeNoDataBody(String year) {
+    return 'Ningún socio registró un muestreo de cuajado en la campaña $year. La proyección aparece con los primeros muestreos, marcada como preliminar.';
+  }
+
+  @override
+  String intakeNoEstimableBody(String year) {
+    return 'Hay muestreos en la campaña $year, pero ninguna parcela es estimable todavía: le falta su estimación de rendimiento o su área.';
+  }
+
+  @override
+  String get intakeSettledNoDataTitle => 'Sin cosechas\nasentadas';
+
+  @override
+  String intakeSettledNoDataBody(String year) {
+    return 'Ningún socio asentó su cosecha de la campaña $year desde que se unió.';
+  }
+
+  @override
+  String get intakeMembersWithoutSampling => 'Ver socios sin muestreo';
+
+  @override
+  String get intakeSheetTitle => 'Elige la\n*campaña*';
+
+  @override
+  String intakeSheetInProgress(String tons) {
+    return 'En curso · proyección $tons t';
+  }
+
+  @override
+  String get intakeSheetInProgressNoData => 'En curso · aún sin cifra';
+
+  @override
+  String intakeSheetClosed(String tons) {
+    return 'Cerrada · acopio real $tons t';
+  }
+
+  @override
+  String intakeSheetPartial(String tons) {
+    return 'Parcial · acopio real $tons t';
+  }
+
+  @override
+  String get intakeSheetSettledNoData => 'Sin cosechas asentadas';
+
+  @override
+  String get intakeSheetNote =>
+      'En las campañas cerradas ves el acopio real registrado por los socios.';
 }

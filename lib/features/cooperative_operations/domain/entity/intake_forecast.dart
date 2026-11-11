@@ -1,3 +1,5 @@
+import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
+
 /// Whether a campaign is still being projected or its harvests are already settled.
 enum IntakeKind {
   projection,
@@ -18,12 +20,16 @@ enum IntakeStatus {
   sufficient,
 
   /// A past campaign with some harvests not settled.
-  partial;
+  partial,
+
+  /// A past campaign whose plots all settled their harvest.
+  closed;
 
   static IntakeStatus parse(String? value) => switch (value) {
         'PRELIMINARY' => preliminary,
         'SUFFICIENT' => sufficient,
         'PARTIAL' => partial,
+        'CLOSED' => closed,
         _ => noData,
       };
 }
@@ -33,6 +39,7 @@ class SectorIntake {
   const SectorIntake({
     required this.sectorId,
     required this.sectorName,
+    this.placement = SectorPlacement.assigned,
     required this.plots,
     required this.sampledPlots,
     required this.tons,
@@ -41,6 +48,10 @@ class SectorIntake {
   /// Null for the plots without a sector.
   final String? sectorId;
   final String? sectorName;
+
+  /// [SectorPlacement.pending] gathers the plots «Por confirmar», [SectorPlacement.none] those
+  /// without a sector.
+  final SectorPlacement placement;
   final int plots;
   final int sampledPlots;
 
@@ -90,4 +101,12 @@ class IntakeForecast {
   /// Empty in the list of campaigns; only one campaign read alone has them.
   final List<SectorIntake> sectors;
   final DateTime? evaluatedAt;
+
+  bool get hasFigure => totalTons != null;
+
+  /// How many more plots must be sampled for the projection to stop being preliminary.
+  int get plotsToThreshold {
+    final needed = (plots * preliminaryThresholdPercent / 100).ceil();
+    return needed > sampledPlots ? needed - sampledPlots : 0;
+  }
 }

@@ -3349,6 +3349,306 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} to confirm'**
   String membersSectorsPending(int count);
+
+  /// No description provided for @intakeCampaign.
+  ///
+  /// In en, this message translates to:
+  /// **'Season {year}'**
+  String intakeCampaign(String year);
+
+  /// No description provided for @intakeChooseCampaign.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose season'**
+  String get intakeChooseCampaign;
+
+  /// No description provided for @intakeHeadlineProjected.
+  ///
+  /// In en, this message translates to:
+  /// **'Your intake,\n*projected.*'**
+  String get intakeHeadlineProjected;
+
+  /// No description provided for @intakeHeadlineSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'Your intake,\n*recorded.*'**
+  String get intakeHeadlineSettled;
+
+  /// No description provided for @intakeHeadlineNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'Your intake,\n*no figure yet.*'**
+  String get intakeHeadlineNoData;
+
+  /// No description provided for @intakeVoiceSufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'It adds up only the estimable plots, without extrapolating. {count} still to sample.'**
+  String intakeVoiceSufficient(int count);
+
+  /// No description provided for @intakeVoiceAllSampled.
+  ///
+  /// In en, this message translates to:
+  /// **'It adds up only the estimable plots, without extrapolating.'**
+  String get intakeVoiceAllSampled;
+
+  /// No description provided for @intakeVoicePreliminary.
+  ///
+  /// In en, this message translates to:
+  /// **'Only {percent} % of the plots are sampled: use this figure with care for contracts.'**
+  String intakeVoicePreliminary(int percent);
+
+  /// No description provided for @intakeVoiceSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'It is the real intake the members settled since they joined.'**
+  String get intakeVoiceSettled;
+
+  /// No description provided for @intakeEyebrowProjection.
+  ///
+  /// In en, this message translates to:
+  /// **'PROJECTION · SEASON {year}'**
+  String intakeEyebrowProjection(String year);
+
+  /// No description provided for @intakeEyebrowSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'REAL INTAKE · SEASON {year}'**
+  String intakeEyebrowSettled(String year);
+
+  /// No description provided for @intakeTagSufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'Enough coverage'**
+  String get intakeTagSufficient;
+
+  /// No description provided for @intakeTagPreliminary.
+  ///
+  /// In en, this message translates to:
+  /// **'Preliminary'**
+  String get intakeTagPreliminary;
+
+  /// No description provided for @intakeTagClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get intakeTagClosed;
+
+  /// No description provided for @intakeTagPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial'**
+  String get intakeTagPartial;
+
+  /// No description provided for @intakeTonsUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'tons'**
+  String get intakeTonsUnit;
+
+  /// No description provided for @intakeUncertainty.
+  ///
+  /// In en, this message translates to:
+  /// **'High margin of uncertainty · {sampled} of {plots} plots'**
+  String intakeUncertainty(int sampled, int plots);
+
+  /// No description provided for @intakeGreenHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Green · by history'**
+  String get intakeGreenHistory;
+
+  /// No description provided for @intakeBlackHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Black · by history'**
+  String get intakeBlackHistory;
+
+  /// No description provided for @intakeGreenSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'Green · settled'**
+  String get intakeGreenSettled;
+
+  /// No description provided for @intakeBlackSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'Black · settled'**
+  String get intakeBlackSettled;
+
+  /// No description provided for @intakePercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} %'**
+  String intakePercent(int percent);
+
+  /// No description provided for @intakeUnclassified.
+  ///
+  /// In en, this message translates to:
+  /// **'{tons} t unclassified · {percent} %'**
+  String intakeUnclassified(String tons, int percent);
+
+  /// No description provided for @intakeCoverageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'SAMPLING COVERAGE'**
+  String get intakeCoverageLabel;
+
+  /// No description provided for @intakeSettledCoverageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'SETTLED HARVESTS'**
+  String get intakeSettledCoverageLabel;
+
+  /// No description provided for @intakeCoveragePlots.
+  ///
+  /// In en, this message translates to:
+  /// **'{sampled} of {plots} plots'**
+  String intakeCoveragePlots(int sampled, int plots);
+
+  /// No description provided for @intakeOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{sampled} of {plots}'**
+  String intakeOf(int sampled, int plots);
+
+  /// No description provided for @intakeThreshold.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} % · preliminary threshold'**
+  String intakeThreshold(int percent);
+
+  /// No description provided for @intakeCoverageSufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'{estimable} of {plots} plots are estimable. From {threshold} % sampling the projection stops being preliminary.'**
+  String intakeCoverageSufficient(int estimable, int plots, int threshold);
+
+  /// No description provided for @intakeCoveragePreliminary.
+  ///
+  /// In en, this message translates to:
+  /// **'{estimable} of {plots} plots are estimable. The projection is preliminary until sampling reaches {threshold} %.'**
+  String intakeCoveragePreliminary(int estimable, int plots, int threshold);
+
+  /// No description provided for @intakeMissingPlots.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 more to get there.} other{{count} more to get there.}}'**
+  String intakeMissingPlots(int count);
+
+  /// No description provided for @intakeCoverageSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'{settled} of {plots} plots settled their harvest of the {year} season.'**
+  String intakeCoverageSettled(int settled, int plots, String year);
+
+  /// No description provided for @intakeBySector.
+  ///
+  /// In en, this message translates to:
+  /// **'By sector'**
+  String get intakeBySector;
+
+  /// No description provided for @intakeSectorSampled.
+  ///
+  /// In en, this message translates to:
+  /// **'{sampled} of {plots} sampled'**
+  String intakeSectorSampled(int sampled, int plots);
+
+  /// No description provided for @intakeSectorSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'{sampled} of {plots} with harvest'**
+  String intakeSectorSettled(int sampled, int plots);
+
+  /// No description provided for @intakeSectorNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'{sampled} of {plots} · no data'**
+  String intakeSectorNoData(int sampled, int plots);
+
+  /// No description provided for @intakeSectorPending.
+  ///
+  /// In en, this message translates to:
+  /// **'{sampled} of {plots} · check the sector'**
+  String intakeSectorPending(int sampled, int plots);
+
+  /// No description provided for @intakeNoDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough data\nto project'**
+  String get intakeNoDataTitle;
+
+  /// No description provided for @intakeNoDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'No member recorded a fruit set sampling in the {year} season. The projection shows up with the first samplings, marked as preliminary.'**
+  String intakeNoDataBody(String year);
+
+  /// No description provided for @intakeNoEstimableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'There are samplings in the {year} season, but no plot is estimable yet: it lacks its yield estimate or its area.'**
+  String intakeNoEstimableBody(String year);
+
+  /// No description provided for @intakeSettledNoDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No settled\nharvests'**
+  String get intakeSettledNoDataTitle;
+
+  /// No description provided for @intakeSettledNoDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'No member settled their harvest of the {year} season since joining.'**
+  String intakeSettledNoDataBody(String year);
+
+  /// No description provided for @intakeMembersWithoutSampling.
+  ///
+  /// In en, this message translates to:
+  /// **'See members without sampling'**
+  String get intakeMembersWithoutSampling;
+
+  /// No description provided for @intakeSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the\n*season*'**
+  String get intakeSheetTitle;
+
+  /// No description provided for @intakeSheetInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress · projection {tons} t'**
+  String intakeSheetInProgress(String tons);
+
+  /// No description provided for @intakeSheetInProgressNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress · no figure yet'**
+  String get intakeSheetInProgressNoData;
+
+  /// No description provided for @intakeSheetClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed · real intake {tons} t'**
+  String intakeSheetClosed(String tons);
+
+  /// No description provided for @intakeSheetPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial · real intake {tons} t'**
+  String intakeSheetPartial(String tons);
+
+  /// No description provided for @intakeSheetSettledNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No settled harvests'**
+  String get intakeSheetSettledNoData;
+
+  /// No description provided for @intakeSheetNote.
+  ///
+  /// In en, this message translates to:
+  /// **'In closed seasons you see the real intake the members recorded.'**
+  String get intakeSheetNote;
 }
 
 class _AppLocalizationsDelegate

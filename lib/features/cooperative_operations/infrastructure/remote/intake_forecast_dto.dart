@@ -1,4 +1,5 @@
 import 'package:viora/features/cooperative_operations/domain/entity/intake_forecast.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
 
 double _tons(Object? value) => (value as num?)?.toDouble() ?? 0;
 
@@ -31,6 +32,7 @@ class IntakeForecastDto {
           SectorIntake(
             sectorId: sector['sectorZoneId'] as String?,
             sectorName: sector['sectorZoneName'] as String?,
+            placement: SectorPlacement.parse(sector['sectorStatus'] as String?),
             plots: (sector['plots'] as num?)?.toInt() ?? 0,
             sampledPlots: (sector['sampledPlots'] as num?)?.toInt() ?? 0,
             tons: (sector['tons'] as num?)?.toDouble(),
