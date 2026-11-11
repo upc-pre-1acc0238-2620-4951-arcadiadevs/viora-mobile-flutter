@@ -26,6 +26,7 @@ class MembersUiState {
     this.filter = MembersFilter.all,
     this.sectorCount,
     this.pendingSectors = 0,
+    this.savedAt,
   });
 
   final bool loading;
@@ -41,6 +42,9 @@ class MembersUiState {
 
   /// Plots «Por confirmar» waiting for the manager.
   final int pendingSectors;
+
+  /// When the roster shown was kept, without a connection; null when it was just read.
+  final DateTime? savedAt;
 
   int get sharingCount => members.where((m) => m.sharing == MemberSharing.sharing).length;
 
@@ -87,6 +91,7 @@ class MembersUiState {
     MembersFilter? filter,
     int? Function()? sectorCount,
     int? pendingSectors,
+    DateTime? Function()? savedAt,
   }) =>
       MembersUiState(
         loading: loading ?? this.loading,
@@ -98,5 +103,6 @@ class MembersUiState {
         filter: filter ?? this.filter,
         sectorCount: sectorCount != null ? sectorCount() : this.sectorCount,
         pendingSectors: pendingSectors ?? this.pendingSectors,
+        savedAt: savedAt != null ? savedAt() : this.savedAt,
       );
 }

@@ -18,7 +18,8 @@ class RiskRepositoryImpl implements RiskRepository {
 
   final RiskApi api;
 
-  /// Keeps the last map and alerts for the screens without a connection. Null keeps nothing.
+  /// Keeps the last map, plot details and alerts for the screens without a connection. Null keeps
+  /// nothing.
   final ManagerSnapshotStore? snapshots;
 
   @override
@@ -36,7 +37,18 @@ class RiskRepositoryImpl implements RiskRepository {
   }
 
   @override
-  Future<RiskPlotDetail> plot(String id) => _call(() async => (await api.plot(id)).toDomain());
+  Future<RiskPlotDetail> plot(String id) => _call(() async {
+        final dto = await api.plot(id);
+        await snapshots?.keep('$_plotsKey/$id', dto.json);
+        return dto.toDomain();
+      });
+
+  @override
+  Future<Kept<RiskPlotDetail>?> keptPlot(String id) async {
+    final kept = await snapshots?.read('$_plotsKey/$id');
+    if (kept == null) return null;
+    return Kept(RiskPlotDetailDto(kept.value! as Map<String, dynamic>).toDomain(), kept.savedAt);
+  }
 
   @override
   Future<bool> hasActiveAlerts() => _call(api.hasActiveAlerts);

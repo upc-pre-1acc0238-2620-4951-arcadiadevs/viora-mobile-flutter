@@ -15,6 +15,7 @@ class ManagerHomeUiState {
     this.capacity,
     this.frostAlerts,
     this.intake,
+    this.savedAt,
   });
 
   final bool loading;
@@ -30,6 +31,9 @@ class ManagerHomeUiState {
   /// The newest campaign; null when there is none or it could not be read.
   final IntakeForecast? intake;
 
+  /// When the valley shown was kept, without a connection; null when it was just read.
+  final DateTime? savedAt;
+
   ManagerHomeUiState copyWith({
     bool? loading,
     CooperativeFailure? Function()? failure,
@@ -37,6 +41,7 @@ class ManagerHomeUiState {
     LicenseCapacity? Function()? capacity,
     int? Function()? frostAlerts,
     IntakeForecast? Function()? intake,
+    DateTime? Function()? savedAt,
   }) =>
       ManagerHomeUiState(
         loading: loading ?? this.loading,
@@ -45,5 +50,6 @@ class ManagerHomeUiState {
         capacity: capacity != null ? capacity() : this.capacity,
         frostAlerts: frostAlerts != null ? frostAlerts() : this.frostAlerts,
         intake: intake != null ? intake() : this.intake,
+        savedAt: savedAt != null ? savedAt() : this.savedAt,
       );
 }

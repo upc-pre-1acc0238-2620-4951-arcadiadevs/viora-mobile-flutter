@@ -11,11 +11,14 @@ import 'package:viora/core/datastore/session_store.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/network/api_client.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/intake_forecast.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/invitation_code.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/manager_snapshot_dao.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/manager_snapshot_store.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/intake_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_api.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/repository/cooperative_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/intake_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/risk_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/presentation/state/intake_ui_state.dart';
@@ -46,12 +49,37 @@ void main() {
     'preliminaryThresholdPercent': 50.0,
   };
 
+  final license = {
+    'organizationName': 'Cooperativa Olivar del Sur',
+    'seats': 60,
+    'contractedAreaHa': 200.0,
+    'seatsUsed': 48,
+    'startsAt': '2026-01-01T00:00:00Z',
+    'endsAt': '2026-12-31T00:00:00Z',
+  };
+  final member = {'id': 'm1', 'fullName': 'Teodoro Mamani', 'sharing': 'SHARING'};
+  final code = {
+    'id': 'c1',
+    'issuedAt': '2026-11-01T00:00:00Z',
+    'expiresAt': '2026-11-30T00:00:00Z',
+    'hectares': 12,
+    'status': 'AVAILABLE',
+  };
+
   ApiClient client() => ApiClient(
         client: MockClient((request) async {
           if (!online) throw http.ClientException('no signal');
           final path = request.url.path;
           final Object body = path.endsWith('/member-plots')
               ? [plot]
+              : path.endsWith('/member-plots/plot-1')
+                  ? plot
+              : path.endsWith('/cooperative-licenses')
+                  ? [license]
+              : path.endsWith('/cooperative-members')
+                  ? [member]
+              : path.endsWith('/invitation-codes')
+                  ? [code]
               : path.endsWith('/intake-forecasts')
                   ? [campaign]
                   : path.endsWith('/intake-forecasts/2026')
@@ -88,6 +116,25 @@ void main() {
     expect((await intake.keptCampaigns())!.value.single.totalTons, 1240);
     expect((await intake.keptCampaign(2026))!.value.estimablePlots, 31);
     expect(await intake.keptCampaign(2025), isNull);
+  });
+
+  test('a plot, the seats, the roster and the codes are kept too, for G10, G22, G23 and G40', () async {
+    final risk = RiskRepositoryImpl(api: RiskApi(client: client()), snapshots: store());
+    final cooperative = CooperativeRepositoryImpl(api: CooperativeApi(client: client()), snapshots: store());
+    await risk.plot('plot-1');
+    await cooperative.capacity();
+    await cooperative.members();
+    await cooperative.codes(InvitationCodeFilter.available);
+
+    online = false;
+    await expectLater(cooperative.members(), throwsA(isA<CooperativeOffline>()));
+
+    expect((await risk.keptPlot('plot-1'))!.value.name, 'Lote 1');
+    expect(await risk.keptPlot('plot-2'), isNull);
+    expect((await cooperative.keptCapacity())!.value.seatsUsed, 48);
+    expect((await cooperative.keptMembers())!.value.single.fullName, 'Teodoro Mamani');
+    expect((await cooperative.keptCodes(InvitationCodeFilter.available))!.value.single.id, 'c1');
+    expect(await cooperative.keptCodes(InvitationCodeFilter.redeemed), isNull);
   });
 
   test('another account never sees what was kept, and clearing forgets it', () async {

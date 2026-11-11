@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/manager_alerts_page.dart';
 import 'package:viora/features/iam/presentation/ui/iam_page.dart';
+import 'package:viora/features/profiles/presentation/ui/account_page.dart';
 import 'package:viora/navigation/app_router.dart';
 
 void main() {
@@ -18,13 +20,20 @@ void main() {
     expect(match.pathParameters, isNot(contains('token')));
   });
 
-  test('the alerts of the manager and their preferences live under the Riesgo tab', () {
+  test('the alerts of the manager live under the Riesgo tab, and their settings are the account', () {
     final alerts = appRouter.configuration.findMatch(Uri.parse('/risk/alerts'));
     final preferences = appRouter.configuration.findMatch(Uri.parse('/risk/alerts/preferences'));
 
     expect(alerts.uri.path, '/risk/alerts');
     expect(alerts.matches.last.matchedLocation, '/risk/${ManagerAlertsPage.path}');
-    expect(preferences.matches.last.matchedLocation, '/risk/alerts/preferences');
+    expect(preferences.matches, isEmpty);
+    expect(appRouter.configuration.findMatch(Uri.parse(AccountPage.path)).matches, isNotEmpty);
+  });
+
+  test('every tab opens its own screen', () {
+    for (final tab in TopLevelDestination.values) {
+      expect(appRouter.configuration.findMatch(Uri.parse(tab.path)).matches.last.matchedLocation, tab.path);
+    }
   });
 
   test('the bell of Home and Socios opens the alerts over its own tab, so going back returns there', () {
