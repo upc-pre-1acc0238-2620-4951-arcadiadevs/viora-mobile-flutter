@@ -58,6 +58,7 @@ class CooperativeMember {
     required this.registeredAreaHa,
     required this.sectorNames,
     required this.worstRisk,
+    this.unsampledPlots = 0,
   });
 
   final String id;
@@ -68,6 +69,9 @@ class CooperativeMember {
   final double registeredAreaHa;
   final List<String> sectorNames;
   final PlotRisk worstRisk;
+
+  /// Plots without any tree sampled this campaign, counted as the intake counts them.
+  final int unsampledPlots;
 }
 
 /// One plot of a member, as the member detail shows it (G41).

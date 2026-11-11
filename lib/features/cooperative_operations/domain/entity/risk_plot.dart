@@ -114,6 +114,7 @@ class RiskPlotDetail {
     required this.producerPhone,
     required this.areaHa,
     required this.sectorName,
+    this.placement = SectorPlacement.none,
     required this.risk,
     required this.reasons,
     required this.overloadPercent,
@@ -136,6 +137,9 @@ class RiskPlotDetail {
   final String? producerPhone;
   final double? areaHa;
   final String? sectorName;
+
+  /// Tells a sector waiting for the manager from no sector at all, when [sectorName] is null.
+  final SectorPlacement placement;
   final PlotRisk risk;
   final List<PlotRiskReason> reasons;
   final double? overloadPercent;

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
@@ -75,6 +76,8 @@ RiskPlotDetail _detail({
   PlotRisk risk = PlotRisk.critical,
   DateTime? thinnedOn,
   String? phone = '+51952184337',
+  String? sectorName = 'La Yarada Baja',
+  SectorPlacement placement = SectorPlacement.assigned,
 }) =>
     RiskPlotDetail(
       id: 'p1',
@@ -82,7 +85,8 @@ RiskPlotDetail _detail({
       producerName: 'Teodoro Mamani',
       producerPhone: phone,
       areaHa: 2.5,
-      sectorName: 'La Yarada Baja',
+      sectorName: sectorName,
+      placement: placement,
       risk: risk,
       reasons: risk == PlotRisk.critical ? const [_overload] : const [],
       overloadPercent: fruits == null ? null : 43,
@@ -888,6 +892,34 @@ void main() {
       expect(find.text('Óptimo'), findsNothing);
       expect(find.text('Quedan 12 días'), findsNothing);
       expect(find.textContaining('Escríbele a Teodoro'), findsOneWidget);
+    });
+
+    testWidgets('the heading tells a sector to confirm from no sector, as the map does', (tester) async {
+      _phone(tester, height: 1600);
+      await tester.pumpWidget(page(_detail(sectorName: null, placement: SectorPlacement.pending)));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('La Yarada 02 · Por confirmar'), findsOneWidget);
+
+      await tester.pumpWidget(page(_detail(sectorName: null, placement: SectorPlacement.none)));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('La Yarada 02 · Sin sector'), findsOneWidget);
+    });
+
+    testWidgets('a short target still holds its whole label inside its capsule', (tester) async {
+      _phone(tester, height: 1800);
+      await tester.pumpWidget(page(_detail(fruits: 1.5, target: 0.4)));
+      await tester.pumpAndSettle();
+
+      final label = find.text('Objetivo sostenible');
+      final textWidth = tester.renderObject<RenderParagraph>(label).getMaxIntrinsicWidth(double.infinity);
+      final bar = find.ancestor(of: label, matching: find.byType(Stack)).first;
+      final capsule = find.descendant(of: bar, matching: find.byType(FractionallySizedBox));
+      // Its share alone would be 27 % of the bar; it grows to hold the label, up to the whole bar.
+      final needed = textWidth + 36;
+      final whole = tester.getSize(bar).width;
+      expect(tester.getSize(capsule).width, greaterThanOrEqualTo(needed < whole ? needed : whole));
+      expect(tester.getCenter(label).dy, closeTo(tester.getCenter(bar).dy, 1));
+      expect(tester.getCenter(find.text('0,40')).dy, closeTo(tester.getCenter(bar).dy, 1));
     });
 
     testWidgets('without a phone there is no way to call', (tester) async {

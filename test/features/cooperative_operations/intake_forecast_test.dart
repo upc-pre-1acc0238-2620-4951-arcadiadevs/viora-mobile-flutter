@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:viora/core/designsystem/component/viora_capsule_bar.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_intake_forecasts_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
@@ -141,6 +142,33 @@ void main() {
       expect(forecast.status, IntakeStatus.closed);
       expect(forecast.sectors.map((sector) => sector.placement), [SectorPlacement.pending, SectorPlacement.none]);
     });
+
+    test('reads how each sector splits by color, and leaves it out when the server does not send it', () {
+      final forecast = IntakeForecastDto.fromJson({
+        'campaignYear': 2026,
+        'kind': 'PROJECTION',
+        'status': 'SUFFICIENT',
+        'sectors': [
+          {
+            'sectorZoneId': 's1',
+            'sectorZoneName': 'La Yarada Baja',
+            'sectorStatus': 'ASSIGNED',
+            'plots': 18,
+            'sampledPlots': 15,
+            'tons': 390.0,
+            'greenTons': 220.0,
+            'blackTons': 130.0,
+            'unclassifiedTons': 40.0,
+          },
+          {'sectorZoneId': 's2', 'sectorZoneName': 'Sama', 'sectorStatus': 'ASSIGNED', 'plots': 4, 'tons': 80.0},
+        ],
+      }).toDomain();
+
+      final split = forecast.sectors.first;
+      expect([split.greenTons, split.blackTons, split.unclassifiedTons], [220, 130, 40]);
+      expect(split.hasColors, isTrue);
+      expect(forecast.sectors.last.hasColors, isFalse);
+    });
   });
 
   group('IntakeForecast', () {
@@ -252,6 +280,27 @@ void main() {
       expect(find.text('10 de 14'), findsOneWidget);
       expect(find.text('0 de 4 · sin datos'), findsOneWidget);
       expect(find.text('0 de 2 · revisar sector'), findsOneWidget);
+    });
+
+    testWidgets('splits the bar of a sector green and black when the server tells how', (tester) async {
+      const sectors = [
+        SectorIntake(
+          sectorId: 's1',
+          sectorName: 'La Yarada Baja',
+          plots: 18,
+          sampledPlots: 15,
+          tons: 390,
+          greenTons: 220,
+          blackTons: 130,
+          unclassifiedTons: 40,
+        ),
+        SectorIntake(sectorId: 's2', sectorName: 'La Yarada Alta', plots: 14, sampledPlots: 10, tons: 320),
+      ];
+      await tester.pumpWidget(_page(IntakeUiState(loading: false, selectedYear: 2026, forecast: _forecast(sectors: sectors))));
+      await tester.scrollUntilVisible(find.text('La Yarada Alta'), 200);
+
+      // The total and the first sector are split; the second one stays a single green bar.
+      expect(find.byType(VioraSegmentedBar), findsNWidgets(2));
     });
 
     testWidgets('marks a projection below the threshold as preliminary', (tester) async {

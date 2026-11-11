@@ -21,6 +21,7 @@ import 'package:viora/features/cooperative_operations/presentation/ui/provisiona
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_plot_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/sector_detail_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/sectors_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/state/members_ui_state.dart';
 import 'package:viora/features/home/presentation/ui/home_page.dart';
 import 'package:viora/features/home/presentation/ui/widgets/home_greeting.dart';
 import 'package:viora/features/iam/presentation/ui/iam_page.dart';
@@ -153,6 +154,9 @@ GoRoute _membersRoute(String path) {
   return GoRoute(
     path: path,
     builder: (context, state) => MembersPage(
+      // A new filter in the link opens a new roster with that chip selected.
+      key: ValueKey(state.uri.queryParameters['filter']),
+      initialFilter: MembersFilter.parse(state.uri.queryParameters['filter']),
       header: HomeGreeting(
         onOpenAccount: () => context.push(AccountPage.path),
         onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
@@ -218,13 +222,17 @@ GoRoute _riskRoute(String path) {
   );
 }
 
-/// G30 · Acopio and the alerts its bell opens. «Ver socios sin muestreo» goes to the members tab.
+/// G30 · Acopio and the alerts its bell opens. «Ver socios sin muestreo» goes to the members tab,
+/// showing only the members who are missing a sampling.
 GoRoute _intakeRoute(String path) {
   return GoRoute(
     path: path,
     builder: (context, state) => IntakePage(
       onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
-      onOpenMembers: () => context.go(TopLevelDestination.members.path),
+      onOpenMembers: () => context.go(Uri(
+        path: TopLevelDestination.members.path,
+        queryParameters: {'filter': MembersFilter.unsampled.name},
+      ).toString()),
     ),
     routes: [_alertsRoute(path)],
   );

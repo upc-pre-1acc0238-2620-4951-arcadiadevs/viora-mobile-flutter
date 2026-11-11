@@ -314,6 +314,7 @@
   "membersFilterAll": "Todos · {count}",
   "membersFilterSharing": "Comparten · {count}",
   "membersFilterWithdrawn": "Retiraron · {count}",
+  "membersFilterUnsampled": "Sin muestreo · {count}",
   "membersPlots": "{count, plural, =1{1 lote} other{{count} lotes}}",
   "membersNoSharedData": "Sin datos compartidos",
   "membersLinked": "Vinculado",
