@@ -1257,5 +1257,272 @@
         "type": "int"
       }
     }
-  }
+  },
+  "intakeCampaign": "Season {year}",
+  "@intakeCampaign": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeChooseCampaign": "Choose season",
+  "intakeHeadlineProjected": "Your intake,\n*projected.*",
+  "intakeHeadlineSettled": "Your intake,\n*recorded.*",
+  "intakeHeadlineNoData": "Your intake,\n*no figure yet.*",
+  "intakeVoiceSufficient": "It adds up only the estimable plots, without extrapolating. {count} still to sample.",
+  "@intakeVoiceSufficient": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeVoiceAllSampled": "It adds up only the estimable plots, without extrapolating.",
+  "intakeVoicePreliminary": "Only {percent} % of the plots are sampled: use this figure with care for contracts.",
+  "@intakeVoicePreliminary": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeVoiceSettled": "It is the real intake the members settled since they joined.",
+  "intakeEyebrowProjection": "PROJECTION · SEASON {year}",
+  "@intakeEyebrowProjection": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeEyebrowSettled": "REAL INTAKE · SEASON {year}",
+  "@intakeEyebrowSettled": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeTagSufficient": "Enough coverage",
+  "intakeTagPreliminary": "Preliminary",
+  "intakeTagClosed": "Closed",
+  "intakeTagPartial": "Partial",
+  "intakeTonsUnit": "tons",
+  "intakeUncertainty": "High margin of uncertainty · {sampled} of {plots} plots",
+  "@intakeUncertainty": {
+    "placeholders": {
+      "sampled": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeGreenHistory": "Green · by history",
+  "intakeBlackHistory": "Black · by history",
+  "intakeGreenSettled": "Green · settled",
+  "intakeBlackSettled": "Black · settled",
+  "intakePercent": "{percent} %",
+  "@intakePercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeUnclassified": "{tons} t unclassified · {percent} %",
+  "@intakeUnclassified": {
+    "placeholders": {
+      "tons": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeCoverageLabel": "SAMPLING COVERAGE",
+  "intakeSettledCoverageLabel": "SETTLED HARVESTS",
+  "intakeCoveragePlots": "{sampled} of {plots} plots",
+  "@intakeCoveragePlots": {
+    "placeholders": {
+      "sampled": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeOf": "{sampled} of {plots}",
+  "@intakeOf": {
+    "placeholders": {
+      "sampled": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeThreshold": "{percent} % · preliminary threshold",
+  "@intakeThreshold": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeCoverageSufficient": "{estimable} of {plots} plots are estimable. From {threshold} % sampling the projection stops being preliminary.",
+  "@intakeCoverageSufficient": {
+    "placeholders": {
+      "estimable": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      },
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeCoveragePreliminary": "{estimable} of {plots} plots are estimable. The projection is preliminary until sampling reaches {threshold} %.",
+  "@intakeCoveragePreliminary": {
+    "placeholders": {
+      "estimable": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      },
+      "threshold": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeMissingPlots": "{count, plural, =1{1 more to get there.} other{{count} more to get there.}}",
+  "@intakeMissingPlots": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeCoverageSettled": "{settled} of {plots} plots settled their harvest of the {year} season.",
+  "@intakeCoverageSettled": {
+    "placeholders": {
+      "settled": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeBySector": "By sector",
+  "intakeSectorSampled": "{sampled} of {plots} sampled",
+  "@intakeSectorSampled": {
+    "placeholders": {
+      "sampled": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeSectorSettled": "{sampled} of {plots} with harvest",
+  "@intakeSectorSettled": {
+    "placeholders": {
+      "sampled": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeSectorNoData": "{sampled} of {plots} · no data",
+  "@intakeSectorNoData": {
+    "placeholders": {
+      "sampled": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeSectorPending": "{sampled} of {plots} · check the sector",
+  "@intakeSectorPending": {
+    "placeholders": {
+      "sampled": {
+        "type": "int"
+      },
+      "plots": {
+        "type": "int"
+      }
+    }
+  },
+  "intakeNoDataTitle": "Not enough data\nto project",
+  "intakeNoDataBody": "No member recorded a fruit set sampling in the {year} season. The projection shows up with the first samplings, marked as preliminary.",
+  "@intakeNoDataBody": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeNoEstimableBody": "There are samplings in the {year} season, but no plot is estimable yet: it lacks its yield estimate or its area.",
+  "@intakeNoEstimableBody": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeSettledNoDataTitle": "No settled\nharvests",
+  "intakeSettledNoDataBody": "No member settled their harvest of the {year} season since joining.",
+  "@intakeSettledNoDataBody": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeMembersWithoutSampling": "See members without sampling",
+  "intakeSheetTitle": "Choose the\n*season*",
+  "intakeSheetInProgress": "In progress · projection {tons} t",
+  "@intakeSheetInProgress": {
+    "placeholders": {
+      "tons": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeSheetInProgressNoData": "In progress · no figure yet",
+  "intakeSheetClosed": "Closed · real intake {tons} t",
+  "@intakeSheetClosed": {
+    "placeholders": {
+      "tons": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeSheetPartial": "Partial · real intake {tons} t",
+  "@intakeSheetPartial": {
+    "placeholders": {
+      "tons": {
+        "type": "String"
+      }
+    }
+  },
+  "intakeSheetSettledNoData": "No settled harvests",
+  "intakeSheetNote": "In closed seasons you see the real intake the members recorded."
 }
