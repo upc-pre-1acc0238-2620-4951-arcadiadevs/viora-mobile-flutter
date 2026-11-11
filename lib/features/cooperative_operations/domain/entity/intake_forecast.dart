@@ -43,6 +43,9 @@ class SectorIntake {
     required this.plots,
     required this.sampledPlots,
     required this.tons,
+    this.greenTons,
+    this.blackTons,
+    this.unclassifiedTons,
   });
 
   /// Null for the plots without a sector.
@@ -57,6 +60,14 @@ class SectorIntake {
 
   /// Null without any sampling in the sector.
   final double? tons;
+
+  /// How [tons] splits by color. All null when the server or a copy kept before did not send it.
+  final double? greenTons;
+  final double? blackTons;
+  final double? unclassifiedTons;
+
+  /// Whether [tons] can be drawn green and black.
+  bool get hasColors => greenTons != null || blackTons != null || unclassifiedTons != null;
 }
 
 /// The intake of a campaign: the tons the members of the license should deliver, green and
