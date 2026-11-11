@@ -153,6 +153,8 @@ void main() {
     final repo = repository((_) async => json([license()]));
     final seen = <String?>[];
     final subscription = repo.watchCurrent().listen((license) => seen.add(license?.organizationName));
+    // The database opens on the first query: the empty answer comes before anything is kept.
+    await pumpEventQueue();
 
     await repo.refresh();
     await pumpEventQueue();

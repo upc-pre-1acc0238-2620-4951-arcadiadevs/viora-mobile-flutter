@@ -1,11 +1,15 @@
 import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/sector_alert.dart';
+import 'package:viora/features/cooperative_operations/domain/valueobject/kept.dart';
 
 /// The territorial traffic light of the manager's license.
 abstract class RiskRepository {
   /// The plots of the members who share, in visit order. [origin] breaks ties by closeness and
   /// gives each plot its distance; the server doesn't keep it.
   Future<List<RiskPlot>> plots({GeoCoordinate? origin});
+
+  /// The plots of the last [plots] read, for the map without a connection.
+  Future<Kept<List<RiskPlot>>?> keptPlots();
 
   Future<RiskPlotDetail> plot(String id);
 
@@ -14,6 +18,9 @@ abstract class RiskRepository {
 
   /// The alerts of the license's sectors: the active ones and those normalized in the last 7 days.
   Future<List<SectorAlert>> alerts();
+
+  /// The alerts of the last [alerts] read, for T14 without a connection.
+  Future<Kept<List<SectorAlert>>?> keptAlerts();
 }
 
 /// Where the manager stands, and how well the phone knows it.

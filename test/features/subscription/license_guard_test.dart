@@ -64,15 +64,37 @@ class _FakeAuth implements AuthRepository {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-LicenseGuardViewModel _guard(_FakeLicenses licenses, _FakeAuth auth, DateTime Function() now) =>
+LicenseGuardViewModel _guard(
+  _FakeLicenses licenses,
+  _FakeAuth auth,
+  DateTime Function() now, {
+  Future<void> Function()? onLicenseEnded,
+}) =>
     LicenseGuardViewModel(
       watchLicense: WatchCurrentLicenseUseCase(repository: licenses),
       refreshLicense: RefreshLicenseUseCase(repository: licenses),
       isSignedIn: IsSignedInUseCase(repository: auth),
+      onLicenseEnded: onLicenseEnded,
       now: now,
     );
 
 void main() {
+  test('the end of the license forgets what the phone kept of it, once', () async {
+    var forgotten = 0;
+    final licenses = _FakeLicenses(_license(endsAt: DateTime.utc(2028)));
+    final guard = _guard(licenses, _FakeAuth(), () => _start, onLicenseEnded: () async => forgotten++);
+    await pumpEventQueue();
+    expect(forgotten, 0);
+
+    licenses.change(null);
+    await pumpEventQueue();
+    licenses.change(null);
+    await pumpEventQueue();
+
+    expect(forgotten, 1);
+    await guard.close();
+  });
+
   test('a license in force keeps the manager in the app', () {
     fakeAsync((async) {
       final licenses = _FakeLicenses(_license(endsAt: _start.add(const Duration(days: 30))));
