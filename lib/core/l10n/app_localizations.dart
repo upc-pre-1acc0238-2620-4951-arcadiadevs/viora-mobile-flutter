@@ -3584,6 +3584,12 @@ abstract class AppLocalizations {
   /// **'alerts'**
   String get offlineWhatAlerts;
 
+  /// No description provided for @offlineWhatMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'members'**
+  String get offlineWhatMembers;
+
   /// No description provided for @riskSavedAt.
   ///
   /// In en, this message translates to:

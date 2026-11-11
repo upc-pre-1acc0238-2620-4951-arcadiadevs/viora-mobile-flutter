@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/l10n/app_localizations_es.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_intake_forecasts_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_license_capacity_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plots_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_sector_alerts_use_case.dart';
@@ -16,6 +17,7 @@ import 'package:viora/features/cooperative_operations/domain/exception/cooperati
 import 'package:viora/features/cooperative_operations/domain/repository/cooperative_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/intake_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/valueobject/kept.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/intake_forecast_dto.dart';
 import 'package:viora/features/cooperative_operations/presentation/state/manager_home_ui_state.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/manager_home_sections.dart';
@@ -118,6 +120,15 @@ class _FakeRisk implements RiskRepository {
   @override
   Future<List<SectorAlert>> alerts() async => alertsAnswer;
 
+  Kept<List<RiskPlot>>? keptPlotsAnswer;
+  Kept<List<SectorAlert>>? keptAlertsAnswer;
+
+  @override
+  Future<Kept<List<RiskPlot>>?> keptPlots() async => keptPlotsAnswer;
+
+  @override
+  Future<Kept<List<SectorAlert>>?> keptAlerts() async => keptAlertsAnswer;
+
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
@@ -132,18 +143,33 @@ class _FakeCooperative implements CooperativeRepository {
     return _capacity;
   }
 
+  Kept<LicenseCapacity>? keptCapacityAnswer;
+
+  @override
+  Future<Kept<LicenseCapacity>?> keptCapacity() async => keptCapacityAnswer;
+
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _FakeIntake implements IntakeRepository {
   List<IntakeForecast> answer = const [];
+  CooperativeFailure? failure;
 
   @override
-  Future<List<IntakeForecast>> campaigns() async => answer;
+  Future<List<IntakeForecast>> campaigns() async {
+    final failure = this.failure;
+    if (failure != null) throw failure;
+    return answer;
+  }
 
   @override
   Future<IntakeForecast> campaign(int year) async => answer.first;
+
+  Kept<List<IntakeForecast>>? keptAnswer;
+
+  @override
+  Future<Kept<List<IntakeForecast>>?> keptCampaigns() async => keptAnswer;
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
@@ -178,6 +204,10 @@ void main() {
           getAlerts: GetSectorAlertsUseCase(repository: risk),
           getIntake: GetIntakeForecastsUseCase(repository: intake),
           location: _FakeLocation(),
+          getKeptPlots: GetKeptRiskPlotsUseCase(repository: risk),
+          getKeptCapacity: GetKeptLicenseCapacityUseCase(repository: cooperative),
+          getKeptAlerts: GetKeptSectorAlertsUseCase(repository: risk),
+          getKeptIntake: GetKeptIntakeForecastsUseCase(repository: intake),
         );
 
     setUp(() {
@@ -235,6 +265,29 @@ void main() {
 
       expect(home.state.failure, isNull);
       expect(home.state.territory!.valley.total, 1);
+    });
+
+    test('without a connection it shows the valley and the cards last read, with their date', () async {
+      final saved = DateTime(2026, 11, 10, 18, 10);
+      risk
+        ..plotsFailure = const CooperativeOffline()
+        ..keptPlotsAnswer = Kept([_plot('1', risk: PlotRisk.critical)], saved)
+        ..keptAlertsAnswer = Kept([_alert(SectorAlertType.frost)], saved);
+      cooperative
+        ..failure = const CooperativeOffline()
+        ..keptCapacityAnswer = Kept(_capacity, saved);
+      intake
+        ..failure = const CooperativeOffline()
+        ..keptAnswer = Kept([_intake(year: 2026)], saved);
+      final home = viewModel();
+
+      await home.load();
+
+      expect(home.state.failure, isNull);
+      expect(home.state.territory!.valley.critical, 1);
+      expect(home.state.savedAt, saved);
+      expect(home.state.capacity!.seatsUsed, 48);
+      expect(home.state.intake!.campaignYear, 2026);
     });
   });
 
@@ -387,6 +440,19 @@ void main() {
       expect(find.text('sin muestreos todavía'), findsOneWidget);
       expect(find.text('Ninguna parcela necesita visita hoy.'), findsOneWidget);
       expect(find.text('Ver todas'), findsNothing);
+    });
+
+    testWidgets('a valley kept without a connection says so, with its date', (tester) async {
+      tester.view.physicalSize = const Size(402, 2000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final kept = state(plots: [_plot('1')]);
+
+      await tester.pumpWidget(summary(kept));
+      expect(find.textContaining('Sin conexión'), findsNothing);
+
+      await tester.pumpWidget(summary(kept.copyWith(savedAt: () => DateTime(2026, 11, 10, 18, 10))));
+      expect(find.textContaining('Sin conexión · último estado'), findsOneWidget);
     });
   });
 }

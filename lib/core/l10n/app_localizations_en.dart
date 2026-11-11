@@ -2338,6 +2338,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get offlineWhatAlerts => 'alerts';
 
   @override
+  String get offlineWhatMembers => 'members';
+
+  @override
   String riskSavedAt(String when) {
     return 'saved $when';
   }

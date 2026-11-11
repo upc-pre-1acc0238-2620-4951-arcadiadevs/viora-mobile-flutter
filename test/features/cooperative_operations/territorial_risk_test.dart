@@ -24,6 +24,7 @@ import 'package:viora/features/cooperative_operations/presentation/ui/risk_page.
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_plot_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/sector_detail_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_map_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_plot_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/sector_detail_view_model.dart';
 
 final _now = DateTime.utc(2026, 11, 8, 12);
@@ -117,8 +118,20 @@ class _FakeRisk implements RiskRepository {
     return plotsToReturn;
   }
 
+  CooperativeFailure? detailFailure;
+
+  /// The detail kept from the last read, for G23 without a connection.
+  Kept<RiskPlotDetail>? keptDetail;
+
   @override
-  Future<RiskPlotDetail> plot(String id) async => _detail();
+  Future<RiskPlotDetail> plot(String id) async {
+    final failure = detailFailure;
+    if (failure != null) throw failure;
+    return _detail();
+  }
+
+  @override
+  Future<Kept<RiskPlotDetail>?> keptPlot(String id) async => keptDetail;
 
   @override
   Future<bool> hasActiveAlerts() async => activeAlerts;
@@ -599,6 +612,46 @@ void main() {
       expect(viewModel.state.priority.map((p) => p.id), ['c', 'a']);
     });
 
+    test('without a connection a sector shows the plots of the last map, with their date', () async {
+      final saved = DateTime(2026, 11, 10, 18, 10);
+      final risk = _FakeRisk()
+        ..plotsFailure = const CooperativeOffline()
+        ..kept = Kept([_plot('a', risk: PlotRisk.critical)], saved);
+      final viewModel = SectorDetailViewModel(
+        getPlots: GetRiskPlotsUseCase(repository: risk),
+        location: _FakeLocation(),
+        getKeptPlots: GetKeptRiskPlotsUseCase(repository: risk),
+      );
+      await viewModel.load('s1');
+
+      expect(viewModel.state.failure, isNull);
+      expect(viewModel.state.priority.map((p) => p.id), ['a']);
+      expect(viewModel.state.savedAt, saved);
+
+      risk.kept = null;
+      await viewModel.load('s1');
+      expect(viewModel.state.failure, isA<CooperativeOffline>());
+    });
+
+    test('without a connection a plot shows its last detail, with its date', () async {
+      final saved = DateTime(2026, 11, 10, 18, 10);
+      final risk = _FakeRisk()
+        ..detailFailure = const CooperativeOffline()
+        ..keptDetail = Kept(_detail(), saved);
+      final viewModel = RiskPlotViewModel(
+        getPlot: GetRiskPlotUseCase(repository: risk),
+        getKeptPlot: GetKeptRiskPlotUseCase(repository: risk),
+      );
+      await viewModel.load('p1');
+
+      expect(viewModel.state.plot!.name, 'La Yarada 02');
+      expect(viewModel.state.savedAt, saved);
+
+      risk.keptDetail = null;
+      await viewModel.load('p1');
+      expect(viewModel.state.failure, isA<CooperativeOffline>());
+    });
+
     test('«Ver visitas por cercanía» arrives with the closest first', () async {
       final risk = _FakeRisk()
         ..plotsToReturn = [
@@ -920,6 +973,22 @@ void main() {
       expect(tester.getSize(capsule).width, greaterThanOrEqualTo(needed < whole ? needed : whole));
       expect(tester.getCenter(label).dy, closeTo(tester.getCenter(bar).dy, 1));
       expect(tester.getCenter(find.text('0,40')).dy, closeTo(tester.getCenter(bar).dy, 1));
+    });
+
+    testWidgets('a plot kept without a connection says so, with its date', (tester) async {
+      _phone(tester, height: 1600);
+      await tester.pumpWidget(_app(RiskPlotContent(
+        state: RiskPlotUiState(loading: false, plot: _detail(), savedAt: DateTime(2026, 11, 10, 18, 10)),
+        now: _now,
+        onBack: () {},
+        onRetry: () {},
+        onOpenDossier: () {},
+        onCall: (_) {},
+        onWhatsapp: (_) {},
+      )));
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('Sin conexión · último estado'), findsOneWidget);
     });
 
     testWidgets('without a phone there is no way to call', (tester) async {

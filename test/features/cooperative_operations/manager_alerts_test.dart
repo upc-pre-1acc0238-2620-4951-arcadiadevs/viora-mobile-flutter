@@ -97,6 +97,9 @@ class _FakeRisk implements RiskRepository {
 
   @override
   Future<Kept<List<RiskPlot>>?> keptPlots() async => null;
+
+  @override
+  Future<Kept<RiskPlotDetail>?> keptPlot(String id) async => null;
 }
 
 Widget _page(

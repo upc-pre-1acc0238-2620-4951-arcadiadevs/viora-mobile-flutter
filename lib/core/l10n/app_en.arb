@@ -1499,6 +1499,7 @@
   "offlineWhatProjection": "projection",
   "offlineWhatIntake": "intake",
   "offlineWhatAlerts": "alerts",
+  "offlineWhatMembers": "members",
   "riskSavedAt": "saved {when}",
   "@riskSavedAt": {
     "placeholders": {

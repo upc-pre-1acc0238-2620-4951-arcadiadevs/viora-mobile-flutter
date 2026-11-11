@@ -112,6 +112,21 @@ class RiskPlotContent extends StatelessWidget {
             else ...[
               _ReadOnlyLine(evaluatedAt: plot.evaluatedAt, now: now),
               const SizedBox(height: Spacing.sm),
+              if (state.savedAt != null) ...[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: OfflinePill(
+                    text: formatOffline(
+                      l10n,
+                      l10n.offlineWhatState,
+                      state.savedAt!,
+                      now,
+                      Localizations.localeOf(context).toLanguageTag(),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: Spacing.sm),
+              ],
               if (plot.hasLoad) ...[
                 _LoadCard(plot: plot, now: now),
                 if ((plot.percentageToRemove ?? 0) > 0) ...[

@@ -13,6 +13,7 @@ class SectorDetailUiState {
     this.plots = const [],
     this.nearestFirst = false,
     this.expanded = const {},
+    this.savedAt,
   });
 
   final bool loading;
@@ -28,6 +29,9 @@ class SectorDetailUiState {
 
   /// The groups of "Resto del sector" opened in place.
   final Set<PlotRisk> expanded;
+
+  /// When the plots shown were kept, without a connection; null when they were just read.
+  final DateTime? savedAt;
 
   RiskGroup get group => RiskGroup(plots);
 
@@ -52,5 +56,6 @@ class SectorDetailUiState {
         plots: plots,
         nearestFirst: nearestFirst ?? this.nearestFirst,
         expanded: expanded ?? this.expanded,
+        savedAt: savedAt,
       );
 }

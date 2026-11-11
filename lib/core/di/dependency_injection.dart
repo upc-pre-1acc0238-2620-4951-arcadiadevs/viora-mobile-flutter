@@ -110,7 +110,7 @@ void setupDependencies() {
 void _setupCooperativeOperations() {
   getIt.registerLazySingleton<CooperativeApi>(() => CooperativeApi(client: getIt<ApiClient>()));
   getIt.registerLazySingleton<CooperativeRepository>(
-    () => CooperativeRepositoryImpl(api: getIt<CooperativeApi>()),
+    () => CooperativeRepositoryImpl(api: getIt<CooperativeApi>(), snapshots: getIt<ManagerSnapshotStore>()),
   );
   getIt.registerLazySingleton(() => GetLicenseCapacityUseCase(repository: getIt<CooperativeRepository>()));
   getIt.registerLazySingleton(() => GetMembersUseCase(repository: getIt<CooperativeRepository>()));
@@ -137,6 +137,9 @@ void _setupCooperativeOperations() {
       getMembers: getIt<GetMembersUseCase>(),
       getCodes: getIt<GetInvitationCodesUseCase>(),
       getSectors: getIt<GetSectorsUseCase>(),
+      getKeptCapacity: getIt<GetKeptLicenseCapacityUseCase>(),
+      getKeptMembers: getIt<GetKeptMembersUseCase>(),
+      getKeptCodes: getIt<GetKeptInvitationCodesUseCase>(),
     ),
   );
   getIt.registerFactory<MemberDetailViewModel>(
@@ -179,6 +182,10 @@ void _setupTerritorialRisk() {
   getIt.registerLazySingleton(() => GetSectorAlertsUseCase(repository: getIt<RiskRepository>()));
   getIt.registerLazySingleton(() => GetKeptRiskPlotsUseCase(repository: getIt<RiskRepository>()));
   getIt.registerLazySingleton(() => GetKeptSectorAlertsUseCase(repository: getIt<RiskRepository>()));
+  getIt.registerLazySingleton(() => GetKeptRiskPlotUseCase(repository: getIt<RiskRepository>()));
+  getIt.registerLazySingleton(() => GetKeptLicenseCapacityUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton(() => GetKeptMembersUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton(() => GetKeptInvitationCodesUseCase(repository: getIt<CooperativeRepository>()));
 
   getIt.registerFactory<RiskMapViewModel>(
     () => RiskMapViewModel(
@@ -190,9 +197,15 @@ void _setupTerritorialRisk() {
     ),
   );
   getIt.registerFactory<SectorDetailViewModel>(
-    () => SectorDetailViewModel(getPlots: getIt<GetRiskPlotsUseCase>(), location: getIt<LocationRepository>()),
+    () => SectorDetailViewModel(
+      getPlots: getIt<GetRiskPlotsUseCase>(),
+      location: getIt<LocationRepository>(),
+      getKeptPlots: getIt<GetKeptRiskPlotsUseCase>(),
+    ),
   );
-  getIt.registerFactory<RiskPlotViewModel>(() => RiskPlotViewModel(getPlot: getIt<GetRiskPlotUseCase>()));
+  getIt.registerFactory<RiskPlotViewModel>(
+    () => RiskPlotViewModel(getPlot: getIt<GetRiskPlotUseCase>(), getKeptPlot: getIt<GetKeptRiskPlotUseCase>()),
+  );
   getIt.registerFactory<ManagerAlertsViewModel>(
     () => ManagerAlertsViewModel(
       getAlerts: getIt<GetSectorAlertsUseCase>(),
@@ -224,6 +237,10 @@ void _setupTerritorialRisk() {
       getAlerts: getIt<GetSectorAlertsUseCase>(),
       getIntake: getIt<GetIntakeForecastsUseCase>(),
       location: getIt<LocationRepository>(),
+      getKeptPlots: getIt<GetKeptRiskPlotsUseCase>(),
+      getKeptCapacity: getIt<GetKeptLicenseCapacityUseCase>(),
+      getKeptAlerts: getIt<GetKeptSectorAlertsUseCase>(),
+      getKeptIntake: getIt<GetKeptIntakeForecastsUseCase>(),
     ),
   );
 

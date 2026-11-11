@@ -132,6 +132,15 @@ class MembersPageContent extends StatelessWidget {
           ),
           children: [
             header,
+            if (state.savedAt != null) ...[
+              const SizedBox(height: Spacing.sm),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: OfflinePill(
+                  text: formatOffline(l10n, l10n.offlineWhatMembers, state.savedAt!, DateTime.now(), locale),
+                ),
+              ),
+            ],
             const SizedBox(height: 28),
             VioraEditorialTitle(l10n.membersHeadline, fontSize: 44, lineHeight: 46),
             if (capacity != null) ...[

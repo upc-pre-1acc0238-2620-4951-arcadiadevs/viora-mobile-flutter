@@ -628,5 +628,6 @@
   "offlineWhatProjection": "proyección",
   "offlineWhatIntake": "acopio",
   "offlineWhatAlerts": "alertas",
+  "offlineWhatMembers": "socios",
   "riskSavedAt": "guardado {when}"
 }
