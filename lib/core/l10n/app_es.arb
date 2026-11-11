@@ -673,5 +673,12 @@
   "intakeSheetClosed": "Cerrada · acopio real {tons} t",
   "intakeSheetPartial": "Parcial · acopio real {tons} t",
   "intakeSheetSettledNoData": "Sin cosechas asentadas",
-  "intakeSheetNote": "En las campañas cerradas ves el acopio real registrado por los socios."
+  "intakeSheetNote": "En las campañas cerradas ves el acopio real registrado por los socios.",
+  "offlineToday": "Sin conexión · {what} de {when}",
+  "offlineOn": "Sin conexión · {what} del {when}",
+  "offlineWhatState": "último estado",
+  "offlineWhatProjection": "proyección",
+  "offlineWhatIntake": "acopio",
+  "offlineWhatAlerts": "alertas",
+  "riskSavedAt": "guardado {when}"
 }

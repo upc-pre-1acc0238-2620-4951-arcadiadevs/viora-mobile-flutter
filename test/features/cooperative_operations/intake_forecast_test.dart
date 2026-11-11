@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_intake_forecasts_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/intake_forecast.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/intake_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/valueobject/kept.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/intake_forecast_dto.dart';
 import 'package:viora/features/cooperative_operations/presentation/state/intake_ui_state.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/intake_page.dart';
@@ -74,6 +76,16 @@ class _FakeIntake implements IntakeRepository {
     if (failure != null) throw failure;
     return byYear[year]!;
   }
+
+  /// What the phone kept of the last reads, for G30 · Sin conexión.
+  Kept<List<IntakeForecast>>? keptList;
+  Map<int, Kept<IntakeForecast>> keptByYear = {};
+
+  @override
+  Future<Kept<List<IntakeForecast>>?> keptCampaigns() async => keptList;
+
+  @override
+  Future<Kept<IntakeForecast>?> keptCampaign(int year) async => keptByYear[year];
 }
 
 class _FakeRisk implements RiskRepository {
@@ -145,6 +157,8 @@ void main() {
     IntakeViewModel viewModel() => IntakeViewModel(
           getCampaigns: GetIntakeForecastsUseCase(repository: intake),
           getCampaign: GetIntakeForecastUseCase(repository: intake),
+          getKeptCampaigns: GetKeptIntakeForecastsUseCase(repository: intake),
+          getKeptCampaign: GetKeptIntakeForecastUseCase(repository: intake),
           hasActiveAlerts: HasActiveSectorAlertsUseCase(repository: _FakeRisk()),
         );
 
@@ -193,6 +207,32 @@ void main() {
       final fresh = viewModel();
       await fresh.load();
       expect(fresh.state.failure, isA<CooperativeOffline>());
+    });
+
+    test('opened without connection, it shows the campaign kept from the last read', () async {
+      final savedAt = DateTime(2026, 9, 26, 18, 10);
+      intake
+        ..failure = const CooperativeOffline()
+        ..keptList = Kept([_forecast(sectors: const [])], savedAt)
+        ..keptByYear = {2026: Kept(_forecast(), savedAt)};
+      final model = viewModel();
+
+      await model.load();
+
+      expect(model.state.failure, isNull);
+      expect(model.state.selectedYear, 2026);
+      expect(model.state.forecast!.sectors, hasLength(4));
+      expect(model.state.savedAt, savedAt);
+    });
+
+    test('a campaign never read before cannot be chosen without connection', () async {
+      final model = viewModel();
+      await model.load();
+      intake.failure = const CooperativeOffline();
+
+      await model.selectCampaign(2025);
+
+      expect(model.state.failure, isA<CooperativeOffline>());
     });
   });
 

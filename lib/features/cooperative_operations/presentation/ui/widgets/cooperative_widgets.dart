@@ -390,6 +390,44 @@ class ContactButton extends StatelessWidget {
   }
 }
 
+/// The dark pill of G20 and G30 · Sin conexión: what is on screen was kept, and since when.
+class OfflinePill extends StatelessWidget {
+  const OfflinePill({super.key, required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      liveRegion: true,
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(color: VioraColors.neutral900, shape: StadiumBorder()),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12, 10, 14, 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const VioraIcon(VioraIcons.cloudSync, size: 18, color: VioraColors.neutral0),
+              const SizedBox(width: Spacing.xs),
+              Flexible(
+                child: Text(
+                  text,
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        fontSize: 12,
+                        height: 16 / 12,
+                        letterSpacing: 0,
+                        color: VioraColors.neutral0,
+                      ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// What failed, and a way to try again.
 class CooperativeFailureView extends StatelessWidget {
   const CooperativeFailureView({super.key, required this.failure, required this.onRetry});

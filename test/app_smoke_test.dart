@@ -1,3 +1,4 @@
+import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -43,6 +44,9 @@ void main() {
     setupDependencies();
     getIt.unregister<LicenseRepository>();
     getIt.registerLazySingleton<LicenseRepository>(_LicensedManager.new);
+    // The screens keep their reads for offline use: in a test they go to a database in memory.
+    getIt.unregister<AppDatabase>();
+    getIt.registerLazySingleton<AppDatabase>(() => AppDatabase(NativeDatabase.memory()));
   });
   tearDown(() => getIt.reset());
 

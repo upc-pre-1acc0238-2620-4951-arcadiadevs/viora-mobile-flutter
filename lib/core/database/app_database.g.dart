@@ -477,17 +477,339 @@ class ManagerLicensesCompanion extends UpdateCompanion<ManagerLicenseRow> {
   }
 }
 
+class $ManagerSnapshotsTable extends ManagerSnapshots
+    with TableInfo<$ManagerSnapshotsTable, ManagerSnapshotRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ManagerSnapshotsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _readKeyMeta = const VerificationMeta(
+    'readKey',
+  );
+  @override
+  late final GeneratedColumn<String> readKey = GeneratedColumn<String>(
+    'read_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bodyMeta = const VerificationMeta('body');
+  @override
+  late final GeneratedColumn<String> body = GeneratedColumn<String>(
+    'body',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _savedAtMeta = const VerificationMeta(
+    'savedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> savedAt = GeneratedColumn<DateTime>(
+    'saved_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [userId, readKey, body, savedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'manager_snapshots';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ManagerSnapshotRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('read_key')) {
+      context.handle(
+        _readKeyMeta,
+        readKey.isAcceptableOrUnknown(data['read_key']!, _readKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_readKeyMeta);
+    }
+    if (data.containsKey('body')) {
+      context.handle(
+        _bodyMeta,
+        body.isAcceptableOrUnknown(data['body']!, _bodyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bodyMeta);
+    }
+    if (data.containsKey('saved_at')) {
+      context.handle(
+        _savedAtMeta,
+        savedAt.isAcceptableOrUnknown(data['saved_at']!, _savedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_savedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {userId, readKey};
+  @override
+  ManagerSnapshotRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ManagerSnapshotRow(
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      readKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}read_key'],
+      )!,
+      body: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}body'],
+      )!,
+      savedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}saved_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ManagerSnapshotsTable createAlias(String alias) {
+    return $ManagerSnapshotsTable(attachedDatabase, alias);
+  }
+}
+
+class ManagerSnapshotRow extends DataClass
+    implements Insertable<ManagerSnapshotRow> {
+  final String userId;
+
+  /// The read it answers, such as `member-plots` or `intake-forecasts/2026`.
+  final String readKey;
+
+  /// The JSON body of the answer.
+  final String body;
+  final DateTime savedAt;
+  const ManagerSnapshotRow({
+    required this.userId,
+    required this.readKey,
+    required this.body,
+    required this.savedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['user_id'] = Variable<String>(userId);
+    map['read_key'] = Variable<String>(readKey);
+    map['body'] = Variable<String>(body);
+    map['saved_at'] = Variable<DateTime>(savedAt);
+    return map;
+  }
+
+  ManagerSnapshotsCompanion toCompanion(bool nullToAbsent) {
+    return ManagerSnapshotsCompanion(
+      userId: Value(userId),
+      readKey: Value(readKey),
+      body: Value(body),
+      savedAt: Value(savedAt),
+    );
+  }
+
+  factory ManagerSnapshotRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ManagerSnapshotRow(
+      userId: serializer.fromJson<String>(json['userId']),
+      readKey: serializer.fromJson<String>(json['readKey']),
+      body: serializer.fromJson<String>(json['body']),
+      savedAt: serializer.fromJson<DateTime>(json['savedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'userId': serializer.toJson<String>(userId),
+      'readKey': serializer.toJson<String>(readKey),
+      'body': serializer.toJson<String>(body),
+      'savedAt': serializer.toJson<DateTime>(savedAt),
+    };
+  }
+
+  ManagerSnapshotRow copyWith({
+    String? userId,
+    String? readKey,
+    String? body,
+    DateTime? savedAt,
+  }) => ManagerSnapshotRow(
+    userId: userId ?? this.userId,
+    readKey: readKey ?? this.readKey,
+    body: body ?? this.body,
+    savedAt: savedAt ?? this.savedAt,
+  );
+  ManagerSnapshotRow copyWithCompanion(ManagerSnapshotsCompanion data) {
+    return ManagerSnapshotRow(
+      userId: data.userId.present ? data.userId.value : this.userId,
+      readKey: data.readKey.present ? data.readKey.value : this.readKey,
+      body: data.body.present ? data.body.value : this.body,
+      savedAt: data.savedAt.present ? data.savedAt.value : this.savedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ManagerSnapshotRow(')
+          ..write('userId: $userId, ')
+          ..write('readKey: $readKey, ')
+          ..write('body: $body, ')
+          ..write('savedAt: $savedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(userId, readKey, body, savedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ManagerSnapshotRow &&
+          other.userId == this.userId &&
+          other.readKey == this.readKey &&
+          other.body == this.body &&
+          other.savedAt == this.savedAt);
+}
+
+class ManagerSnapshotsCompanion extends UpdateCompanion<ManagerSnapshotRow> {
+  final Value<String> userId;
+  final Value<String> readKey;
+  final Value<String> body;
+  final Value<DateTime> savedAt;
+  final Value<int> rowid;
+  const ManagerSnapshotsCompanion({
+    this.userId = const Value.absent(),
+    this.readKey = const Value.absent(),
+    this.body = const Value.absent(),
+    this.savedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ManagerSnapshotsCompanion.insert({
+    required String userId,
+    required String readKey,
+    required String body,
+    required DateTime savedAt,
+    this.rowid = const Value.absent(),
+  }) : userId = Value(userId),
+       readKey = Value(readKey),
+       body = Value(body),
+       savedAt = Value(savedAt);
+  static Insertable<ManagerSnapshotRow> custom({
+    Expression<String>? userId,
+    Expression<String>? readKey,
+    Expression<String>? body,
+    Expression<DateTime>? savedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (userId != null) 'user_id': userId,
+      if (readKey != null) 'read_key': readKey,
+      if (body != null) 'body': body,
+      if (savedAt != null) 'saved_at': savedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ManagerSnapshotsCompanion copyWith({
+    Value<String>? userId,
+    Value<String>? readKey,
+    Value<String>? body,
+    Value<DateTime>? savedAt,
+    Value<int>? rowid,
+  }) {
+    return ManagerSnapshotsCompanion(
+      userId: userId ?? this.userId,
+      readKey: readKey ?? this.readKey,
+      body: body ?? this.body,
+      savedAt: savedAt ?? this.savedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (readKey.present) {
+      map['read_key'] = Variable<String>(readKey.value);
+    }
+    if (body.present) {
+      map['body'] = Variable<String>(body.value);
+    }
+    if (savedAt.present) {
+      map['saved_at'] = Variable<DateTime>(savedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ManagerSnapshotsCompanion(')
+          ..write('userId: $userId, ')
+          ..write('readKey: $readKey, ')
+          ..write('body: $body, ')
+          ..write('savedAt: $savedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $ManagerLicensesTable managerLicenses = $ManagerLicensesTable(
     this,
   );
+  late final $ManagerSnapshotsTable managerSnapshots = $ManagerSnapshotsTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [managerLicenses];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    managerLicenses,
+    managerSnapshots,
+  ];
 }
 
 typedef $$ManagerLicensesTableCreateCompanionBuilder =
@@ -747,10 +1069,214 @@ typedef $$ManagerLicensesTableProcessedTableManager =
       ManagerLicenseRow,
       PrefetchHooks Function()
     >;
+typedef $$ManagerSnapshotsTableCreateCompanionBuilder =
+    ManagerSnapshotsCompanion Function({
+      required String userId,
+      required String readKey,
+      required String body,
+      required DateTime savedAt,
+      Value<int> rowid,
+    });
+typedef $$ManagerSnapshotsTableUpdateCompanionBuilder =
+    ManagerSnapshotsCompanion Function({
+      Value<String> userId,
+      Value<String> readKey,
+      Value<String> body,
+      Value<DateTime> savedAt,
+      Value<int> rowid,
+    });
+
+class $$ManagerSnapshotsTableFilterComposer
+    extends Composer<_$AppDatabase, $ManagerSnapshotsTable> {
+  $$ManagerSnapshotsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get readKey => $composableBuilder(
+    column: $table.readKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get savedAt => $composableBuilder(
+    column: $table.savedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ManagerSnapshotsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ManagerSnapshotsTable> {
+  $$ManagerSnapshotsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get readKey => $composableBuilder(
+    column: $table.readKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get savedAt => $composableBuilder(
+    column: $table.savedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ManagerSnapshotsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ManagerSnapshotsTable> {
+  $$ManagerSnapshotsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get readKey =>
+      $composableBuilder(column: $table.readKey, builder: (column) => column);
+
+  GeneratedColumn<String> get body =>
+      $composableBuilder(column: $table.body, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get savedAt =>
+      $composableBuilder(column: $table.savedAt, builder: (column) => column);
+}
+
+class $$ManagerSnapshotsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ManagerSnapshotsTable,
+          ManagerSnapshotRow,
+          $$ManagerSnapshotsTableFilterComposer,
+          $$ManagerSnapshotsTableOrderingComposer,
+          $$ManagerSnapshotsTableAnnotationComposer,
+          $$ManagerSnapshotsTableCreateCompanionBuilder,
+          $$ManagerSnapshotsTableUpdateCompanionBuilder,
+          (
+            ManagerSnapshotRow,
+            BaseReferences<
+              _$AppDatabase,
+              $ManagerSnapshotsTable,
+              ManagerSnapshotRow
+            >,
+          ),
+          ManagerSnapshotRow,
+          PrefetchHooks Function()
+        > {
+  $$ManagerSnapshotsTableTableManager(
+    _$AppDatabase db,
+    $ManagerSnapshotsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ManagerSnapshotsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ManagerSnapshotsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ManagerSnapshotsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> userId = const Value.absent(),
+                Value<String> readKey = const Value.absent(),
+                Value<String> body = const Value.absent(),
+                Value<DateTime> savedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ManagerSnapshotsCompanion(
+                userId: userId,
+                readKey: readKey,
+                body: body,
+                savedAt: savedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String userId,
+                required String readKey,
+                required String body,
+                required DateTime savedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => ManagerSnapshotsCompanion.insert(
+                userId: userId,
+                readKey: readKey,
+                body: body,
+                savedAt: savedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ManagerSnapshotsTable, ManagerSnapshotRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $ManagerSnapshotsTable,
+                    ManagerSnapshotRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ManagerSnapshotsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ManagerSnapshotsTable,
+      ManagerSnapshotRow,
+      $$ManagerSnapshotsTableFilterComposer,
+      $$ManagerSnapshotsTableOrderingComposer,
+      $$ManagerSnapshotsTableAnnotationComposer,
+      $$ManagerSnapshotsTableCreateCompanionBuilder,
+      $$ManagerSnapshotsTableUpdateCompanionBuilder,
+      (
+        ManagerSnapshotRow,
+        BaseReferences<
+          _$AppDatabase,
+          $ManagerSnapshotsTable,
+          ManagerSnapshotRow
+        >,
+      ),
+      ManagerSnapshotRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$ManagerLicensesTableTableManager get managerLicenses =>
       $$ManagerLicensesTableTableManager(_db, _db.managerLicenses);
+  $$ManagerSnapshotsTableTableManager get managerSnapshots =>
+      $$ManagerSnapshotsTableTableManager(_db, _db.managerSnapshots);
 }

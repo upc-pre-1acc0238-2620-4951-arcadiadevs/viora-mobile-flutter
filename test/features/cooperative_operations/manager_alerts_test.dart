@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_sector_alerts_use_case.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/cooperative_member.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/sector_alert.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/valueobject/kept.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/sector_alert_dto.dart';
 import 'package:viora/features/cooperative_operations/presentation/state/manager_alerts_ui_state.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/manager_alerts_page.dart';
@@ -86,6 +88,15 @@ class _FakeRisk implements RiskRepository {
 
   @override
   Future<RiskPlotDetail> plot(String id) => throw UnimplementedError();
+
+  /// The alerts kept from the last read, for T14 without a connection.
+  Kept<List<SectorAlert>>? kept;
+
+  @override
+  Future<Kept<List<SectorAlert>>?> keptAlerts() async => kept;
+
+  @override
+  Future<Kept<List<RiskPlot>>?> keptPlots() async => null;
 }
 
 Widget _page(
@@ -251,6 +262,24 @@ void main() {
       await viewModel.load();
       expect(viewModel.state.failure, isNull);
       expect(viewModel.state.visibleActive.map((alert) => alert.id), ['critical']);
+    });
+
+    test('without connection it shows the alerts kept from the last read, with their date', () async {
+      final savedAt = _now.subtract(const Duration(hours: 3));
+      final risk = _FakeRisk()
+        ..failure = const CooperativeOffline()
+        ..kept = Kept(_mockup, savedAt);
+      final viewModel = ManagerAlertsViewModel(
+        getAlerts: GetSectorAlertsUseCase(repository: risk),
+        getKeptAlerts: GetKeptSectorAlertsUseCase(repository: risk),
+      );
+
+      await viewModel.load();
+
+      expect(viewModel.state.failure, isNull);
+      expect(viewModel.state.offline, isTrue);
+      expect(viewModel.state.alerts, hasLength(4));
+      expect(viewModel.state.readAt, savedAt);
     });
   });
 

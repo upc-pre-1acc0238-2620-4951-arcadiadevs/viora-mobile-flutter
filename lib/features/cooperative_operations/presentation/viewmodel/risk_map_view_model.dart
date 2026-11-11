@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plot_use_case.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_risk_plots_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
@@ -10,12 +12,19 @@ import 'package:viora/features/cooperative_operations/presentation/state/risk_ma
 class RiskMapViewModel extends Cubit<RiskMapUiState> {
   RiskMapViewModel({
     required this.getPlots,
+    this.getKeptPlots,
     required this.getPlot,
     required this.hasActiveAlerts,
     required this.location,
-  }) : super(const RiskMapUiState());
+    DateTime Function()? clock,
+  })  : clock = clock ?? DateTime.now,
+        super(const RiskMapUiState());
 
   final GetRiskPlotsUseCase getPlots;
+
+  /// The last map read, for G20 · Sin conexión. Null shows the failure instead.
+  final GetKeptRiskPlotsUseCase? getKeptPlots;
+  final DateTime Function() clock;
   final GetRiskPlotUseCase getPlot;
   final HasActiveSectorAlertsUseCase hasActiveAlerts;
   final LocationRepository location;
@@ -50,16 +59,34 @@ class RiskMapViewModel extends Cubit<RiskMapUiState> {
     _readAlerts();
     try {
       final plots = await getPlots.execute(origin: state.location?.coordinate);
-      final selectionGone = !plots.any((plot) => plot.id == state.selectedPlotId);
-      _emit(state.copyWith(
-        loading: false,
-        plots: plots,
-        selectedPlotId: selectionGone ? () => null : null,
-        selectedDetail: selectionGone ? () => null : null,
-      ));
+      _show(plots, readAt: clock(), savedAt: null);
+    } on CooperativeOffline catch (failure) {
+      // Without a connection the map stays as it was last read, with its date, never as fresh.
+      if (state.plots.isNotEmpty) {
+        _emit(state.copyWith(loading: false, savedAt: () => state.savedAt ?? state.readAt));
+        return;
+      }
+      final kept = await getKeptPlots?.execute();
+      if (kept == null) {
+        _emit(state.copyWith(loading: false, failure: () => failure));
+      } else {
+        _show(kept.value, readAt: kept.savedAt, savedAt: kept.savedAt);
+      }
     } on CooperativeFailure catch (failure) {
       _emit(state.copyWith(loading: false, failure: state.plots.isEmpty ? () => failure : null));
     }
+  }
+
+  void _show(List<RiskPlot> plots, {required DateTime readAt, required DateTime? savedAt}) {
+    final selectionGone = !plots.any((plot) => plot.id == state.selectedPlotId);
+    _emit(state.copyWith(
+      loading: false,
+      plots: plots,
+      readAt: readAt,
+      savedAt: () => savedAt,
+      selectedPlotId: selectionGone ? () => null : null,
+      selectedDetail: selectionGone ? () => null : null,
+    ));
   }
 
   /// «Permitir ubicación» and «Reintentar».

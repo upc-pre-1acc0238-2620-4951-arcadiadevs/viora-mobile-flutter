@@ -3649,6 +3649,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In closed seasons you see the real intake the members recorded.'**
   String get intakeSheetNote;
+
+  /// No description provided for @offlineToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline · {what} from {when}'**
+  String offlineToday(String what, String when);
+
+  /// No description provided for @offlineOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline · {what} from {when}'**
+  String offlineOn(String what, String when);
+
+  /// No description provided for @offlineWhatState.
+  ///
+  /// In en, this message translates to:
+  /// **'last state'**
+  String get offlineWhatState;
+
+  /// No description provided for @offlineWhatProjection.
+  ///
+  /// In en, this message translates to:
+  /// **'projection'**
+  String get offlineWhatProjection;
+
+  /// No description provided for @offlineWhatIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'intake'**
+  String get offlineWhatIntake;
+
+  /// No description provided for @offlineWhatAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'alerts'**
+  String get offlineWhatAlerts;
+
+  /// No description provided for @riskSavedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'saved {when}'**
+  String riskSavedAt(String when);
 }
 
 class _AppLocalizationsDelegate
