@@ -2168,4 +2168,213 @@ class AppLocalizationsEn extends AppLocalizations {
   String membersSectorsPending(int count) {
     return '$count to confirm';
   }
+
+  @override
+  String intakeCampaign(String year) {
+    return 'Season $year';
+  }
+
+  @override
+  String get intakeChooseCampaign => 'Choose season';
+
+  @override
+  String get intakeHeadlineProjected => 'Your intake,\n*projected.*';
+
+  @override
+  String get intakeHeadlineSettled => 'Your intake,\n*recorded.*';
+
+  @override
+  String get intakeHeadlineNoData => 'Your intake,\n*no figure yet.*';
+
+  @override
+  String intakeVoiceSufficient(int count) {
+    return 'It adds up only the estimable plots, without extrapolating. $count still to sample.';
+  }
+
+  @override
+  String get intakeVoiceAllSampled =>
+      'It adds up only the estimable plots, without extrapolating.';
+
+  @override
+  String intakeVoicePreliminary(int percent) {
+    return 'Only $percent % of the plots are sampled: use this figure with care for contracts.';
+  }
+
+  @override
+  String get intakeVoiceSettled =>
+      'It is the real intake the members settled since they joined.';
+
+  @override
+  String intakeEyebrowProjection(String year) {
+    return 'PROJECTION · SEASON $year';
+  }
+
+  @override
+  String intakeEyebrowSettled(String year) {
+    return 'REAL INTAKE · SEASON $year';
+  }
+
+  @override
+  String get intakeTagSufficient => 'Enough coverage';
+
+  @override
+  String get intakeTagPreliminary => 'Preliminary';
+
+  @override
+  String get intakeTagClosed => 'Closed';
+
+  @override
+  String get intakeTagPartial => 'Partial';
+
+  @override
+  String get intakeTonsUnit => 'tons';
+
+  @override
+  String intakeUncertainty(int sampled, int plots) {
+    return 'High margin of uncertainty · $sampled of $plots plots';
+  }
+
+  @override
+  String get intakeGreenHistory => 'Green · by history';
+
+  @override
+  String get intakeBlackHistory => 'Black · by history';
+
+  @override
+  String get intakeGreenSettled => 'Green · settled';
+
+  @override
+  String get intakeBlackSettled => 'Black · settled';
+
+  @override
+  String intakePercent(int percent) {
+    return '$percent %';
+  }
+
+  @override
+  String intakeUnclassified(String tons, int percent) {
+    return '$tons t unclassified · $percent %';
+  }
+
+  @override
+  String get intakeCoverageLabel => 'SAMPLING COVERAGE';
+
+  @override
+  String get intakeSettledCoverageLabel => 'SETTLED HARVESTS';
+
+  @override
+  String intakeCoveragePlots(int sampled, int plots) {
+    return '$sampled of $plots plots';
+  }
+
+  @override
+  String intakeOf(int sampled, int plots) {
+    return '$sampled of $plots';
+  }
+
+  @override
+  String intakeThreshold(int percent) {
+    return '$percent % · preliminary threshold';
+  }
+
+  @override
+  String intakeCoverageSufficient(int estimable, int plots, int threshold) {
+    return '$estimable of $plots plots are estimable. From $threshold % sampling the projection stops being preliminary.';
+  }
+
+  @override
+  String intakeCoveragePreliminary(int estimable, int plots, int threshold) {
+    return '$estimable of $plots plots are estimable. The projection is preliminary until sampling reaches $threshold %.';
+  }
+
+  @override
+  String intakeMissingPlots(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count more to get there.',
+      one: '1 more to get there.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String intakeCoverageSettled(int settled, int plots, String year) {
+    return '$settled of $plots plots settled their harvest of the $year season.';
+  }
+
+  @override
+  String get intakeBySector => 'By sector';
+
+  @override
+  String intakeSectorSampled(int sampled, int plots) {
+    return '$sampled of $plots sampled';
+  }
+
+  @override
+  String intakeSectorSettled(int sampled, int plots) {
+    return '$sampled of $plots with harvest';
+  }
+
+  @override
+  String intakeSectorNoData(int sampled, int plots) {
+    return '$sampled of $plots · no data';
+  }
+
+  @override
+  String intakeSectorPending(int sampled, int plots) {
+    return '$sampled of $plots · check the sector';
+  }
+
+  @override
+  String get intakeNoDataTitle => 'Not enough data\nto project';
+
+  @override
+  String intakeNoDataBody(String year) {
+    return 'No member recorded a fruit set sampling in the $year season. The projection shows up with the first samplings, marked as preliminary.';
+  }
+
+  @override
+  String intakeNoEstimableBody(String year) {
+    return 'There are samplings in the $year season, but no plot is estimable yet: it lacks its yield estimate or its area.';
+  }
+
+  @override
+  String get intakeSettledNoDataTitle => 'No settled\nharvests';
+
+  @override
+  String intakeSettledNoDataBody(String year) {
+    return 'No member settled their harvest of the $year season since joining.';
+  }
+
+  @override
+  String get intakeMembersWithoutSampling => 'See members without sampling';
+
+  @override
+  String get intakeSheetTitle => 'Choose the\n*season*';
+
+  @override
+  String intakeSheetInProgress(String tons) {
+    return 'In progress · projection $tons t';
+  }
+
+  @override
+  String get intakeSheetInProgressNoData => 'In progress · no figure yet';
+
+  @override
+  String intakeSheetClosed(String tons) {
+    return 'Closed · real intake $tons t';
+  }
+
+  @override
+  String intakeSheetPartial(String tons) {
+    return 'Partial · real intake $tons t';
+  }
+
+  @override
+  String get intakeSheetSettledNoData => 'No settled harvests';
+
+  @override
+  String get intakeSheetNote =>
+      'In closed seasons you see the real intake the members recorded.';
 }

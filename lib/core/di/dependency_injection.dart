@@ -39,6 +39,7 @@ import 'package:viora/features/cooperative_operations/infrastructure/repository/
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/issue_codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_alerts_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/intake_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_home_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/member_detail_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/members_view_model.dart';
@@ -191,6 +192,14 @@ void _setupTerritorialRisk() {
   getIt.registerLazySingleton<IntakeApi>(() => IntakeApi(client: getIt<ApiClient>()));
   getIt.registerLazySingleton<IntakeRepository>(() => IntakeRepositoryImpl(api: getIt<IntakeApi>()));
   getIt.registerLazySingleton(() => GetIntakeForecastsUseCase(repository: getIt<IntakeRepository>()));
+  getIt.registerLazySingleton(() => GetIntakeForecastUseCase(repository: getIt<IntakeRepository>()));
+  getIt.registerFactory<IntakeViewModel>(
+    () => IntakeViewModel(
+      getCampaigns: getIt<GetIntakeForecastsUseCase>(),
+      getCampaign: getIt<GetIntakeForecastUseCase>(),
+      hasActiveAlerts: getIt<HasActiveSectorAlertsUseCase>(),
+    ),
+  );
   getIt.registerFactory<ManagerHomeViewModel>(
     () => ManagerHomeViewModel(
       getPlots: getIt<GetRiskPlotsUseCase>(),

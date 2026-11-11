@@ -94,6 +94,19 @@ class DashedCircle extends StatelessWidget {
       );
 }
 
+/// The dashed outline that stands for a bar without data, as the sectors without sampling.
+class DashedPill extends StatelessWidget {
+  const DashedPill({super.key, required this.height});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) => CustomPaint(
+        painter: const _DashedPillPainter(),
+        child: SizedBox(height: height, width: double.infinity),
+      );
+}
+
 /// «9 críticas · 14 moderadas · 31 óptimas · 6 sin datos».
 class RiskCountsStrip extends StatelessWidget {
   const RiskCountsStrip({super.key, required this.group, this.background = VioraColors.neutral0});
