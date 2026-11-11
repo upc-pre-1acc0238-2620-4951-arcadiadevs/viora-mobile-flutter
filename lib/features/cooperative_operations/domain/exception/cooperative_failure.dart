@@ -53,3 +53,18 @@ class CodeAlreadyRedeemed extends CooperativeFailure {
 class CodeNotAvailable extends CooperativeFailure {
   const CodeNotAvailable();
 }
+
+/// The list already has a sector with that name, ignoring accents and case.
+class SectorNameTaken extends CooperativeFailure {
+  const SectorNameTaken();
+}
+
+/// The server refused the name: blank, too short or too long.
+class SectorNameInvalid extends CooperativeFailure {
+  const SectorNameInvalid();
+}
+
+/// The plot was no longer «Por confirmar»: another review got there first.
+class SectorAlreadyResolved extends CooperativeFailure {
+  const SectorAlreadyResolved();
+}

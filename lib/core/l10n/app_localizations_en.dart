@@ -2037,4 +2037,135 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeVisitsNone => 'No plot needs a visit today.';
+
+  @override
+  String get sectorsTitle => 'Sectors';
+
+  @override
+  String get sectorsSubtitle => 'Your license\'s list';
+
+  @override
+  String get sectorsHeadline => 'Your\n*sectors.*';
+
+  @override
+  String get sectorsPendingTitle => 'To confirm';
+
+  @override
+  String sectorsPendingCount(int count) {
+    return '$count to review';
+  }
+
+  @override
+  String sectorsPendingLine(String producer, String plot) {
+    return '$producer · $plot';
+  }
+
+  @override
+  String get sectorsListTitle => 'Your list';
+
+  @override
+  String sectorsListCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sectors',
+      one: '1 sector',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String sectorsPlotCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plots',
+      one: '1 plot',
+      zero: 'No plots yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sectorsReview => 'Review';
+
+  @override
+  String get sectorsRename => 'Rename';
+
+  @override
+  String get sectorsAdd => 'Add sector';
+
+  @override
+  String get sectorsNote =>
+      'Sectors belong to your license. Renaming updates all its plots; they are not deleted.';
+
+  @override
+  String get sectorsEmpty => 'Your list has no sectors yet.';
+
+  @override
+  String get sectorAddHeadline => 'Add\n*sector*';
+
+  @override
+  String get sectorRenameHeadline => 'Rename\n*sector*';
+
+  @override
+  String get sectorNameLabel => 'Sector name';
+
+  @override
+  String get sectorNamePlaceholder => 'Cerro Blanco';
+
+  @override
+  String get sectorNameHint =>
+      'Accents and case don\'t count: «cerro blanco» and «Cerro Blanco» are the same sector.';
+
+  @override
+  String get sectorSave => 'Save sector';
+
+  @override
+  String get sectorRenameSave => 'Save name';
+
+  @override
+  String get sectorNameTaken =>
+      'Your list already has a sector with that name.';
+
+  @override
+  String get sectorNameInvalid => 'Write between 2 and 60 letters.';
+
+  @override
+  String get sectorSaveOffline =>
+      'No connection. Try again when you have signal.';
+
+  @override
+  String get sectorSaveFailed => 'It could not be saved. Try again.';
+
+  @override
+  String get sectorReviewSameAs => 'It is the same as';
+
+  @override
+  String get sectorReviewHint =>
+      'It only sorts your panel: the member\'s plot doesn\'t change.';
+
+  @override
+  String get sectorReviewAdd => 'Add as a sector';
+
+  @override
+  String sectorReviewJoin(String sector) {
+    return 'Join $sector';
+  }
+
+  @override
+  String membersSectorsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sectors in your list',
+      one: '1 sector in your list',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String membersSectorsPending(int count) {
+    return '$count to confirm';
+  }
 }

@@ -2044,4 +2044,134 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homeVisitsNone => 'Ninguna parcela necesita visita hoy.';
+
+  @override
+  String get sectorsTitle => 'Sectores';
+
+  @override
+  String get sectorsSubtitle => 'Lista de tu licencia';
+
+  @override
+  String get sectorsHeadline => 'Tus\n*sectores.*';
+
+  @override
+  String get sectorsPendingTitle => 'Por confirmar';
+
+  @override
+  String sectorsPendingCount(int count) {
+    return '$count por revisar';
+  }
+
+  @override
+  String sectorsPendingLine(String producer, String plot) {
+    return '$producer · $plot';
+  }
+
+  @override
+  String get sectorsListTitle => 'Tu lista';
+
+  @override
+  String sectorsListCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sectores',
+      one: '1 sector',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String sectorsPlotCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count parcelas',
+      one: '1 parcela',
+      zero: 'Sin parcelas aún',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sectorsReview => 'Revisar';
+
+  @override
+  String get sectorsRename => 'Renombrar';
+
+  @override
+  String get sectorsAdd => 'Añadir sector';
+
+  @override
+  String get sectorsNote =>
+      'Los sectores son de tu licencia. Renombrar actualiza todos sus lotes; no se borran.';
+
+  @override
+  String get sectorsEmpty => 'Tu lista aún no tiene sectores.';
+
+  @override
+  String get sectorAddHeadline => 'Añadir\n*sector*';
+
+  @override
+  String get sectorRenameHeadline => 'Renombrar\n*sector*';
+
+  @override
+  String get sectorNameLabel => 'Nombre del sector';
+
+  @override
+  String get sectorNamePlaceholder => 'Cerro Blanco';
+
+  @override
+  String get sectorNameHint =>
+      'Sin tildes ni mayúsculas: «cerro blanco» y «Cerro Blanco» son el mismo sector.';
+
+  @override
+  String get sectorSave => 'Guardar sector';
+
+  @override
+  String get sectorRenameSave => 'Guardar nombre';
+
+  @override
+  String get sectorNameTaken => 'Tu lista ya tiene un sector con ese nombre.';
+
+  @override
+  String get sectorNameInvalid => 'Escribe entre 2 y 60 letras.';
+
+  @override
+  String get sectorSaveOffline =>
+      'Sin conexión. Vuelve a intentarlo cuando tengas señal.';
+
+  @override
+  String get sectorSaveFailed => 'No se pudo guardar. Vuelve a intentarlo.';
+
+  @override
+  String get sectorReviewSameAs => 'Es el mismo que';
+
+  @override
+  String get sectorReviewHint =>
+      'Solo ordena tu panel: el lote del socio no cambia.';
+
+  @override
+  String get sectorReviewAdd => 'Añadir como sector';
+
+  @override
+  String sectorReviewJoin(String sector) {
+    return 'Unir a $sector';
+  }
+
+  @override
+  String membersSectorsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sectores en tu lista',
+      one: '1 sector en tu lista',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String membersSectorsPending(int count) {
+    return '$count por confirmar';
+  }
 }
