@@ -1894,4 +1894,154 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dossierNotShared => 'Este socio ya no comparte la parcela.';
+
+  @override
+  String homeManagerSubtitle(String organization) {
+    return '$organization · técnico';
+  }
+
+  @override
+  String get homeVoiceNoPlots =>
+      'Aún ningún socio comparte lotes: genera códigos para invitarlos.';
+
+  @override
+  String homeVoiceOverload(String sector, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count parcelas en sobrecarga',
+      one: '1 parcela en sobrecarga',
+    );
+    return '$sector necesita tu visita: $_temp0.';
+  }
+
+  @override
+  String homeVoiceCritical(String sector, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count parcelas en rojo',
+      one: '1 parcela en rojo',
+    );
+    return '$sector necesita tu visita: $_temp0.';
+  }
+
+  @override
+  String homeVoiceCriticalValley(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count parcelas en rojo esperan tu visita.',
+      one: 'Una parcela en rojo espera tu visita.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String homeVoiceFrost(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count parcelas',
+      one: '1 parcela',
+    );
+    return 'Se viene helada: $_temp0 bajo 1,5 °C en 48 h.';
+  }
+
+  @override
+  String get homeVoiceCalm =>
+      'Tu valle está en calma: ninguna parcela en rojo.';
+
+  @override
+  String homeValleyEyebrow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count parcelas',
+      one: '1 parcela',
+    );
+    return 'Semáforo del valle · $_temp0';
+  }
+
+  @override
+  String homeValleyCritical(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'parcelas\ncríticas',
+      one: 'parcela\ncrítica',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get homeOpenRisk => 'Ver riesgo territorial';
+
+  @override
+  String get homeLicenseTitle => 'Tu licencia';
+
+  @override
+  String homeCampaign(String year) {
+    return 'Campaña $year';
+  }
+
+  @override
+  String get homeIntakeLabel => 'Acopio';
+
+  @override
+  String homeTons(String tons) {
+    return '$tons t';
+  }
+
+  @override
+  String get homeIntakeProjected => 'proyectadas';
+
+  @override
+  String get homeIntakeSettled => 'acopiadas';
+
+  @override
+  String get homeIntakeNoData => 'sin muestreos todavía';
+
+  @override
+  String homeIntakeGreen(String tons) {
+    return '$tons t verde';
+  }
+
+  @override
+  String homeIntakeBlack(String tons) {
+    return '$tons t negra';
+  }
+
+  @override
+  String homeIntakeUnclassified(String tons) {
+    return '$tons t sin clasificar';
+  }
+
+  @override
+  String homeIntakeCoverage(int percent) {
+    return 'Cobertura $percent %';
+  }
+
+  @override
+  String homeFrostAlerts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'alertas de helada',
+      one: 'alerta de helada',
+    );
+    return '$_temp0\n≤ 1,5 °C en 48 h';
+  }
+
+  @override
+  String get homeSeatsLabel => 'plazas de la licencia';
+
+  @override
+  String get homeVisitsTitle => 'Visitas sugeridas';
+
+  @override
+  String get homeVisitsSeeAll => 'Ver todas';
+
+  @override
+  String get homeVisitsNone => 'Ninguna parcela necesita visita hoy.';
 }

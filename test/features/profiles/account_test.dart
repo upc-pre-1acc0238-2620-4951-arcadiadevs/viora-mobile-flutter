@@ -8,6 +8,8 @@ import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/domain/account_rules.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/locale/app_language.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
+import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
 import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart';
 import 'package:viora/features/iam/application/usecase/change_password_use_case.dart';
 import 'package:viora/features/iam/application/usecase/sign_out_use_case.dart';
@@ -25,6 +27,36 @@ import 'package:viora/features/profiles/presentation/ui/account_page.dart';
 import 'package:viora/features/profiles/presentation/viewmodel/account_view_model.dart';
 import 'package:viora/features/profiles/presentation/viewmodel/change_password_view_model.dart';
 import 'package:viora/features/profiles/presentation/viewmodel/edit_profile_view_model.dart';
+import 'package:viora/features/subscription/application/usecase/watch_current_license_use_case.dart';
+import 'package:viora/features/subscription/domain/entity/manager_license.dart';
+import 'package:viora/features/subscription/domain/repository/license_repository.dart';
+
+/// The license the greeting names under the manager.
+class _FakeLicenses implements LicenseRepository {
+  @override
+  Stream<ManagerLicense?> watchCurrent() => Stream.value(
+        ManagerLicense(
+          id: 'license-1',
+          organizationName: 'Cooperativa Olivar del Sur',
+          seats: 60,
+          contractedAreaHa: 200,
+          startsAt: DateTime(2026),
+          endsAt: DateTime(2100),
+        ),
+      );
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+/// One sector alert active, for the dot of the bell.
+class _FakeRisk implements RiskRepository {
+  @override
+  Future<bool> hasActiveAlerts() async => true;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 const _profile = Profile(
   id: 'profile-1',
@@ -103,7 +135,17 @@ void main() {
   HomeViewModel homeOf(ProfileRepository profiles) => HomeViewModel(
         watchProfile: WatchCurrentProfileUseCase(repository: profiles),
         refreshProfile: RefreshProfileUseCase(repository: profiles),
+        watchLicense: WatchCurrentLicenseUseCase(repository: _FakeLicenses()),
+        hasActiveAlerts: HasActiveSectorAlertsUseCase(repository: _FakeRisk()),
       );
+
+  test('the greeting names the organization of the license and lights the bell', () async {
+    final home = homeOf(_FakeProfiles(_profile));
+    await Future<void>.delayed(Duration.zero);
+
+    expect(home.state.organizationName, 'Cooperativa Olivar del Sur');
+    expect(home.state.hasUnreadAlerts, isTrue);
+  });
 
   test('the Home greets with the name of the profile', () async {
     final home = homeOf(_FakeProfiles(_profile));

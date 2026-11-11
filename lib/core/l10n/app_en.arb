@@ -1044,5 +1044,135 @@
   "dossierShare": "Share",
   "dossierShareSubject": "Provisional dossier · {plot}",
   "dossierSaved": "PDF saved",
-  "dossierNotShared": "This member no longer shares the plot."
+  "dossierNotShared": "This member no longer shares the plot.",
+  "homeManagerSubtitle": "{organization} · technician",
+  "@homeManagerSubtitle": {
+    "placeholders": {
+      "organization": {
+        "type": "String"
+      }
+    }
+  },
+  "homeVoiceNoPlots": "No member shares a plot yet: issue codes to invite them.",
+  "homeVoiceOverload": "{sector} needs your visit: {count, plural, =1{1 plot overloaded} other{{count} plots overloaded}}.",
+  "@homeVoiceOverload": {
+    "placeholders": {
+      "sector": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeVoiceCritical": "{sector} needs your visit: {count, plural, =1{1 plot in red} other{{count} plots in red}}.",
+  "@homeVoiceCritical": {
+    "placeholders": {
+      "sector": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeVoiceCriticalValley": "{count, plural, =1{A plot in red is waiting for your visit.} other{{count} plots in red are waiting for your visit.}}",
+  "@homeVoiceCriticalValley": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeVoiceFrost": "Frost is coming: {count, plural, =1{1 plot} other{{count} plots}} under 1.5 °C within 48 h.",
+  "@homeVoiceFrost": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeVoiceCalm": "Your valley is calm: no plot in red.",
+  "homeValleyEyebrow": "Valley traffic light · {count, plural, =1{1 plot} other{{count} plots}}",
+  "@homeValleyEyebrow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeValleyCritical": "{count, plural, =1{critical\nplot} other{critical\nplots}}",
+  "@homeValleyCritical": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeOpenRisk": "See territorial risk",
+  "homeLicenseTitle": "Your license",
+  "homeCampaign": "Season {year}",
+  "@homeCampaign": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "homeIntakeLabel": "Intake",
+  "homeTons": "{tons} t",
+  "@homeTons": {
+    "placeholders": {
+      "tons": {
+        "type": "String"
+      }
+    }
+  },
+  "homeIntakeProjected": "projected",
+  "homeIntakeSettled": "delivered",
+  "homeIntakeNoData": "no samplings yet",
+  "homeIntakeGreen": "{tons} t green",
+  "@homeIntakeGreen": {
+    "placeholders": {
+      "tons": {
+        "type": "String"
+      }
+    }
+  },
+  "homeIntakeBlack": "{tons} t black",
+  "@homeIntakeBlack": {
+    "placeholders": {
+      "tons": {
+        "type": "String"
+      }
+    }
+  },
+  "homeIntakeUnclassified": "{tons} t unclassified",
+  "@homeIntakeUnclassified": {
+    "placeholders": {
+      "tons": {
+        "type": "String"
+      }
+    }
+  },
+  "homeIntakeCoverage": "Coverage {percent} %",
+  "@homeIntakeCoverage": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "homeFrostAlerts": "{count, plural, =1{frost alert} other{frost alerts}}\n≤ 1.5 °C within 48 h",
+  "@homeFrostAlerts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeSeatsLabel": "seats of the license",
+  "homeVisitsTitle": "Suggested visits",
+  "homeVisitsSeeAll": "See all",
+  "homeVisitsNone": "No plot needs a visit today."
 }

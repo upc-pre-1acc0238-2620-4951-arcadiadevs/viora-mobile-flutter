@@ -3007,6 +3007,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This member no longer shares the plot.'**
   String get dossierNotShared;
+
+  /// No description provided for @homeManagerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{organization} · technician'**
+  String homeManagerSubtitle(String organization);
+
+  /// No description provided for @homeVoiceNoPlots.
+  ///
+  /// In en, this message translates to:
+  /// **'No member shares a plot yet: issue codes to invite them.'**
+  String get homeVoiceNoPlots;
+
+  /// No description provided for @homeVoiceOverload.
+  ///
+  /// In en, this message translates to:
+  /// **'{sector} needs your visit: {count, plural, =1{1 plot overloaded} other{{count} plots overloaded}}.'**
+  String homeVoiceOverload(String sector, int count);
+
+  /// No description provided for @homeVoiceCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'{sector} needs your visit: {count, plural, =1{1 plot in red} other{{count} plots in red}}.'**
+  String homeVoiceCritical(String sector, int count);
+
+  /// No description provided for @homeVoiceCriticalValley.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{A plot in red is waiting for your visit.} other{{count} plots in red are waiting for your visit.}}'**
+  String homeVoiceCriticalValley(int count);
+
+  /// No description provided for @homeVoiceFrost.
+  ///
+  /// In en, this message translates to:
+  /// **'Frost is coming: {count, plural, =1{1 plot} other{{count} plots}} under 1.5 °C within 48 h.'**
+  String homeVoiceFrost(int count);
+
+  /// No description provided for @homeVoiceCalm.
+  ///
+  /// In en, this message translates to:
+  /// **'Your valley is calm: no plot in red.'**
+  String get homeVoiceCalm;
+
+  /// No description provided for @homeValleyEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Valley traffic light · {count, plural, =1{1 plot} other{{count} plots}}'**
+  String homeValleyEyebrow(int count);
+
+  /// No description provided for @homeValleyCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{critical\nplot} other{critical\nplots}}'**
+  String homeValleyCritical(int count);
+
+  /// No description provided for @homeOpenRisk.
+  ///
+  /// In en, this message translates to:
+  /// **'See territorial risk'**
+  String get homeOpenRisk;
+
+  /// No description provided for @homeLicenseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your license'**
+  String get homeLicenseTitle;
+
+  /// No description provided for @homeCampaign.
+  ///
+  /// In en, this message translates to:
+  /// **'Season {year}'**
+  String homeCampaign(String year);
+
+  /// No description provided for @homeIntakeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Intake'**
+  String get homeIntakeLabel;
+
+  /// No description provided for @homeTons.
+  ///
+  /// In en, this message translates to:
+  /// **'{tons} t'**
+  String homeTons(String tons);
+
+  /// No description provided for @homeIntakeProjected.
+  ///
+  /// In en, this message translates to:
+  /// **'projected'**
+  String get homeIntakeProjected;
+
+  /// No description provided for @homeIntakeSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'delivered'**
+  String get homeIntakeSettled;
+
+  /// No description provided for @homeIntakeNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'no samplings yet'**
+  String get homeIntakeNoData;
+
+  /// No description provided for @homeIntakeGreen.
+  ///
+  /// In en, this message translates to:
+  /// **'{tons} t green'**
+  String homeIntakeGreen(String tons);
+
+  /// No description provided for @homeIntakeBlack.
+  ///
+  /// In en, this message translates to:
+  /// **'{tons} t black'**
+  String homeIntakeBlack(String tons);
+
+  /// No description provided for @homeIntakeUnclassified.
+  ///
+  /// In en, this message translates to:
+  /// **'{tons} t unclassified'**
+  String homeIntakeUnclassified(String tons);
+
+  /// No description provided for @homeIntakeCoverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Coverage {percent} %'**
+  String homeIntakeCoverage(int percent);
+
+  /// No description provided for @homeFrostAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{frost alert} other{frost alerts}}\n≤ 1.5 °C within 48 h'**
+  String homeFrostAlerts(int count);
+
+  /// No description provided for @homeSeatsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'seats of the license'**
+  String get homeSeatsLabel;
+
+  /// No description provided for @homeVisitsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested visits'**
+  String get homeVisitsTitle;
+
+  /// No description provided for @homeVisitsSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get homeVisitsSeeAll;
+
+  /// No description provided for @homeVisitsNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No plot needs a visit today.'**
+  String get homeVisitsNone;
 }
 
 class _AppLocalizationsDelegate

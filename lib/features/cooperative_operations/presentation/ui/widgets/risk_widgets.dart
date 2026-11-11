@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:viora/core/designsystem/component/viora_capsule_bar.dart';
+import 'package:viora/core/designsystem/component/viora_card.dart';
 import 'package:viora/core/designsystem/component/viora_icon.dart';
+import 'package:viora/core/designsystem/component/viora_status_tag.dart';
 import 'package:viora/core/designsystem/theme/colors.dart';
 import 'package:viora/core/designsystem/theme/spacing.dart';
 import 'package:viora/core/designsystem/theme/typography.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/cooperative_member.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_territory.dart';
+import 'package:viora/features/cooperative_operations/presentation/cooperative_formats.dart';
 import 'package:viora/features/cooperative_operations/presentation/risk_map_features.dart';
 
 String riskLevelLabel(AppLocalizations l10n, PlotRisk risk) => switch (risk) {
@@ -361,5 +365,110 @@ class YouMarker extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// A plot to visit, numbered by priority (G22 and the Home's «Visitas sugeridas»): red for
+/// overload or a critical incident, dark when only frost is coming, yellow when amber.
+class RiskVisitRow extends StatelessWidget {
+  const RiskVisitRow({
+    super.key,
+    required this.position,
+    required this.plot,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  final int position;
+  final RiskPlot plot;
+
+  /// The line under the member's name: the plot and its distance or its sector.
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final reason = plot.mainReason;
+    final frostOnly = reason?.type == RiskReason.frostForecast;
+    final (circle, numeral) = frostOnly
+        ? (VioraColors.green900, VioraColors.neutral0)
+        : plot.risk == PlotRisk.moderate
+            ? (VioraColors.harvest300, VioraColors.neutral900)
+            : (VioraColors.terracotta500, VioraColors.neutral0);
+    return VioraCard(
+      padding: const EdgeInsets.fromLTRB(10, 10, Spacing.md, 10),
+      onTap: onTap,
+      child: Row(
+        children: [
+          SizedBox.square(
+            dimension: 44,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: circle,
+                shape: const CircleBorder(),
+              ),
+              child: Center(
+                child: Text(
+                  '$position',
+                  style: TextStyle(fontFamily: VioraFonts.newsreader, fontSize: 22, color: numeral),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: Spacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(plot.producerName, style: textTheme.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(
+                  subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: textTheme.bodySmall?.copyWith(color: VioraColors.neutral600),
+                ),
+                if (reason != null) ...[const SizedBox(height: Spacing.xxs), RiskReasonTag(reason: reason)],
+              ],
+            ),
+          ),
+          const VioraIcon(VioraIcons.chevronRight, size: 22, color: VioraColors.neutral700),
+        ],
+      ),
+    );
+  }
+}
+
+/// Why a plot has its color: «Sobrecarga 43 %», «Helada 1,2 °C · 12 nov».
+class RiskReasonTag extends StatelessWidget {
+  const RiskReasonTag({super.key, required this.reason});
+
+  final PlotRiskReason reason;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final value = reason.value;
+    return switch (reason.type) {
+      RiskReason.overload => VioraStatusTag(
+          label: l10n.riskReasonOverload(formatOneDecimal(value ?? 0, locale)),
+          tone: VioraTagTone.alert,
+          iconAsset: VioraIcons.scale,
+        ),
+      RiskReason.frostForecast => VioraStatusTag(
+          label: reason.date == null
+              ? l10n.riskFrost
+              : l10n.riskReasonFrost(formatOneDecimal(value ?? 0, locale), formatDayMonth(reason.date!, locale)),
+          tone: VioraTagTone.info,
+          iconAsset: VioraIcons.acUnit,
+        ),
+      RiskReason.criticalIncident => VioraStatusTag(
+          label: l10n.riskCriticalIncident,
+          tone: VioraTagTone.alert,
+          iconAsset: VioraIcons.warning,
+        ),
+      _ => VioraStatusTag(label: l10n.riskModerate, tone: VioraTagTone.pending, iconAsset: VioraIcons.warning),
+    };
   }
 }

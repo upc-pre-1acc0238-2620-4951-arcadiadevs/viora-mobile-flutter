@@ -4,6 +4,7 @@ import 'package:viora/core/datastore/session_events.dart';
 import 'package:viora/core/datastore/session_store.dart';
 import 'package:viora/core/locale/app_language.dart';
 import 'package:viora/core/network/api_client.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_intake_forecasts_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_invitation_codes_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_license_capacity_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_member_use_case.dart';
@@ -19,18 +20,22 @@ import 'package:viora/features/cooperative_operations/application/usecase/revoke
 import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/cooperative_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/dossier_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/repository/intake_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/device_document_exporter.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/device_location_repository.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/dossier_api.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/intake_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/cooperative_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/dossier_repository_impl.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/repository/intake_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/risk_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/issue_codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_alerts_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_home_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/member_detail_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/members_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/provisional_dossier_view_model.dart';
@@ -164,6 +169,19 @@ void _setupTerritorialRisk() {
   );
   getIt.registerFactory<RiskPlotViewModel>(() => RiskPlotViewModel(getPlot: getIt<GetRiskPlotUseCase>()));
   getIt.registerFactory<ManagerAlertsViewModel>(() => ManagerAlertsViewModel(getAlerts: getIt<GetSectorAlertsUseCase>()));
+
+  getIt.registerLazySingleton<IntakeApi>(() => IntakeApi(client: getIt<ApiClient>()));
+  getIt.registerLazySingleton<IntakeRepository>(() => IntakeRepositoryImpl(api: getIt<IntakeApi>()));
+  getIt.registerLazySingleton(() => GetIntakeForecastsUseCase(repository: getIt<IntakeRepository>()));
+  getIt.registerFactory<ManagerHomeViewModel>(
+    () => ManagerHomeViewModel(
+      getPlots: getIt<GetRiskPlotsUseCase>(),
+      getCapacity: getIt<GetLicenseCapacityUseCase>(),
+      getAlerts: getIt<GetSectorAlertsUseCase>(),
+      getIntake: getIt<GetIntakeForecastsUseCase>(),
+      location: getIt<LocationRepository>(),
+    ),
+  );
 
   getIt.registerLazySingleton<DossierApi>(() => DossierApi(client: getIt<ApiClient>()));
   getIt.registerLazySingleton<DossierRepository>(() => DossierRepositoryImpl(api: getIt<DossierApi>()));
@@ -304,6 +322,8 @@ void _setupViewModels() {
     () => HomeViewModel(
       watchProfile: getIt<WatchCurrentProfileUseCase>(),
       refreshProfile: getIt<RefreshProfileUseCase>(),
+      watchLicense: getIt<WatchCurrentLicenseUseCase>(),
+      hasActiveAlerts: getIt<HasActiveSectorAlertsUseCase>(),
     ),
   );
   getIt.registerFactory<EditProfileViewModel>(
