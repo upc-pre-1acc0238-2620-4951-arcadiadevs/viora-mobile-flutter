@@ -1524,5 +1524,39 @@
     }
   },
   "intakeSheetSettledNoData": "No settled harvests",
-  "intakeSheetNote": "In closed seasons you see the real intake the members recorded."
+  "intakeSheetNote": "In closed seasons you see the real intake the members recorded.",
+  "offlineToday": "Offline · {what} from {when}",
+  "@offlineToday": {
+    "placeholders": {
+      "what": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineOn": "Offline · {what} from {when}",
+  "@offlineOn": {
+    "placeholders": {
+      "what": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineWhatState": "last state",
+  "offlineWhatProjection": "projection",
+  "offlineWhatIntake": "intake",
+  "offlineWhatAlerts": "alerts",
+  "riskSavedAt": "saved {when}",
+  "@riskSavedAt": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  }
 }

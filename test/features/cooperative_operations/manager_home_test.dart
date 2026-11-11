@@ -144,6 +144,9 @@ class _FakeIntake implements IntakeRepository {
 
   @override
   Future<IntakeForecast> campaign(int year) async => answer.first;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _FakeLocation implements LocationRepository {

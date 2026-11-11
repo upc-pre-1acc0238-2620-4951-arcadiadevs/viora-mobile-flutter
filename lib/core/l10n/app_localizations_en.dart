@@ -2377,4 +2377,31 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get intakeSheetNote =>
       'In closed seasons you see the real intake the members recorded.';
+
+  @override
+  String offlineToday(String what, String when) {
+    return 'Offline · $what from $when';
+  }
+
+  @override
+  String offlineOn(String what, String when) {
+    return 'Offline · $what from $when';
+  }
+
+  @override
+  String get offlineWhatState => 'last state';
+
+  @override
+  String get offlineWhatProjection => 'projection';
+
+  @override
+  String get offlineWhatIntake => 'intake';
+
+  @override
+  String get offlineWhatAlerts => 'alerts';
+
+  @override
+  String riskSavedAt(String when) {
+    return 'saved $when';
+  }
 }

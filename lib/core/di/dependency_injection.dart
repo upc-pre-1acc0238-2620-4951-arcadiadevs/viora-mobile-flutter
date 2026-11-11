@@ -6,6 +6,7 @@ import 'package:viora/core/locale/app_language.dart';
 import 'package:viora/core/network/api_client.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_intake_forecasts_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_invitation_codes_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_license_capacity_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_member_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_members_use_case.dart';
@@ -26,6 +27,8 @@ import 'package:viora/features/cooperative_operations/domain/repository/risk_rep
 import 'package:viora/features/cooperative_operations/domain/repository/sector_repository.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/device_document_exporter.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/device_location_repository.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/local/manager_snapshot_dao.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/local/manager_snapshot_store.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/dossier_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/intake_api.dart';
@@ -167,17 +170,26 @@ void _setupCooperativeOperations() {
 
 void _setupTerritorialRisk() {
   getIt.registerLazySingleton<RiskApi>(() => RiskApi(client: getIt<ApiClient>()));
-  getIt.registerLazySingleton<RiskRepository>(() => RiskRepositoryImpl(api: getIt<RiskApi>()));
+  getIt.registerLazySingleton<ManagerSnapshotDao>(() => ManagerSnapshotDao(getIt<AppDatabase>()));
+  getIt.registerLazySingleton<ManagerSnapshotStore>(
+    () => ManagerSnapshotStore(dao: getIt<ManagerSnapshotDao>(), sessionStore: getIt<SessionStore>()),
+  );
+  getIt.registerLazySingleton<RiskRepository>(
+    () => RiskRepositoryImpl(api: getIt<RiskApi>(), snapshots: getIt<ManagerSnapshotStore>()),
+  );
   // One instance: G22 reuses the place the map found.
   getIt.registerLazySingleton<LocationRepository>(() => DeviceLocationRepository());
   getIt.registerLazySingleton(() => GetRiskPlotsUseCase(repository: getIt<RiskRepository>()));
   getIt.registerLazySingleton(() => GetRiskPlotUseCase(repository: getIt<RiskRepository>()));
   getIt.registerLazySingleton(() => HasActiveSectorAlertsUseCase(repository: getIt<RiskRepository>()));
   getIt.registerLazySingleton(() => GetSectorAlertsUseCase(repository: getIt<RiskRepository>()));
+  getIt.registerLazySingleton(() => GetKeptRiskPlotsUseCase(repository: getIt<RiskRepository>()));
+  getIt.registerLazySingleton(() => GetKeptSectorAlertsUseCase(repository: getIt<RiskRepository>()));
 
   getIt.registerFactory<RiskMapViewModel>(
     () => RiskMapViewModel(
       getPlots: getIt<GetRiskPlotsUseCase>(),
+      getKeptPlots: getIt<GetKeptRiskPlotsUseCase>(),
       getPlot: getIt<GetRiskPlotUseCase>(),
       hasActiveAlerts: getIt<HasActiveSectorAlertsUseCase>(),
       location: getIt<LocationRepository>(),
@@ -187,16 +199,27 @@ void _setupTerritorialRisk() {
     () => SectorDetailViewModel(getPlots: getIt<GetRiskPlotsUseCase>(), location: getIt<LocationRepository>()),
   );
   getIt.registerFactory<RiskPlotViewModel>(() => RiskPlotViewModel(getPlot: getIt<GetRiskPlotUseCase>()));
-  getIt.registerFactory<ManagerAlertsViewModel>(() => ManagerAlertsViewModel(getAlerts: getIt<GetSectorAlertsUseCase>()));
+  getIt.registerFactory<ManagerAlertsViewModel>(
+    () => ManagerAlertsViewModel(
+      getAlerts: getIt<GetSectorAlertsUseCase>(),
+      getKeptAlerts: getIt<GetKeptSectorAlertsUseCase>(),
+    ),
+  );
 
   getIt.registerLazySingleton<IntakeApi>(() => IntakeApi(client: getIt<ApiClient>()));
-  getIt.registerLazySingleton<IntakeRepository>(() => IntakeRepositoryImpl(api: getIt<IntakeApi>()));
+  getIt.registerLazySingleton<IntakeRepository>(
+    () => IntakeRepositoryImpl(api: getIt<IntakeApi>(), snapshots: getIt<ManagerSnapshotStore>()),
+  );
   getIt.registerLazySingleton(() => GetIntakeForecastsUseCase(repository: getIt<IntakeRepository>()));
   getIt.registerLazySingleton(() => GetIntakeForecastUseCase(repository: getIt<IntakeRepository>()));
+  getIt.registerLazySingleton(() => GetKeptIntakeForecastsUseCase(repository: getIt<IntakeRepository>()));
+  getIt.registerLazySingleton(() => GetKeptIntakeForecastUseCase(repository: getIt<IntakeRepository>()));
   getIt.registerFactory<IntakeViewModel>(
     () => IntakeViewModel(
       getCampaigns: getIt<GetIntakeForecastsUseCase>(),
       getCampaign: getIt<GetIntakeForecastUseCase>(),
+      getKeptCampaigns: getIt<GetKeptIntakeForecastsUseCase>(),
+      getKeptCampaign: getIt<GetKeptIntakeForecastUseCase>(),
       hasActiveAlerts: getIt<HasActiveSectorAlertsUseCase>(),
     ),
   );
@@ -401,6 +424,8 @@ void _setupViewModels() {
       watchLicense: getIt<WatchCurrentLicenseUseCase>(),
       refreshLicense: getIt<RefreshLicenseUseCase>(),
       isSignedIn: getIt<IsSignedInUseCase>(),
+      // The manager's reads of the members end with the license: nothing of them stays.
+      onLicenseEnded: getIt<ManagerSnapshotStore>().clear,
     ),
   );
   getIt.registerFactory<ProducerPlanViewModel>(
@@ -428,5 +453,6 @@ void forgetAccountDataWhenSessionEnds() {
   getIt<SessionEvents>().ended.listen((_) {
     getIt<ProfileRepository>().clear();
     getIt<LicenseRepository>().clear();
+    getIt<ManagerSnapshotStore>().clear();
   });
 }

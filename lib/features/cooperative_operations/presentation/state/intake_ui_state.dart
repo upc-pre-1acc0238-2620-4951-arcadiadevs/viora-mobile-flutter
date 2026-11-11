@@ -10,6 +10,7 @@ class IntakeUiState {
     this.selectedYear,
     this.forecast,
     this.hasActiveAlerts = false,
+    this.savedAt,
   });
 
   final bool loading;
@@ -23,6 +24,10 @@ class IntakeUiState {
   final IntakeForecast? forecast;
   final bool hasActiveAlerts;
 
+  /// Without a connection: when the campaign on screen was read (G30 · Sin conexión). Null while
+  /// it is fresh.
+  final DateTime? savedAt;
+
   IntakeUiState copyWith({
     bool? loading,
     CooperativeFailure? Function()? failure,
@@ -30,6 +35,7 @@ class IntakeUiState {
     int? selectedYear,
     IntakeForecast? Function()? forecast,
     bool? hasActiveAlerts,
+    DateTime? Function()? savedAt,
   }) =>
       IntakeUiState(
         loading: loading ?? this.loading,
@@ -38,5 +44,6 @@ class IntakeUiState {
         selectedYear: selectedYear ?? this.selectedYear,
         forecast: forecast == null ? this.forecast : forecast(),
         hasActiveAlerts: hasActiveAlerts ?? this.hasActiveAlerts,
+        savedAt: savedAt == null ? this.savedAt : savedAt(),
       );
 }

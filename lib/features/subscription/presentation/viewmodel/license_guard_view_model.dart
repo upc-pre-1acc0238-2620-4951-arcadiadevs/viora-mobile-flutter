@@ -14,6 +14,7 @@ class LicenseGuardViewModel extends Cubit<bool> {
     required WatchCurrentLicenseUseCase watchLicense,
     required this.refreshLicense,
     required this.isSignedIn,
+    this.onLicenseEnded,
     DateTime Function()? now,
   })  : _now = now ?? DateTime.now,
         super(false) {
@@ -22,6 +23,9 @@ class LicenseGuardViewModel extends Cubit<bool> {
 
   final RefreshLicenseUseCase refreshLicense;
   final IsSignedInUseCase isSignedIn;
+
+  /// Forgets what the phone kept of the license, once the manager is sent back.
+  final Future<void> Function()? onLicenseEnded;
   final DateTime Function() _now;
   late final StreamSubscription<ManagerLicense?> _license;
   Timer? _end;
@@ -51,7 +55,9 @@ class LicenseGuardViewModel extends Cubit<bool> {
   }
 
   void _leave() {
-    if (!isClosed && !state) emit(true);
+    if (isClosed || state) return;
+    onLicenseEnded?.call();
+    emit(true);
   }
 
   @override

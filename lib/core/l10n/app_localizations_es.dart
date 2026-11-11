@@ -2383,4 +2383,31 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get intakeSheetNote =>
       'En las campañas cerradas ves el acopio real registrado por los socios.';
+
+  @override
+  String offlineToday(String what, String when) {
+    return 'Sin conexión · $what de $when';
+  }
+
+  @override
+  String offlineOn(String what, String when) {
+    return 'Sin conexión · $what del $when';
+  }
+
+  @override
+  String get offlineWhatState => 'último estado';
+
+  @override
+  String get offlineWhatProjection => 'proyección';
+
+  @override
+  String get offlineWhatIntake => 'acopio';
+
+  @override
+  String get offlineWhatAlerts => 'alertas';
+
+  @override
+  String riskSavedAt(String when) {
+    return 'guardado $when';
+  }
 }
