@@ -1174,5 +1174,88 @@
   "homeSeatsLabel": "seats of the license",
   "homeVisitsTitle": "Suggested visits",
   "homeVisitsSeeAll": "See all",
-  "homeVisitsNone": "No plot needs a visit today."
+  "homeVisitsNone": "No plot needs a visit today.",
+  "sectorsTitle": "Sectors",
+  "sectorsSubtitle": "Your license's list",
+  "sectorsHeadline": "Your\n*sectors.*",
+  "sectorsPendingTitle": "To confirm",
+  "sectorsPendingCount": "{count} to review",
+  "@sectorsPendingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sectorsPendingLine": "{producer} · {plot}",
+  "@sectorsPendingLine": {
+    "placeholders": {
+      "producer": {
+        "type": "String"
+      },
+      "plot": {
+        "type": "String"
+      }
+    }
+  },
+  "sectorsListTitle": "Your list",
+  "sectorsListCount": "{count, plural, =1{1 sector} other{{count} sectors}}",
+  "@sectorsListCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sectorsPlotCount": "{count, plural, =0{No plots yet} =1{1 plot} other{{count} plots}}",
+  "@sectorsPlotCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sectorsReview": "Review",
+  "sectorsRename": "Rename",
+  "sectorsAdd": "Add sector",
+  "sectorsNote": "Sectors belong to your license. Renaming updates all its plots; they are not deleted.",
+  "sectorsEmpty": "Your list has no sectors yet.",
+  "sectorAddHeadline": "Add\n*sector*",
+  "sectorRenameHeadline": "Rename\n*sector*",
+  "sectorNameLabel": "Sector name",
+  "sectorNamePlaceholder": "Cerro Blanco",
+  "sectorNameHint": "Accents and case don't count: «cerro blanco» and «Cerro Blanco» are the same sector.",
+  "sectorSave": "Save sector",
+  "sectorRenameSave": "Save name",
+  "sectorNameTaken": "Your list already has a sector with that name.",
+  "sectorNameInvalid": "Write between 2 and 60 letters.",
+  "sectorSaveOffline": "No connection. Try again when you have signal.",
+  "sectorSaveFailed": "It could not be saved. Try again.",
+  "sectorReviewSameAs": "It is the same as",
+  "sectorReviewHint": "It only sorts your panel: the member's plot doesn't change.",
+  "sectorReviewAdd": "Add as a sector",
+  "sectorReviewJoin": "Join {sector}",
+  "@sectorReviewJoin": {
+    "placeholders": {
+      "sector": {
+        "type": "String"
+      }
+    }
+  },
+  "membersSectorsCount": "{count, plural, =1{1 sector in your list} other{{count} sectors in your list}}",
+  "@membersSectorsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "membersSectorsPending": "{count} to confirm",
+  "@membersSectorsPending": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -3163,6 +3163,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No plot needs a visit today.'**
   String get homeVisitsNone;
+
+  /// No description provided for @sectorsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sectors'**
+  String get sectorsTitle;
+
+  /// No description provided for @sectorsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your license\'s list'**
+  String get sectorsSubtitle;
+
+  /// No description provided for @sectorsHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your\n*sectors.*'**
+  String get sectorsHeadline;
+
+  /// No description provided for @sectorsPendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'To confirm'**
+  String get sectorsPendingTitle;
+
+  /// No description provided for @sectorsPendingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} to review'**
+  String sectorsPendingCount(int count);
+
+  /// No description provided for @sectorsPendingLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{producer} · {plot}'**
+  String sectorsPendingLine(String producer, String plot);
+
+  /// No description provided for @sectorsListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your list'**
+  String get sectorsListTitle;
+
+  /// No description provided for @sectorsListCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 sector} other{{count} sectors}}'**
+  String sectorsListCount(int count);
+
+  /// No description provided for @sectorsPlotCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No plots yet} =1{1 plot} other{{count} plots}}'**
+  String sectorsPlotCount(int count);
+
+  /// No description provided for @sectorsReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get sectorsReview;
+
+  /// No description provided for @sectorsRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get sectorsRename;
+
+  /// No description provided for @sectorsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add sector'**
+  String get sectorsAdd;
+
+  /// No description provided for @sectorsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Sectors belong to your license. Renaming updates all its plots; they are not deleted.'**
+  String get sectorsNote;
+
+  /// No description provided for @sectorsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Your list has no sectors yet.'**
+  String get sectorsEmpty;
+
+  /// No description provided for @sectorAddHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Add\n*sector*'**
+  String get sectorAddHeadline;
+
+  /// No description provided for @sectorRenameHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename\n*sector*'**
+  String get sectorRenameHeadline;
+
+  /// No description provided for @sectorNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sector name'**
+  String get sectorNameLabel;
+
+  /// No description provided for @sectorNamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Cerro Blanco'**
+  String get sectorNamePlaceholder;
+
+  /// No description provided for @sectorNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Accents and case don\'t count: «cerro blanco» and «Cerro Blanco» are the same sector.'**
+  String get sectorNameHint;
+
+  /// No description provided for @sectorSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save sector'**
+  String get sectorSave;
+
+  /// No description provided for @sectorRenameSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save name'**
+  String get sectorRenameSave;
+
+  /// No description provided for @sectorNameTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'Your list already has a sector with that name.'**
+  String get sectorNameTaken;
+
+  /// No description provided for @sectorNameInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Write between 2 and 60 letters.'**
+  String get sectorNameInvalid;
+
+  /// No description provided for @sectorSaveOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection. Try again when you have signal.'**
+  String get sectorSaveOffline;
+
+  /// No description provided for @sectorSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'It could not be saved. Try again.'**
+  String get sectorSaveFailed;
+
+  /// No description provided for @sectorReviewSameAs.
+  ///
+  /// In en, this message translates to:
+  /// **'It is the same as'**
+  String get sectorReviewSameAs;
+
+  /// No description provided for @sectorReviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'It only sorts your panel: the member\'s plot doesn\'t change.'**
+  String get sectorReviewHint;
+
+  /// No description provided for @sectorReviewAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add as a sector'**
+  String get sectorReviewAdd;
+
+  /// No description provided for @sectorReviewJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join {sector}'**
+  String sectorReviewJoin(String sector);
+
+  /// No description provided for @membersSectorsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 sector in your list} other{{count} sectors in your list}}'**
+  String membersSectorsCount(int count);
+
+  /// No description provided for @membersSectorsPending.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} to confirm'**
+  String membersSectorsPending(int count);
 }
 
 class _AppLocalizationsDelegate

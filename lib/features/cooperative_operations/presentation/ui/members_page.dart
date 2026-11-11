@@ -32,6 +32,7 @@ class MembersPage extends StatelessWidget {
     required this.onOpenMember,
     required this.onOpenCodes,
     required this.onIssued,
+    this.onOpenSectors = _noop,
   });
 
   final Widget header;
@@ -42,6 +43,9 @@ class MembersPage extends StatelessWidget {
 
   /// Opens G44 with the codes just issued in G43.
   final Future<void> Function(IssuedCodesArgs args) onIssued;
+
+  /// Opens G45 · Sectores; the page reloads when the manager comes back.
+  final Future<void> Function() onOpenSectors;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +63,10 @@ class MembersPage extends StatelessWidget {
             onOpenMember: onOpenMember,
             onOpenCodes: () async {
               await onOpenCodes();
+              await viewModel.load();
+            },
+            onOpenSectors: () async {
+              await onOpenSectors();
               await viewModel.load();
             },
             onIssueCodes: (capacity) async {
@@ -86,6 +94,7 @@ class MembersPageContent extends StatelessWidget {
     required this.onOpenMember,
     required this.onOpenCodes,
     required this.onIssueCodes,
+    this.onOpenSectors = _noopSync,
   });
 
   final MembersUiState state;
@@ -96,6 +105,7 @@ class MembersPageContent extends StatelessWidget {
   final void Function(String memberId) onOpenMember;
   final VoidCallback onOpenCodes;
   final void Function(LicenseCapacity capacity) onIssueCodes;
+  final VoidCallback onOpenSectors;
 
   @override
   Widget build(BuildContext context) {
@@ -147,6 +157,10 @@ class MembersPageContent extends StatelessWidget {
                   ],
                 ),
               ),
+              if (state.sectorCount != null) ...[
+                const SizedBox(height: Spacing.sm),
+                _SectorsCard(count: state.sectorCount!, pending: state.pendingSectors, onTap: onOpenSectors),
+              ],
             ],
             if (failure != null)
               CooperativeFailureView(failure: failure, onRetry: onRetry)
@@ -180,6 +194,65 @@ class MembersPageContent extends StatelessWidget {
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+Future<void> _noop() async {}
+
+void _noopSync() {}
+
+/// «Sectores»: the way into G45, with how many plots wait «Por confirmar».
+class _SectorsCard extends StatelessWidget {
+  const _SectorsCard({required this.count, required this.pending, required this.onTap});
+
+  final int count;
+  final int pending;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final title = l10n.sectorsTitle;
+    return VioraCard(
+      onTap: onTap,
+      padding: const EdgeInsets.fromLTRB(10, 10, Spacing.sm, 10),
+      child: Row(
+        children: [
+          SizedBox.square(
+            dimension: 44,
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(color: VioraColors.neutral100, shape: CircleBorder()),
+              child: Center(
+                child: Text(
+                  title.substring(0, 2).toUpperCase(),
+                  style: const TextStyle(fontFamily: VioraFonts.newsreader, fontSize: 15, color: VioraColors.neutral900),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: Spacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: textTheme.titleMedium),
+                Text(l10n.membersSectorsCount(count), style: textTheme.bodySmall?.copyWith(color: VioraColors.neutral600)),
+                if (pending > 0) ...[
+                  const SizedBox(height: 6),
+                  VioraStatusTag(
+                    label: l10n.membersSectorsPending(pending),
+                    tone: VioraTagTone.pending,
+                    iconAsset: VioraIcons.schedule,
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const VioraIcon(VioraIcons.chevronRight, color: VioraColors.neutral900),
+        ],
       ),
     );
   }

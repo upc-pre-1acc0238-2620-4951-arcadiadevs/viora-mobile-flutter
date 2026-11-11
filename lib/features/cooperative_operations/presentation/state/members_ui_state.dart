@@ -16,6 +16,8 @@ class MembersUiState {
     this.availableCodes = const [],
     this.query = '',
     this.filter = MembersFilter.all,
+    this.sectorCount,
+    this.pendingSectors = 0,
   });
 
   final bool loading;
@@ -25,6 +27,12 @@ class MembersUiState {
   final List<InvitationCode> availableCodes;
   final String query;
   final MembersFilter filter;
+
+  /// Sectors in the license's list; null hides the «Sectores» card (not read yet, or failed).
+  final int? sectorCount;
+
+  /// Plots «Por confirmar» waiting for the manager.
+  final int pendingSectors;
 
   int get sharingCount => members.where((m) => m.sharing == MemberSharing.sharing).length;
 
@@ -66,6 +74,8 @@ class MembersUiState {
     List<InvitationCode>? availableCodes,
     String? query,
     MembersFilter? filter,
+    int? Function()? sectorCount,
+    int? pendingSectors,
   }) =>
       MembersUiState(
         loading: loading ?? this.loading,
@@ -75,5 +85,7 @@ class MembersUiState {
         availableCodes: availableCodes ?? this.availableCodes,
         query: query ?? this.query,
         filter: filter ?? this.filter,
+        sectorCount: sectorCount != null ? sectorCount() : this.sectorCount,
+        pendingSectors: pendingSectors ?? this.pendingSectors,
       );
 }
