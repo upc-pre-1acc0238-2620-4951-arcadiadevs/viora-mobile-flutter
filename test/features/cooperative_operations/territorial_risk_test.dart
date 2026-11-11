@@ -75,6 +75,8 @@ RiskPlotDetail _detail({
   PlotRisk risk = PlotRisk.critical,
   DateTime? thinnedOn,
   String? phone = '+51952184337',
+  String? sectorName = 'La Yarada Baja',
+  SectorPlacement placement = SectorPlacement.assigned,
 }) =>
     RiskPlotDetail(
       id: 'p1',
@@ -82,7 +84,8 @@ RiskPlotDetail _detail({
       producerName: 'Teodoro Mamani',
       producerPhone: phone,
       areaHa: 2.5,
-      sectorName: 'La Yarada Baja',
+      sectorName: sectorName,
+      placement: placement,
       risk: risk,
       reasons: risk == PlotRisk.critical ? const [_overload] : const [],
       overloadPercent: fruits == null ? null : 43,
@@ -888,6 +891,17 @@ void main() {
       expect(find.text('Óptimo'), findsNothing);
       expect(find.text('Quedan 12 días'), findsNothing);
       expect(find.textContaining('Escríbele a Teodoro'), findsOneWidget);
+    });
+
+    testWidgets('the heading tells a sector to confirm from no sector, as the map does', (tester) async {
+      _phone(tester, height: 1600);
+      await tester.pumpWidget(page(_detail(sectorName: null, placement: SectorPlacement.pending)));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('La Yarada 02 · Por confirmar'), findsOneWidget);
+
+      await tester.pumpWidget(page(_detail(sectorName: null, placement: SectorPlacement.none)));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('La Yarada 02 · Sin sector'), findsOneWidget);
     });
 
     testWidgets('without a phone there is no way to call', (tester) async {
