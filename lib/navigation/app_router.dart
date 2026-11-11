@@ -200,8 +200,7 @@ GoRoute _membersRoute(String path) {
 }
 
 /// G20 · Riesgo territorial and what opens from it: T14 · Alertas del gestor, G22 · Detalle del
-/// sector, G23 · Parcela del socio and T16 · Expediente técnico. The alert preferences are a
-/// placeholder until that screen lands.
+/// sector, G23 · Parcela del socio and T16 · Expediente técnico.
 GoRoute _riskRoute(String path) {
   return GoRoute(
     path: path,
@@ -245,23 +244,18 @@ GoRoute _sectorListRoute() => GoRoute(
     );
 
 /// T14 · Alertas del gestor over the tab at [parent] whose bell opened it, so going back returns
-/// to that tab. The sectors and plots it opens stay on the same tab.
+/// to that tab. The sectors and plots it opens stay on the same tab. Its settings button opens the
+/// account, where the preferences of the app live.
 GoRoute _alertsRoute(String parent) {
   final alerts = '$parent/${ManagerAlertsPage.path}';
   return GoRoute(
     path: ManagerAlertsPage.path,
     builder: (context, state) => ManagerAlertsPage(
       onBack: () => context.pop(),
-      onOpenPreferences: () => context.push('$alerts/preferences'),
+      onOpenPreferences: () => context.push(AccountPage.path),
       onOpenSector: (sectorId) => context.push('$alerts/sectors/$sectorId'),
     ),
-    routes: [
-      GoRoute(
-        path: 'preferences',
-        builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).alertsPreferences),
-      ),
-      _sectorRoute(alerts, nestPlots: true),
-    ],
+    routes: [_sectorRoute(alerts, nestPlots: true)],
   );
 }
 
