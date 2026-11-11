@@ -19,7 +19,7 @@ void main() {
       _app(
         const HomeUiState(
           displayName: 'Rubén Ticona',
-          subtitle: 'Cooperativa Olivar del Sur · técnico',
+          organizationName: 'Cooperativa Olivar del Sur',
           voiceMessage: 'La Yarada Baja necesita tu visita.',
         ),
       ),

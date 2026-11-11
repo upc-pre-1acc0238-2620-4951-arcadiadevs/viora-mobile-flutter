@@ -47,4 +47,14 @@ void main() {
     expect(dossier.pathParameters, {'plotId': 'p1'});
     expect(dossier.matches.last.matchedLocation, '/risk/plots/p1/dossier');
   });
+
+  test('the suggested visits and their plots open over the Home tab', () {
+    final visits = appRouter.configuration.findMatch(Uri.parse('/home/sectors/visits'));
+    final dossier = appRouter.configuration.findMatch(Uri.parse('/home/plots/p1/dossier'));
+
+    expect(visits.pathParameters, {'scope': 'visits'});
+    expect(visits.matches.last.matchedLocation, '/home/sectors/visits');
+    expect(dossier.pathParameters, {'plotId': 'p1'});
+    expect(dossier.matches.last.matchedLocation, '/home/plots/p1/dossier');
+  });
 }

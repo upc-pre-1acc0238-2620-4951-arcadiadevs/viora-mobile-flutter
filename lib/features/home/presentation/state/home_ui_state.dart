@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 class HomeUiState {
   const HomeUiState({
     this.displayName,
-    this.subtitle,
+    this.organizationName,
     this.voiceMessage,
     this.hasUnreadAlerts = false,
   });
@@ -16,8 +16,9 @@ class HomeUiState {
   /// Full name of the profile; `null` while it isn't known.
   final String? displayName;
 
-  /// Organization and role under the greeting; hidden while it isn't known.
-  final String? subtitle;
+  /// The organization of the license, shown with the role under the greeting; hidden while
+  /// it isn't known.
+  final String? organizationName;
 
   /// Line in the voice of Viora under the headline; hidden when there's nothing to say.
   final String? voiceMessage;
@@ -27,13 +28,13 @@ class HomeUiState {
 
   HomeUiState copyWith({
     String? displayName,
-    String? subtitle,
+    String? organizationName,
     String? voiceMessage,
     bool? hasUnreadAlerts,
   }) {
     return HomeUiState(
       displayName: displayName ?? this.displayName,
-      subtitle: subtitle ?? this.subtitle,
+      organizationName: organizationName ?? this.organizationName,
       voiceMessage: voiceMessage ?? this.voiceMessage,
       hasUnreadAlerts: hasUnreadAlerts ?? this.hasUnreadAlerts,
     );

@@ -10,7 +10,9 @@ import 'package:viora/core/navigation/placeholder_screen.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
+import 'package:viora/features/cooperative_operations/domain/entity/risk_territory.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/manager_alerts_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/manager_home_sections.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/member_detail_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/members_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_page.dart';
@@ -89,20 +91,16 @@ final GoRouter appRouter = GoRouter(
         for (final d in TopLevelDestination.values)
           StatefulShellBranch(
             routes: [
-              if (d == TopLevelDestination.members)
+              if (d == TopLevelDestination.home)
+                _homeRoute(d.path)
+              else if (d == TopLevelDestination.members)
                 _membersRoute(d.path)
               else if (d == TopLevelDestination.risk)
                 _riskRoute(d.path)
               else
                 GoRoute(
                   path: d.path,
-                  builder: (context, state) => d == TopLevelDestination.home
-                      ? HomePage(
-                          onOpenAccount: () => context.push(AccountPage.path),
-                          onOpenAlerts: () => context.push('${d.path}/${ManagerAlertsPage.path}'),
-                        )
-                      : PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
-                  routes: [if (d == TopLevelDestination.home) _alertsRoute(d.path)],
+                  builder: (context, state) => PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
                 ),
             ],
           ),
@@ -110,6 +108,38 @@ final GoRouter appRouter = GoRouter(
     ),
   ],
 );
+
+/// G10 · Inicio and what opens from it without leaving the tab: T14 from the bell and the frost
+/// card, the suggested visits (G22) and each visit's plot (G23). The map, the intake and the
+/// members open their own tabs.
+GoRoute _homeRoute(String path) {
+  return GoRoute(
+    path: path,
+    builder: (context, state) => ManagerHomeScope(
+      builder: (context, refresh) => HomePage(
+        onOpenAccount: () => context.push(AccountPage.path),
+        onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
+        voice: const ManagerHomeVoice(),
+        onRefresh: refresh,
+        sections: [
+          ManagerHomeSummary(
+            onOpenRisk: () => context.go(TopLevelDestination.risk.path),
+            onOpenIntake: () => context.go(TopLevelDestination.collection.path),
+            onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
+            onOpenMembers: () => context.go(TopLevelDestination.members.path),
+            onOpenVisits: () => context.push('$path/sectors/${RiskScopes.visits}'),
+            onOpenPlot: (plotId) => context.push('$path/plots/$plotId'),
+          ),
+        ],
+      ),
+    ),
+    routes: [
+      _alertsRoute(path),
+      _sectorRoute(path),
+      _plotRoute((state) => path),
+    ],
+  );
+}
 
 /// G40 · Socios and what opens from it: G41 · Socio, G42 · Códigos and G44 · Códigos generados,
 /// which covers the tab bar as in the design.

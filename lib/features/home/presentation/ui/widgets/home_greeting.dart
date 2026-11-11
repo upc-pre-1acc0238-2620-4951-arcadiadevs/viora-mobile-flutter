@@ -22,7 +22,7 @@ class HomeGreeting extends StatelessWidget {
       child: BlocBuilder<HomeViewModel, HomeUiState>(
         builder: (context, state) => HomeHeader(
           displayName: state.displayName,
-          subtitle: state.subtitle,
+          organizationName: state.organizationName,
           hasUnreadAlerts: state.hasUnreadAlerts,
           onOpenAlerts: onOpenAlerts,
           onOpenAccount: onOpenAccount,

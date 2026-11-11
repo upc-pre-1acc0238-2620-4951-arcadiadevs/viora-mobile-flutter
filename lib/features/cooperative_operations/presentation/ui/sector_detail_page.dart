@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:viora/core/designsystem/component/viora_card.dart';
 import 'package:viora/core/designsystem/component/viora_icon.dart';
 import 'package:viora/core/designsystem/component/viora_section_header.dart';
-import 'package:viora/core/designsystem/component/viora_status_tag.dart';
 import 'package:viora/core/designsystem/component/viora_tab_bar.dart';
 import 'package:viora/core/designsystem/component/viora_voice.dart';
 import 'package:viora/core/designsystem/theme/colors.dart';
@@ -74,6 +73,7 @@ class SectorDetailContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toLanguageTag();
     final failure = state.failure;
     final group = state.group;
     final priority = state.priority;
@@ -126,7 +126,12 @@ class SectorDetailContent extends StatelessWidget {
                 ),
                 const SizedBox(height: Spacing.xs),
                 for (var i = 0; i < priority.length; i++) ...[
-                  _PriorityRow(position: i + 1, plot: priority[i], onTap: () => onOpenPlot(priority[i].id)),
+                  RiskVisitRow(
+                    position: i + 1,
+                    plot: priority[i],
+                    subtitle: _plotLine(l10n, priority[i], locale),
+                    onTap: () => onOpenPlot(priority[i].id),
+                  ),
                   const SizedBox(height: Spacing.xs),
                 ],
               ],
@@ -159,6 +164,7 @@ class SectorDetailContent extends StatelessWidget {
       RiskScopes.nearby => (l10n.riskNearTitle, l10n.riskNearSubtitle(count)),
       RiskScopes.pending => (l10n.riskPendingTitle, count),
       RiskScopes.unassigned => (l10n.riskUnassignedTitle, count),
+      RiskScopes.visits => (l10n.homeVisitsTitle, count),
       _ => (state.title, state.loading ? '' : l10n.riskSectorSubtitle(count)),
     };
   }
@@ -308,96 +314,6 @@ String _plotLine(AppLocalizations l10n, RiskPlot plot, String locale) {
     if (distance != null) l10n.riskDistance(formatOneDecimal(distance, locale)),
     if (proposed != null) l10n.riskProposedSector(proposed),
   ].join(' · ');
-}
-
-class _PriorityRow extends StatelessWidget {
-  const _PriorityRow({required this.position, required this.plot, required this.onTap});
-
-  final int position;
-  final RiskPlot plot;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    final textTheme = Theme.of(context).textTheme;
-    final reason = plot.mainReason;
-    final frostOnly = reason?.type == RiskReason.frostForecast;
-    return VioraCard(
-      padding: const EdgeInsets.fromLTRB(10, 10, Spacing.md, 10),
-      onTap: onTap,
-      child: Row(
-        children: [
-          SizedBox.square(
-            dimension: 44,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: frostOnly ? VioraColors.green900 : VioraColors.terracotta500,
-                shape: const CircleBorder(),
-              ),
-              child: Center(
-                child: Text(
-                  '$position',
-                  style: const TextStyle(fontFamily: VioraFonts.newsreader, fontSize: 22, color: VioraColors.neutral0),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: Spacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(plot.producerName, style: textTheme.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
-                Text(
-                  _plotLine(l10n, plot, locale),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: textTheme.bodySmall?.copyWith(color: VioraColors.neutral600),
-                ),
-                if (reason != null) ...[const SizedBox(height: Spacing.xxs), _ReasonTag(reason: reason)],
-              ],
-            ),
-          ),
-          const VioraIcon(VioraIcons.chevronRight, size: 22, color: VioraColors.neutral700),
-        ],
-      ),
-    );
-  }
-}
-
-class _ReasonTag extends StatelessWidget {
-  const _ReasonTag({required this.reason});
-
-  final PlotRiskReason reason;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    final value = reason.value;
-    return switch (reason.type) {
-      RiskReason.overload => VioraStatusTag(
-          label: l10n.riskReasonOverload(formatOneDecimal(value ?? 0, locale)),
-          tone: VioraTagTone.alert,
-          iconAsset: VioraIcons.scale,
-        ),
-      RiskReason.frostForecast => VioraStatusTag(
-          label: reason.date == null
-              ? l10n.riskFrost
-              : l10n.riskReasonFrost(formatOneDecimal(value ?? 0, locale), formatDayMonth(reason.date!, locale)),
-          tone: VioraTagTone.info,
-          iconAsset: VioraIcons.acUnit,
-        ),
-      RiskReason.criticalIncident => VioraStatusTag(
-          label: l10n.riskCriticalIncident,
-          tone: VioraTagTone.alert,
-          iconAsset: VioraIcons.warning,
-        ),
-      _ => VioraStatusTag(label: l10n.riskModerate, tone: VioraTagTone.pending, iconAsset: VioraIcons.warning),
-    };
-  }
 }
 
 /// One color of "Resto del sector": its count, and its plots when opened.
