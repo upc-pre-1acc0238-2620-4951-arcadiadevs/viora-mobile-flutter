@@ -339,8 +339,9 @@ class _LoadCard extends StatelessWidget {
 class _LoadBar extends StatelessWidget {
   const _LoadBar({required this.label, required this.value, required this.share, required this.color});
 
-  /// Below this the label wouldn't fit inside the capsule.
+  /// The shortest capsule, so a small value still reads as a bar.
   static const _minShare = 0.45;
+  static const _padding = 18.0;
 
   final String label;
   final String value;
@@ -349,20 +350,41 @@ class _LoadBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final valueInside = share > 0.8;
+    final labelStyle = Theme.of(context).textTheme.labelLarge?.copyWith(color: VioraColors.neutral0);
+    return LayoutBuilder(builder: (context, constraints) {
+      // The white label is only readable over the capsule, so the capsule is never shorter than it,
+      // whatever the language.
+      final labelWidth = (TextPainter(
+        text: TextSpan(text: label, style: labelStyle),
+        textDirection: Directionality.of(context),
+        textScaler: MediaQuery.textScalerOf(context),
+        maxLines: 1,
+      )..layout())
+          .width;
+      final fitting = constraints.maxWidth > 0 ? (labelWidth + 2 * _padding + Spacing.xs) / constraints.maxWidth : 1.0;
+      final shortest = fitting > _minShare ? (fitting > 1 ? 1.0 : fitting) : _minShare;
+      final widthFactor = share.clamp(shortest, 1.0);
+      final valueInside = widthFactor > 0.8;
+      return _bar(context, labelStyle, widthFactor, valueInside);
+    });
+  }
+
+  Widget _bar(BuildContext context, TextStyle? labelStyle, double widthFactor, bool valueInside) {
     return DecoratedBox(
       decoration: const ShapeDecoration(color: VioraColors.neutral100, shape: StadiumBorder()),
       child: SizedBox(
         height: 48,
         child: Stack(
+          // The label and the value sit in the middle of the capsule, not on its top edge.
+          alignment: AlignmentDirectional.centerStart,
           children: [
             FractionallySizedBox(
-              widthFactor: share.clamp(_minShare, 1.0),
+              widthFactor: widthFactor,
               heightFactor: 1,
               child: DecoratedBox(decoration: ShapeDecoration(color: color, shape: const StadiumBorder())),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
+              padding: const EdgeInsets.symmetric(horizontal: _padding),
               child: Row(
                 children: [
                   Expanded(
@@ -370,7 +392,7 @@ class _LoadBar extends StatelessWidget {
                       label,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(color: VioraColors.neutral0),
+                      style: labelStyle,
                     ),
                   ),
                   Text(
