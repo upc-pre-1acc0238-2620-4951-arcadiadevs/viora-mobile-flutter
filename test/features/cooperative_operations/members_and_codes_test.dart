@@ -70,6 +70,18 @@ const _teodoro = CooperativeMember(
   worstRisk: PlotRisk.critical,
 );
 
+const _julio = CooperativeMember(
+  id: 'm3',
+  fullName: 'Julio Quispe',
+  sharing: MemberSharing.sharing,
+  withdrawnAt: null,
+  plotCount: 3,
+  registeredAreaHa: 5.1,
+  sectorNames: ['Magollo'],
+  worstRisk: PlotRisk.noData,
+  unsampledPlots: 2,
+);
+
 final _hilda = CooperativeMember(
   id: 'm2',
   fullName: 'Hilda Poma',
@@ -186,6 +198,46 @@ void main() {
       expect(state.copyWith(query: 'HILDA').visibleMembers, [_hilda]);
       expect(state.sharingCount, 1);
       expect(state.withdrawnCount, 1);
+    });
+
+    test('«Sin muestreo» keeps who has a plot without sampling, and the intake can open it by name', () {
+      final state = MembersUiState(members: [_teodoro, _julio, _hilda]);
+
+      expect(state.copyWith(filter: MembersFilter.unsampled).visibleMembers, [_julio]);
+      expect(state.unsampledCount, 1);
+      expect(MembersFilter.parse('unsampled'), MembersFilter.unsampled);
+      expect(MembersFilter.parse('anything'), MembersFilter.all);
+      expect(MembersFilter.parse(null), MembersFilter.all);
+    });
+
+    test('reads the unsampled plots of a member, none when the server does not send them', () {
+      final member = CooperativeMemberDto.fromJson({'id': 'm3', 'sharing': 'SHARING', 'unsampledPlots': 2}).toDomain();
+      final older = CooperativeMemberDto.fromJson({'id': 'm1', 'sharing': 'SHARING'}).toDomain();
+
+      expect(member.unsampledPlots, 2);
+      expect(older.unsampledPlots, 0);
+    });
+
+    testWidgets('the «Sin muestreo» chip shows only while someone is missing a sampling', (tester) async {
+      tester.view.physicalSize = const Size(1080, 4000);
+      tester.view.devicePixelRatio = 2.5;
+      addTearDown(tester.view.reset);
+      Widget roster(List<CooperativeMember> members) => _app(MembersPageContent(
+            state: MembersUiState(loading: false, capacity: _capacity, members: members),
+            header: const SizedBox.shrink(),
+            onRetry: () {},
+            onSearch: (_) {},
+            onFilter: (_) {},
+            onOpenMember: (_) {},
+            onOpenCodes: () {},
+            onIssueCodes: (_) {},
+          ));
+
+      await tester.pumpWidget(roster([_teodoro, _hilda]));
+      expect(find.textContaining('Sin muestreo'), findsNothing);
+
+      await tester.pumpWidget(roster([_teodoro, _julio, _hilda]));
+      expect(find.text('Sin muestreo · 1'), findsOneWidget);
     });
 
     test('the codes card counts the codes that expire first', () {
