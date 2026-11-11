@@ -17,21 +17,25 @@ import 'package:viora/features/cooperative_operations/application/usecase/get_se
 import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/issue_invitation_codes_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/revoke_invitation_code_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/sector_use_cases.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/cooperative_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/dossier_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/intake_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/repository/sector_repository.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/device_document_exporter.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/device_location_repository.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/dossier_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/intake_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_api.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/sector_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/cooperative_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/dossier_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/intake_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/risk_repository_impl.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/repository/sector_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/issue_codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_alerts_view_model.dart';
@@ -42,6 +46,7 @@ import 'package:viora/features/cooperative_operations/presentation/viewmodel/pro
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_map_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_plot_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/sector_detail_view_model.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/sectors_view_model.dart';
 import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart';
 import 'package:viora/features/iam/application/usecase/change_password_use_case.dart';
 import 'package:viora/features/iam/application/usecase/check_password_reset_link_use_case.dart';
@@ -115,12 +120,25 @@ void _setupCooperativeOperations() {
   getIt.registerLazySingleton(() => GetInvitationCodesUseCase(repository: getIt<CooperativeRepository>()));
   getIt.registerLazySingleton(() => IssueInvitationCodesUseCase(repository: getIt<CooperativeRepository>()));
   getIt.registerLazySingleton(() => RevokeInvitationCodeUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton<SectorApi>(() => SectorApi(client: getIt<ApiClient>()));
+  getIt.registerLazySingleton<SectorRepository>(() => SectorRepositoryImpl(api: getIt<SectorApi>()));
+  getIt.registerLazySingleton(() => GetSectorsUseCase(repository: getIt<SectorRepository>()));
+  getIt.registerLazySingleton(() => SaveSectorUseCase(repository: getIt<SectorRepository>()));
+  getIt.registerLazySingleton(() => ResolvePendingSectorUseCase(repository: getIt<SectorRepository>()));
+  getIt.registerFactory<SectorsViewModel>(
+    () => SectorsViewModel(
+      getSectors: getIt<GetSectorsUseCase>(),
+      saveSector: getIt<SaveSectorUseCase>(),
+      resolvePending: getIt<ResolvePendingSectorUseCase>(),
+    ),
+  );
 
   getIt.registerFactory<MembersViewModel>(
     () => MembersViewModel(
       getCapacity: getIt<GetLicenseCapacityUseCase>(),
       getMembers: getIt<GetMembersUseCase>(),
       getCodes: getIt<GetInvitationCodesUseCase>(),
+      getSectors: getIt<GetSectorsUseCase>(),
     ),
   );
   getIt.registerFactory<MemberDetailViewModel>(

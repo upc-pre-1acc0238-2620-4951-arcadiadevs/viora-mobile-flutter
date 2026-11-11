@@ -155,6 +155,29 @@ void main() {
       await viewModel.close();
     });
 
+    testWidgets('the Sectores card counts the list and what waits «Por confirmar»', (tester) async {
+      tester.view.physicalSize = const Size(1080, 4000);
+      tester.view.devicePixelRatio = 2.5;
+      addTearDown(tester.view.reset);
+      var opened = false;
+      await tester.pumpWidget(_app(MembersPageContent(
+        state: MembersUiState(loading: false, capacity: _capacity, sectorCount: 5, pendingSectors: 2),
+        header: const SizedBox.shrink(),
+        onRetry: () {},
+        onSearch: (_) {},
+        onFilter: (_) {},
+        onOpenMember: (_) {},
+        onOpenCodes: () {},
+        onIssueCodes: (_) {},
+        onOpenSectors: () => opened = true,
+      )));
+
+      expect(find.text('5 sectores en tu lista'), findsOneWidget);
+      expect(find.text('2 por confirmar'), findsOneWidget);
+      await tester.tap(find.text('Sectores'));
+      expect(opened, isTrue);
+    });
+
     test('the chips and the search narrow the roster, by name or sector', () {
       final state = MembersUiState(members: [_teodoro, _hilda]);
 

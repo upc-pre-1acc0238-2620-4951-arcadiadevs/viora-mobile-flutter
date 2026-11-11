@@ -19,6 +19,7 @@ import 'package:viora/features/cooperative_operations/presentation/ui/risk_page.
 import 'package:viora/features/cooperative_operations/presentation/ui/provisional_dossier_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_plot_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/sector_detail_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/sectors_page.dart';
 import 'package:viora/features/home/presentation/ui/home_page.dart';
 import 'package:viora/features/home/presentation/ui/widgets/home_greeting.dart';
 import 'package:viora/features/iam/presentation/ui/iam_page.dart';
@@ -156,9 +157,11 @@ GoRoute _membersRoute(String path) {
       onOpenMember: (id) => context.push('$path/$id'),
       onOpenCodes: () => context.push<void>(codes),
       onIssued: (args) => context.push<void>(issued, extra: args),
+      onOpenSectors: () => context.push<void>('$path/${SectorsPage.path}'),
     ),
     routes: [
       _alertsRoute(path),
+      _sectorListRoute(),
       GoRoute(
         path: 'codes',
         builder: (context, state) => CodesPage(
@@ -197,16 +200,26 @@ GoRoute _riskRoute(String path) {
     path: path,
     builder: (context, state) => RiskPage(
       onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
-      onOpenScope: (scope) => context.push('$path/sectors/$scope'),
+      // «Por confirmar» is reviewed in G45, as the design links it; the rest open G22.
+      onOpenScope: (scope) => context.push(
+        scope == RiskScopes.pending ? '$path/${SectorsPage.path}' : '$path/sectors/$scope',
+      ),
       onOpenPlot: (plotId) => context.push('$path/plots/$plotId'),
     ),
     routes: [
       _alertsRoute(path),
+      _sectorListRoute(),
       _sectorRoute(path),
       _plotRoute((state) => path),
     ],
   );
 }
+
+/// G45 · Sectores, from the «Sectores» card of G40 and the «Por confirmar» row of G20.
+GoRoute _sectorListRoute() => GoRoute(
+      path: SectorsPage.path,
+      builder: (context, state) => SectorsPage(onBack: () => context.pop()),
+    );
 
 /// T14 · Alertas del gestor over the tab at [parent] whose bell opened it, so going back returns
 /// to that tab. The sectors and plots it opens stay on the same tab.
