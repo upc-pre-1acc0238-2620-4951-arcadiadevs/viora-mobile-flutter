@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/manager_alerts_page.dart';
 import 'package:viora/features/iam/presentation/ui/iam_page.dart';
 import 'package:viora/features/profiles/presentation/ui/account_page.dart';
@@ -27,6 +28,12 @@ void main() {
     expect(alerts.matches.last.matchedLocation, '/risk/${ManagerAlertsPage.path}');
     expect(preferences.matches, isEmpty);
     expect(appRouter.configuration.findMatch(Uri.parse(AccountPage.path)).matches, isNotEmpty);
+  });
+
+  test('every tab opens its own screen', () {
+    for (final tab in TopLevelDestination.values) {
+      expect(appRouter.configuration.findMatch(Uri.parse(tab.path)).matches.last.matchedLocation, tab.path);
+    }
   });
 
   test('the bell of Home and Socios opens the alerts over its own tab, so going back returns there', () {

@@ -5,8 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:viora/app_shell.dart';
 import 'package:viora/core/datastore/session_events.dart';
 import 'package:viora/core/di/dependency_injection.dart';
-import 'package:viora/core/l10n/app_localizations.dart';
-import 'package:viora/core/navigation/placeholder_screen.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
@@ -40,8 +38,8 @@ import 'package:viora/features/subscription/presentation/ui/widgets/license_stat
 /// Composition root of navigation: the one place that knows the screens of every
 /// feature. Inside `core/`, only `di/` and `database/` may import `features/`.
 ///
-/// When a feature is ready, replace the `PlaceholderScreen` of its tab with the
-/// feature's root screen and add its detail routes inside the branch.
+/// Every tab is a branch with its root screen and its detail routes; the switch is exhaustive, so a
+/// new tab cannot be left without a screen.
 /// The navigator over the shell: screens on it cover the tab bar.
 final _rootNavigator = GlobalKey<NavigatorState>();
 
@@ -92,19 +90,12 @@ final GoRouter appRouter = GoRouter(
         for (final d in TopLevelDestination.values)
           StatefulShellBranch(
             routes: [
-              if (d == TopLevelDestination.home)
-                _homeRoute(d.path)
-              else if (d == TopLevelDestination.members)
-                _membersRoute(d.path)
-              else if (d == TopLevelDestination.risk)
-                _riskRoute(d.path)
-              else if (d == TopLevelDestination.collection)
-                _intakeRoute(d.path)
-              else
-                GoRoute(
-                  path: d.path,
-                  builder: (context, state) => PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
-                ),
+              switch (d) {
+                TopLevelDestination.home => _homeRoute(d.path),
+                TopLevelDestination.risk => _riskRoute(d.path),
+                TopLevelDestination.collection => _intakeRoute(d.path),
+                TopLevelDestination.members => _membersRoute(d.path),
+              },
             ],
           ),
       ],
