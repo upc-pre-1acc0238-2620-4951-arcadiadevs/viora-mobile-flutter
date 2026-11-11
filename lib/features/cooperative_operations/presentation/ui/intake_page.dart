@@ -730,15 +730,26 @@ class _SectorRow extends StatelessWidget {
             else
               FractionallySizedBox(
                 widthFactor: share.clamp(0.04, 1),
-                child: const SizedBox(
-                  height: 8,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: VioraColors.green700,
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                  ),
-                ),
+                child: sector.hasColors
+                    ? VioraSegmentedBar(
+                        height: 8,
+                        gap: 3,
+                        segments: [
+                          VioraBarSegment(value: sector.greenTons ?? 0, color: VioraColors.green800),
+                          VioraBarSegment(value: sector.blackTons ?? 0, color: VioraColors.neutral900),
+                          VioraBarSegment(value: sector.unclassifiedTons ?? 0, color: VioraColors.neutral500),
+                        ],
+                      )
+                    // Without the split, the sector is drawn as one green bar.
+                    : const SizedBox(
+                        height: 8,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: VioraColors.green700,
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                        ),
+                      ),
               ),
           ],
         ),

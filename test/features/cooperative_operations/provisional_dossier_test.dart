@@ -270,6 +270,16 @@ void main() {
       expect(find.text('Compartir'), findsOneWidget);
     });
 
+    testWidgets('a value gets the width its label leaves, more than half the row', (tester) async {
+      _phone(tester);
+      await tester.pumpWidget(_page(ProvisionalDossierUiState(loading: false, dossier: _dossier())));
+
+      final value = find.text('2,00 frutos/brote · +42,9 %');
+      final row = find.ancestor(of: value, matching: find.byType(Row)).first;
+      expect(tester.getSize(find.text('Carga frutal')).width, lessThanOrEqualTo(tester.getSize(row).width * 0.45));
+      expect(tester.getSize(value).width, greaterThan(tester.getSize(row).width * 0.5));
+    });
+
     testWidgets('a field without records reads «No disponible»', (tester) async {
       _phone(tester);
       await tester.pumpWidget(_page(ProvisionalDossierUiState(

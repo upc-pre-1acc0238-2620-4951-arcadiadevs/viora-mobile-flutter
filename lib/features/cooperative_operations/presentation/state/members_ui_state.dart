@@ -3,8 +3,16 @@ import 'package:viora/features/cooperative_operations/domain/entity/invitation_c
 import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
 
-/// The chips over the roster of G40.
-enum MembersFilter { all, sharing, withdrawn }
+/// The chips over the roster of G40. [unsampled] is also what the intake opens the roster with.
+enum MembersFilter {
+  all,
+  sharing,
+  withdrawn,
+  unsampled;
+
+  /// The filter a link names by its [name]; [all] for anything else.
+  static MembersFilter parse(String? value) => values.asNameMap()[value] ?? all;
+}
 
 /// G40 · Socios: the license, the codes to redeem and the roster.
 class MembersUiState {
@@ -38,6 +46,8 @@ class MembersUiState {
 
   int get withdrawnCount => members.where((m) => m.sharing == MemberSharing.withdrawn).length;
 
+  int get unsampledCount => members.where((m) => m.unsampledPlots > 0).length;
+
   /// The members the chips and the search leave, by name or sector, ignoring case.
   List<CooperativeMember> get visibleMembers {
     final text = query.trim().toLowerCase();
@@ -46,6 +56,7 @@ class MembersUiState {
         MembersFilter.all => true,
         MembersFilter.sharing => member.sharing == MemberSharing.sharing,
         MembersFilter.withdrawn => member.sharing == MemberSharing.withdrawn,
+        MembersFilter.unsampled => member.unsampledPlots > 0,
       };
       if (!kept || text.isEmpty) return kept;
       return member.fullName.toLowerCase().contains(text) ||
