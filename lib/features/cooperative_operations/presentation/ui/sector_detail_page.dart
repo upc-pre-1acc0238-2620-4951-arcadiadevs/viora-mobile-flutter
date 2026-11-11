@@ -92,6 +92,15 @@ class SectorDetailContent extends StatelessWidget {
           children: [
             CooperativeTopBar(title: title, subtitle: subtitle, onBack: onBack),
             const SizedBox(height: Spacing.lg),
+            if (failure == null && state.savedAt != null) ...[
+              Align(
+                alignment: Alignment.centerLeft,
+                child: OfflinePill(
+                  text: formatOffline(l10n, l10n.offlineWhatState, state.savedAt!, DateTime.now(), locale),
+                ),
+              ),
+              const SizedBox(height: Spacing.sm),
+            ],
             if (failure != null)
               CooperativeFailureView(failure: failure, onRetry: onRetry)
             else if (state.loading)

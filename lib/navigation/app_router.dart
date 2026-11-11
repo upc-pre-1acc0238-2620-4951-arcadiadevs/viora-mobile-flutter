@@ -5,8 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:viora/app_shell.dart';
 import 'package:viora/core/datastore/session_events.dart';
 import 'package:viora/core/di/dependency_injection.dart';
-import 'package:viora/core/l10n/app_localizations.dart';
-import 'package:viora/core/navigation/placeholder_screen.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
@@ -34,15 +32,14 @@ import 'package:viora/features/profiles/presentation/ui/change_password_page.dar
 import 'package:viora/features/profiles/presentation/ui/edit_profile_page.dart';
 import 'package:viora/features/subscription/presentation/ui/license_activation_page.dart';
 import 'package:viora/features/subscription/presentation/ui/license_gate_page.dart';
-import 'package:viora/features/subscription/presentation/ui/producer_plan_page.dart';
 import 'package:viora/features/subscription/presentation/ui/widgets/license_guard.dart';
 import 'package:viora/features/subscription/presentation/ui/widgets/license_status_widgets.dart';
 
 /// Composition root of navigation: the one place that knows the screens of every
 /// feature. Inside `core/`, only `di/` and `database/` may import `features/`.
 ///
-/// When a feature is ready, replace the `PlaceholderScreen` of its tab with the
-/// feature's root screen and add its detail routes inside the branch.
+/// Every tab is a branch with its root screen and its detail routes; the switch is exhaustive, so a
+/// new tab cannot be left without a screen.
 /// The navigator over the shell: screens on it cover the tab bar.
 final _rootNavigator = GlobalKey<NavigatorState>();
 
@@ -76,7 +73,6 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => const NoTransitionPage(child: LicenseGatePage()),
     ),
     GoRoute(path: LicenseActivationPage.path, builder: (context, state) => const LicenseActivationPage()),
-    GoRoute(path: ProducerPlanPage.path, builder: (context, state) => const ProducerPlanPage()),
     GoRoute(
       path: AccountPage.path,
       builder: (context, state) => const AccountPage(
@@ -94,19 +90,12 @@ final GoRouter appRouter = GoRouter(
         for (final d in TopLevelDestination.values)
           StatefulShellBranch(
             routes: [
-              if (d == TopLevelDestination.home)
-                _homeRoute(d.path)
-              else if (d == TopLevelDestination.members)
-                _membersRoute(d.path)
-              else if (d == TopLevelDestination.risk)
-                _riskRoute(d.path)
-              else if (d == TopLevelDestination.collection)
-                _intakeRoute(d.path)
-              else
-                GoRoute(
-                  path: d.path,
-                  builder: (context, state) => PlaceholderScreen(title: d.label(AppLocalizations.of(context))),
-                ),
+              switch (d) {
+                TopLevelDestination.home => _homeRoute(d.path),
+                TopLevelDestination.risk => _riskRoute(d.path),
+                TopLevelDestination.collection => _intakeRoute(d.path),
+                TopLevelDestination.members => _membersRoute(d.path),
+              },
             ],
           ),
       ],
@@ -200,8 +189,7 @@ GoRoute _membersRoute(String path) {
 }
 
 /// G20 · Riesgo territorial and what opens from it: T14 · Alertas del gestor, G22 · Detalle del
-/// sector, G23 · Parcela del socio and T16 · Expediente técnico. The alert preferences are a
-/// placeholder until that screen lands.
+/// sector, G23 · Parcela del socio and T16 · Expediente técnico.
 GoRoute _riskRoute(String path) {
   return GoRoute(
     path: path,
@@ -245,23 +233,18 @@ GoRoute _sectorListRoute() => GoRoute(
     );
 
 /// T14 · Alertas del gestor over the tab at [parent] whose bell opened it, so going back returns
-/// to that tab. The sectors and plots it opens stay on the same tab.
+/// to that tab. The sectors and plots it opens stay on the same tab. Its settings button opens the
+/// account, where the preferences of the app live.
 GoRoute _alertsRoute(String parent) {
   final alerts = '$parent/${ManagerAlertsPage.path}';
   return GoRoute(
     path: ManagerAlertsPage.path,
     builder: (context, state) => ManagerAlertsPage(
       onBack: () => context.pop(),
-      onOpenPreferences: () => context.push('$alerts/preferences'),
+      onOpenPreferences: () => context.push(AccountPage.path),
       onOpenSector: (sectorId) => context.push('$alerts/sectors/$sectorId'),
     ),
-    routes: [
-      GoRoute(
-        path: 'preferences',
-        builder: (context, state) => PlaceholderScreen(title: AppLocalizations.of(context).alertsPreferences),
-      ),
-      _sectorRoute(alerts, nestPlots: true),
-    ],
+    routes: [_sectorRoute(alerts, nestPlots: true)],
   );
 }
 

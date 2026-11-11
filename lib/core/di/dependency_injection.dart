@@ -84,22 +84,16 @@ import 'package:viora/features/profiles/presentation/viewmodel/edit_profile_view
 import 'package:viora/features/subscription/application/usecase/activate_license_use_case.dart';
 import 'package:viora/features/subscription/application/usecase/get_account_email_use_case.dart';
 import 'package:viora/features/subscription/application/usecase/get_kept_license_use_case.dart';
-import 'package:viora/features/subscription/application/usecase/get_kept_producer_plan_catalog_use_case.dart';
 import 'package:viora/features/subscription/application/usecase/refresh_license_use_case.dart';
-import 'package:viora/features/subscription/application/usecase/refresh_producer_plan_catalog_use_case.dart';
 import 'package:viora/features/subscription/application/usecase/watch_current_license_use_case.dart';
 import 'package:viora/features/subscription/domain/repository/license_repository.dart';
-import 'package:viora/features/subscription/domain/repository/producer_plan_repository.dart';
 import 'package:viora/features/subscription/infrastructure/local/manager_license_dao.dart';
 import 'package:viora/features/subscription/infrastructure/remote/license_api.dart';
-import 'package:viora/features/subscription/infrastructure/remote/producer_plan_api.dart';
 import 'package:viora/features/subscription/infrastructure/repository/license_repository_impl.dart';
-import 'package:viora/features/subscription/infrastructure/repository/producer_plan_repository_impl.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_activation_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_gate_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_guard_view_model.dart';
 import 'package:viora/features/subscription/presentation/viewmodel/license_status_view_model.dart';
-import 'package:viora/features/subscription/presentation/viewmodel/producer_plan_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -116,7 +110,7 @@ void setupDependencies() {
 void _setupCooperativeOperations() {
   getIt.registerLazySingleton<CooperativeApi>(() => CooperativeApi(client: getIt<ApiClient>()));
   getIt.registerLazySingleton<CooperativeRepository>(
-    () => CooperativeRepositoryImpl(api: getIt<CooperativeApi>()),
+    () => CooperativeRepositoryImpl(api: getIt<CooperativeApi>(), snapshots: getIt<ManagerSnapshotStore>()),
   );
   getIt.registerLazySingleton(() => GetLicenseCapacityUseCase(repository: getIt<CooperativeRepository>()));
   getIt.registerLazySingleton(() => GetMembersUseCase(repository: getIt<CooperativeRepository>()));
@@ -143,6 +137,9 @@ void _setupCooperativeOperations() {
       getMembers: getIt<GetMembersUseCase>(),
       getCodes: getIt<GetInvitationCodesUseCase>(),
       getSectors: getIt<GetSectorsUseCase>(),
+      getKeptCapacity: getIt<GetKeptLicenseCapacityUseCase>(),
+      getKeptMembers: getIt<GetKeptMembersUseCase>(),
+      getKeptCodes: getIt<GetKeptInvitationCodesUseCase>(),
     ),
   );
   getIt.registerFactory<MemberDetailViewModel>(
@@ -185,6 +182,10 @@ void _setupTerritorialRisk() {
   getIt.registerLazySingleton(() => GetSectorAlertsUseCase(repository: getIt<RiskRepository>()));
   getIt.registerLazySingleton(() => GetKeptRiskPlotsUseCase(repository: getIt<RiskRepository>()));
   getIt.registerLazySingleton(() => GetKeptSectorAlertsUseCase(repository: getIt<RiskRepository>()));
+  getIt.registerLazySingleton(() => GetKeptRiskPlotUseCase(repository: getIt<RiskRepository>()));
+  getIt.registerLazySingleton(() => GetKeptLicenseCapacityUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton(() => GetKeptMembersUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton(() => GetKeptInvitationCodesUseCase(repository: getIt<CooperativeRepository>()));
 
   getIt.registerFactory<RiskMapViewModel>(
     () => RiskMapViewModel(
@@ -196,9 +197,15 @@ void _setupTerritorialRisk() {
     ),
   );
   getIt.registerFactory<SectorDetailViewModel>(
-    () => SectorDetailViewModel(getPlots: getIt<GetRiskPlotsUseCase>(), location: getIt<LocationRepository>()),
+    () => SectorDetailViewModel(
+      getPlots: getIt<GetRiskPlotsUseCase>(),
+      location: getIt<LocationRepository>(),
+      getKeptPlots: getIt<GetKeptRiskPlotsUseCase>(),
+    ),
   );
-  getIt.registerFactory<RiskPlotViewModel>(() => RiskPlotViewModel(getPlot: getIt<GetRiskPlotUseCase>()));
+  getIt.registerFactory<RiskPlotViewModel>(
+    () => RiskPlotViewModel(getPlot: getIt<GetRiskPlotUseCase>(), getKeptPlot: getIt<GetKeptRiskPlotUseCase>()),
+  );
   getIt.registerFactory<ManagerAlertsViewModel>(
     () => ManagerAlertsViewModel(
       getAlerts: getIt<GetSectorAlertsUseCase>(),
@@ -230,6 +237,10 @@ void _setupTerritorialRisk() {
       getAlerts: getIt<GetSectorAlertsUseCase>(),
       getIntake: getIt<GetIntakeForecastsUseCase>(),
       location: getIt<LocationRepository>(),
+      getKeptPlots: getIt<GetKeptRiskPlotsUseCase>(),
+      getKeptCapacity: getIt<GetKeptLicenseCapacityUseCase>(),
+      getKeptAlerts: getIt<GetKeptSectorAlertsUseCase>(),
+      getKeptIntake: getIt<GetKeptIntakeForecastsUseCase>(),
     ),
   );
 
@@ -271,17 +282,6 @@ void _setupSubscription() {
   );
   getIt.registerLazySingleton<GetAccountEmailUseCase>(
     () => GetAccountEmailUseCase(repository: getIt<LicenseRepository>()),
-  );
-  getIt.registerLazySingleton<ProducerPlanApi>(() => ProducerPlanApi(client: getIt<ApiClient>()));
-  // A singleton, because it keeps the last catalog read for as long as the app runs.
-  getIt.registerLazySingleton<ProducerPlanRepository>(
-    () => ProducerPlanRepositoryImpl(api: getIt<ProducerPlanApi>()),
-  );
-  getIt.registerLazySingleton<GetKeptProducerPlanCatalogUseCase>(
-    () => GetKeptProducerPlanCatalogUseCase(repository: getIt<ProducerPlanRepository>()),
-  );
-  getIt.registerLazySingleton<RefreshProducerPlanCatalogUseCase>(
-    () => RefreshProducerPlanCatalogUseCase(repository: getIt<ProducerPlanRepository>()),
   );
 }
 
@@ -426,12 +426,6 @@ void _setupViewModels() {
       isSignedIn: getIt<IsSignedInUseCase>(),
       // The manager's reads of the members end with the license: nothing of them stays.
       onLicenseEnded: getIt<ManagerSnapshotStore>().clear,
-    ),
-  );
-  getIt.registerFactory<ProducerPlanViewModel>(
-    () => ProducerPlanViewModel(
-      getKeptCatalog: getIt<GetKeptProducerPlanCatalogUseCase>(),
-      refreshCatalog: getIt<RefreshProducerPlanCatalogUseCase>(),
     ),
   );
   getIt.registerFactory<IamViewModel>(

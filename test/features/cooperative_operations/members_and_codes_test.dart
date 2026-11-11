@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/network/api_client.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_invitation_codes_use_case.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_license_capacity_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_members_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/issue_invitation_codes_use_case.dart';
@@ -12,6 +13,7 @@ import 'package:viora/features/cooperative_operations/domain/entity/invitation_c
 import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
 import 'package:viora/features/cooperative_operations/domain/exception/cooperative_failure.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/cooperative_repository.dart';
+import 'package:viora/features/cooperative_operations/domain/valueobject/kept.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/mapper/cooperative_error_mapper.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_member_dto.dart';
 import 'package:viora/features/cooperative_operations/presentation/state/codes_ui_state.dart';
@@ -106,11 +108,31 @@ class _FakeRepository implements CooperativeRepository {
   final revoked = <String>[];
   final issued = <(int, double, int)>[];
 
+  CooperativeFailure? readFailure;
+
+  /// What the phone kept of the last reads, for G40 without a connection.
+  Kept<LicenseCapacity>? keptCapacityAnswer;
+  Kept<List<CooperativeMember>>? keptMembersAnswer;
+  Kept<List<InvitationCode>>? keptCodesAnswer;
+
   @override
-  Future<LicenseCapacity> capacity() async => capacityAnswer;
+  Future<LicenseCapacity> capacity() async {
+    final failure = readFailure;
+    if (failure != null) throw failure;
+    return capacityAnswer;
+  }
+
+  @override
+  Future<Kept<LicenseCapacity>?> keptCapacity() async => keptCapacityAnswer;
 
   @override
   Future<List<CooperativeMember>> members() async => membersAnswer;
+
+  @override
+  Future<Kept<List<CooperativeMember>>?> keptMembers() async => keptMembersAnswer;
+
+  @override
+  Future<Kept<List<InvitationCode>>?> keptCodes(InvitationCodeFilter filter) async => keptCodesAnswer;
 
   @override
   Future<MemberDetail> member(String id) => throw UnimplementedError();
@@ -188,6 +210,51 @@ void main() {
       expect(find.text('2 por confirmar'), findsOneWidget);
       await tester.tap(find.text('Sectores'));
       expect(opened, isTrue);
+    });
+
+    test('without a connection it shows the roster last read, dated by its oldest part', () async {
+      repository
+        ..readFailure = const CooperativeOffline()
+        ..keptCapacityAnswer = Kept(_capacity, DateTime(2026, 11, 10, 18, 10))
+        ..keptMembersAnswer = Kept([_teodoro], DateTime(2026, 11, 10, 18, 5))
+        ..keptCodesAnswer = Kept([_code('4F9T')], DateTime(2026, 11, 10, 18, 12));
+      final viewModel = MembersViewModel(
+        getCapacity: GetLicenseCapacityUseCase(repository: repository),
+        getMembers: GetMembersUseCase(repository: repository),
+        getCodes: GetInvitationCodesUseCase(repository: repository),
+        getKeptCapacity: GetKeptLicenseCapacityUseCase(repository: repository),
+        getKeptMembers: GetKeptMembersUseCase(repository: repository),
+        getKeptCodes: GetKeptInvitationCodesUseCase(repository: repository),
+      );
+
+      await viewModel.load();
+      expect(viewModel.state.failure, isNull);
+      expect(viewModel.state.members, [_teodoro]);
+      expect(viewModel.state.availableCodes, hasLength(1));
+      expect(viewModel.state.savedAt, DateTime(2026, 11, 10, 18, 5));
+
+      repository.keptMembersAnswer = null;
+      await viewModel.load();
+      expect(viewModel.state.failure, isA<CooperativeOffline>());
+      await viewModel.close();
+    });
+
+    testWidgets('a roster kept without a connection says so', (tester) async {
+      tester.view.physicalSize = const Size(1080, 4000);
+      tester.view.devicePixelRatio = 2.5;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(_app(MembersPageContent(
+        state: MembersUiState(loading: false, capacity: _capacity, members: [_teodoro], savedAt: DateTime(2026, 11, 10, 18, 10)),
+        header: const SizedBox.shrink(),
+        onRetry: () {},
+        onSearch: (_) {},
+        onFilter: (_) {},
+        onOpenMember: (_) {},
+        onOpenCodes: () {},
+        onIssueCodes: (_) {},
+      )));
+
+      expect(find.textContaining('Sin conexión · socios'), findsOneWidget);
     });
 
     test('the chips and the search narrow the roster, by name or sector', () {

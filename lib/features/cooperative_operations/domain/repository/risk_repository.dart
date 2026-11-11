@@ -13,6 +13,9 @@ abstract class RiskRepository {
 
   Future<RiskPlotDetail> plot(String id);
 
+  /// The last [plot] read of [id], for its screen without a connection.
+  Future<Kept<RiskPlotDetail>?> keptPlot(String id);
+
   /// Whether any sector of the license has an active alert.
   Future<bool> hasActiveAlerts();
 

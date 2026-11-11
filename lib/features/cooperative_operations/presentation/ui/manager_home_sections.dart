@@ -18,6 +18,7 @@ import 'package:viora/features/cooperative_operations/domain/entity/intake_forec
 import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_plot.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/risk_territory.dart';
+import 'package:viora/features/cooperative_operations/presentation/cooperative_formats.dart';
 import 'package:viora/features/cooperative_operations/presentation/state/manager_home_ui_state.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/widgets/cooperative_widgets.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/widgets/risk_widgets.dart';
@@ -174,6 +175,21 @@ class ManagerHomeSummaryContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (state.savedAt != null) ...[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: OfflinePill(
+              text: formatOffline(
+                l10n,
+                l10n.offlineWhatState,
+                state.savedAt!,
+                DateTime.now(),
+                Localizations.localeOf(context).toLanguageTag(),
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+        ],
         _ValleyCard(valley: territory.valley, onOpenRisk: onOpenRisk),
         const SizedBox(height: 28),
         VioraSectionHeader(

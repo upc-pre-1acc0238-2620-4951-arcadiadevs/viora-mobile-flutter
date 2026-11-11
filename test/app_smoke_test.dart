@@ -10,7 +10,6 @@ import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart';
 import 'package:viora/features/subscription/domain/entity/manager_license.dart';
 import 'package:viora/features/subscription/domain/repository/license_repository.dart';
-import 'package:viora/features/subscription/presentation/viewmodel/producer_plan_view_model.dart';
 import 'package:viora/main.dart';
 
 /// A manager whose kept license is in force, so the license check opens the Home.
@@ -54,10 +53,6 @@ void main() {
     expect(getIt<HomeViewModel>(), isNot(same(getIt<HomeViewModel>())));
     // Only checks the registration: creating it would open the real database.
     expect(getIt.isRegistered<AppDatabase>(), isTrue);
-  });
-
-  test('get_it provides the ViewModel of the producer plan screen', () {
-    expect(getIt<ProducerPlanViewModel>(), isNot(same(getIt<ProducerPlanViewModel>())));
   });
 
   testWidgets('the app keeps its own style for the system bars', (tester) async {
