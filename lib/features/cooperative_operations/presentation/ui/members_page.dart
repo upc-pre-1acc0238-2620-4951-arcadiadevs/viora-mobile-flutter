@@ -33,6 +33,7 @@ class MembersPage extends StatelessWidget {
     required this.onOpenCodes,
     required this.onIssued,
     this.onOpenSectors = _noop,
+    this.initialFilter = MembersFilter.all,
   });
 
   final Widget header;
@@ -47,10 +48,15 @@ class MembersPage extends StatelessWidget {
   /// Opens G45 · Sectores; the page reloads when the manager comes back.
   final Future<void> Function() onOpenSectors;
 
+  /// The chip selected when the page opens.
+  final MembersFilter initialFilter;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<MembersViewModel>()..load(),
+      create: (context) => getIt<MembersViewModel>()
+        ..filter(initialFilter)
+        ..load(),
       child: BlocBuilder<MembersViewModel, MembersUiState>(
         builder: (context, state) {
           final viewModel = context.read<MembersViewModel>();
@@ -522,6 +528,9 @@ class _FilterChips extends StatelessWidget {
       MembersFilter.all: l10n.membersFilterAll(state.members.length),
       MembersFilter.sharing: l10n.membersFilterSharing(state.sharingCount),
       MembersFilter.withdrawn: l10n.membersFilterWithdrawn(state.withdrawnCount),
+      // Only while someone is missing a sampling, or the intake asked for it.
+      if (state.unsampledCount > 0 || state.filter == MembersFilter.unsampled)
+        MembersFilter.unsampled: l10n.membersFilterUnsampled(state.unsampledCount),
     };
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
