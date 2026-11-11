@@ -34,7 +34,6 @@ import 'package:viora/features/profiles/presentation/ui/change_password_page.dar
 import 'package:viora/features/profiles/presentation/ui/edit_profile_page.dart';
 import 'package:viora/features/subscription/presentation/ui/license_activation_page.dart';
 import 'package:viora/features/subscription/presentation/ui/license_gate_page.dart';
-import 'package:viora/features/subscription/presentation/ui/producer_plan_page.dart';
 import 'package:viora/features/subscription/presentation/ui/widgets/license_guard.dart';
 import 'package:viora/features/subscription/presentation/ui/widgets/license_status_widgets.dart';
 
@@ -76,7 +75,6 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) => const NoTransitionPage(child: LicenseGatePage()),
     ),
     GoRoute(path: LicenseActivationPage.path, builder: (context, state) => const LicenseActivationPage()),
-    GoRoute(path: ProducerPlanPage.path, builder: (context, state) => const ProducerPlanPage()),
     GoRoute(
       path: AccountPage.path,
       builder: (context, state) => const AccountPage(
