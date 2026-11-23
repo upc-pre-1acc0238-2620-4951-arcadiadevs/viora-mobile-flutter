@@ -73,18 +73,14 @@ class IssuedCodesPage extends StatelessWidget {
                   ),
                   for (final code in issued.codes) ...[
                     const Divider(height: Spacing.lg, color: VioraColors.neutral200),
+                    // The code gets the whole width; sharing it and copying it go on the row below.
+                    CodeText(code),
                     Row(
                       children: [
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CodeText(code),
-                              Text(
-                                l10n.codesPerCode(formatHectares(issued.hectaresPerCode, locale)),
-                                style: textTheme.bodySmall?.copyWith(color: VioraColors.neutral600),
-                              ),
-                            ],
+                          child: Text(
+                            l10n.codesPerCode(formatHectares(issued.hectaresPerCode, locale)),
+                            style: textTheme.bodySmall?.copyWith(color: VioraColors.neutral600),
                           ),
                         ),
                         ShareCodeButton(
@@ -96,7 +92,14 @@ class IssuedCodesPage extends StatelessWidget {
                             expiresAt: issued.expiresAt,
                           ),
                         ),
-                        VioraTextButton(label: l10n.issuedCopy, onPressed: () => copyCode(context, code)),
+                        // A full-width text button here would take the whole row and squeeze the code.
+                        TextButton(
+                          onPressed: () => copyCode(context, code),
+                          child: Text(
+                            l10n.issuedCopy,
+                            style: textTheme.labelLarge?.copyWith(color: VioraColors.green800),
+                          ),
+                        ),
                       ],
                     ),
                   ],

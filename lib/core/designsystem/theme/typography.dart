@@ -7,6 +7,12 @@ abstract final class VioraFonts {
 
   /// Interface font for all functional text (Title, Body and Label).
   static const roboto = 'Roboto';
+
+  /// Fixed-width font of the platform, for codes read aloud or copied by hand: every character keeps its place.
+  static const monospace = 'monospace';
+
+  /// Where the platform has no font called [monospace] (iOS).
+  static const monospaceFallback = ['Menlo', 'Courier'];
 }
 
 // Both fonts are variable: the weight is applied as a variation of the `wght` axis.
