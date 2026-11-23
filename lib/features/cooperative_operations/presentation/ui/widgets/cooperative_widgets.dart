@@ -195,7 +195,8 @@ class CooperativeActionPill extends StatelessWidget {
   }
 }
 
-/// A code written as the design does, wide and spaced: "COOP-4F9T".
+/// A code as it is dictated or copied by hand: "COOP-4F9T", whole on one line in a fixed-width font. On a narrow
+/// screen or with large text it shrinks instead of breaking, so no character ever lands on another line.
 class CodeText extends StatelessWidget {
   const CodeText(this.code, {super.key, this.color = VioraColors.neutral900});
 
@@ -203,13 +204,21 @@ class CodeText extends StatelessWidget {
   final Color color;
 
   @override
-  Widget build(BuildContext context) => Text(
-        code,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: 17,
-              letterSpacing: 1.6,
-              color: color,
-            ),
+  Widget build(BuildContext context) => FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: AlignmentDirectional.centerStart,
+        child: Text(
+          code,
+          maxLines: 1,
+          softWrap: false,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontFamily: VioraFonts.monospace,
+                fontFamilyFallback: VioraFonts.monospaceFallback,
+                fontSize: 17,
+                letterSpacing: 1.2,
+                color: color,
+              ),
+        ),
       );
 }
 

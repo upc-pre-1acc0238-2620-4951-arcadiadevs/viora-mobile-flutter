@@ -21,6 +21,7 @@ import 'package:viora/features/cooperative_operations/domain/valueobject/kept.da
 import 'package:viora/features/cooperative_operations/infrastructure/remote/intake_forecast_dto.dart';
 import 'package:viora/features/cooperative_operations/presentation/state/manager_home_ui_state.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/manager_home_sections.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/widgets/risk_widgets.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_home_view_model.dart';
 
 const _overload = PlotRiskReason(type: RiskReason.overload, value: 43);
@@ -406,9 +407,11 @@ void main() {
       expect(find.text('Cobertura 62 %'), findsOneWidget);
       expect(find.text('alertas de helada\n≤ 1,5 °C en 48 h'), findsOneWidget);
       expect(find.text('48 / 60'), findsOneWidget);
-      expect(find.text('Teodoro Mamani'), findsOneWidget);
+      expect(find.text('Socio: Teodoro Mamani'), findsOneWidget);
+      // Each level of the valley's legend has its icon, not only its color
+      expect(find.byType(RiskBadge), findsNWidgets(4));
       expect(find.text('Lote 1 · La Yarada Baja'), findsOneWidget);
-      expect(find.text('Julio Quispe'), findsOneWidget);
+      expect(find.text('Socio: Julio Quispe'), findsOneWidget);
       expect(find.text('Ángel Choque'), findsNothing);
     });
 
@@ -424,7 +427,7 @@ void main() {
       await tester.tap(find.text('48 / 60'));
       await tester.tap(find.text('alertas de helada\n≤ 1,5 °C en 48 h'));
       await tester.tap(find.text('Ver todas'));
-      await tester.tap(find.text('Teodoro Mamani'));
+      await tester.tap(find.text('Socio: Teodoro Mamani'));
 
       expect(opened, ['risk', 'intake', 'members', 'alerts', 'visits', 'plot 1']);
     });

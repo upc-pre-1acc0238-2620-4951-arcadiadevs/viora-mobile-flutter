@@ -68,3 +68,13 @@ class SectorNameInvalid extends CooperativeFailure {
 class SectorAlreadyResolved extends CooperativeFailure {
   const SectorAlreadyResolved();
 }
+
+/// The caliber ranges were refused: [rangeIndex] is the one in conflict, from 0, and [reason] why (it overlaps the
+/// previous one, leaves a gap, is inverted, off the scale or incomplete). The ranges in force stay.
+class CaliberRangeConflict extends CooperativeFailure {
+  const CaliberRangeConflict({required this.reason, this.rangeIndex});
+
+  final String reason;
+  final int? rangeIndex;
+}
+

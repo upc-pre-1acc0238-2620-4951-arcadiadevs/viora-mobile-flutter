@@ -2180,6 +2180,24 @@ abstract class AppLocalizations {
   /// **'No sector'**
   String get riskUnassignedTitle;
 
+  /// No description provided for @riskMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member: {name}'**
+  String riskMember(Object name);
+
+  /// No description provided for @riskMemberWithCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Member: {name} · {code}'**
+  String riskMemberWithCode(String name, String code);
+
+  /// No description provided for @riskMemberIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'Member: {name} · Code: {code}'**
+  String riskMemberIdentity(String name, String code);
+
   /// No description provided for @riskReview.
   ///
   /// In en, this message translates to:
@@ -3320,6 +3338,90 @@ abstract class AppLocalizations {
   /// **'Enough coverage'**
   String get intakeTagSufficient;
 
+  /// No description provided for @intakeTagConfidenceLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low confidence'**
+  String get intakeTagConfidenceLow;
+
+  /// No description provided for @intakeTagConfidenceMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium confidence'**
+  String get intakeTagConfidenceMedium;
+
+  /// No description provided for @intakeTagConfidenceHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High confidence'**
+  String get intakeTagConfidenceHigh;
+
+  /// No description provided for @intakeConfidenceMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'medium'**
+  String get intakeConfidenceMedium;
+
+  /// No description provided for @intakeConfidenceHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'high'**
+  String get intakeConfidenceHigh;
+
+  /// No description provided for @intakePendingForConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'{plots, plural, =0{0 plots} =1{1 plot} other{{plots} plots}} and {hectares} ha left to sample for {level} confidence.'**
+  String intakePendingForConfidence(String level, int plots, String hectares);
+
+  /// No description provided for @intakeByCaliber.
+  ///
+  /// In en, this message translates to:
+  /// **'By caliber'**
+  String get intakeByCaliber;
+
+  /// No description provided for @intakeEstimablePlots.
+  ///
+  /// In en, this message translates to:
+  /// **'{estimable} of {plots} plots are estimable.'**
+  String intakeEstimablePlots(int estimable, int plots);
+
+  /// No description provided for @intakeCaliberRange.
+  ///
+  /// In en, this message translates to:
+  /// **'{min}–{max} fruits/kg'**
+  String intakeCaliberRange(int min, int max);
+
+  /// No description provided for @intakeUnsized.
+  ///
+  /// In en, this message translates to:
+  /// **'No caliber'**
+  String get intakeUnsized;
+
+  /// No description provided for @intakeOutOfRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of range'**
+  String get intakeOutOfRange;
+
+  /// No description provided for @intakeCaliberEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit ranges'**
+  String get intakeCaliberEdit;
+
+  /// No description provided for @intakeCaliberSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your plant\'s caliber ranges to see the projection by caliber.'**
+  String get intakeCaliberSetup;
+
+  /// No description provided for @intakeCaliberSetupAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Set caliber ranges'**
+  String get intakeCaliberSetupAction;
+
   /// No description provided for @intakeTagPreliminary.
   ///
   /// In en, this message translates to:
@@ -3595,6 +3697,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'saved {when}'**
   String riskSavedAt(String when);
+
+  /// No description provided for @caliberRangesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Caliber ranges'**
+  String get caliberRangesTitle;
+
+  /// No description provided for @caliberRangesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your organization\'s plant'**
+  String get caliberRangesSubtitle;
+
+  /// No description provided for @caliberRangesVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'The calibers your plant takes olives in.'**
+  String get caliberRangesVoice;
+
+  /// No description provided for @caliberRangesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'From the biggest fruit to the smallest: each range starts right after the previous one.'**
+  String get caliberRangesHint;
+
+  /// No description provided for @caliberRangesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No ranges yet: the projection shows green and black olives only.'**
+  String get caliberRangesEmpty;
+
+  /// No description provided for @caliberRangeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Range {position}'**
+  String caliberRangeLabel(int position);
+
+  /// No description provided for @caliberRangeFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From (fruits/kg)'**
+  String get caliberRangeFrom;
+
+  /// No description provided for @caliberRangeTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To (fruits/kg)'**
+  String get caliberRangeTo;
+
+  /// No description provided for @caliberRangeRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove range'**
+  String get caliberRangeRemove;
+
+  /// No description provided for @caliberRangesAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add range'**
+  String get caliberRangesAdd;
+
+  /// No description provided for @caliberRangesSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save ranges'**
+  String get caliberRangesSave;
+
+  /// No description provided for @caliberRangeIncomplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in both ends with whole numbers.'**
+  String get caliberRangeIncomplete;
+
+  /// No description provided for @caliberRangeOverlapping.
+  ///
+  /// In en, this message translates to:
+  /// **'It overlaps the previous range.'**
+  String get caliberRangeOverlapping;
+
+  /// No description provided for @caliberRangeGap.
+  ///
+  /// In en, this message translates to:
+  /// **'It must start right after the previous range.'**
+  String get caliberRangeGap;
+
+  /// No description provided for @caliberRangeInverted.
+  ///
+  /// In en, this message translates to:
+  /// **'The start cannot be above the end.'**
+  String get caliberRangeInverted;
+
+  /// No description provided for @caliberRangeOffScale.
+  ///
+  /// In en, this message translates to:
+  /// **'Use values between 60 and 2000 fruits per kilogram.'**
+  String get caliberRangeOffScale;
+
+  /// No description provided for @caliberRangesTooMany.
+  ///
+  /// In en, this message translates to:
+  /// **'You can set up to 20 ranges.'**
+  String get caliberRangesTooMany;
+
+  /// No description provided for @caliberRangeInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Check this range.'**
+  String get caliberRangeInvalid;
 }
 
 class _AppLocalizationsDelegate

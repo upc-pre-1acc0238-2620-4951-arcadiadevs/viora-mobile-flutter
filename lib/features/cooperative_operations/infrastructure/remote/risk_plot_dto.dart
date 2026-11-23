@@ -61,6 +61,7 @@ class RiskPlotDto {
       id: json['plotId'] as String,
       name: json['plotName'] as String? ?? '',
       producerName: json['producerName'] as String? ?? '',
+      memberCode: json['memberCode'] as String?,
       areaHa: _number(json['areaHa']),
       center: latitude == null || longitude == null ? null : GeoCoordinate(longitude, latitude),
       outline: parseOutline(json['geoJson'] as String?),
@@ -89,6 +90,7 @@ class RiskPlotDetailDto {
         id: json['plotId'] as String,
         name: json['plotName'] as String? ?? '',
         producerName: json['producerName'] as String? ?? '',
+        memberCode: json['memberCode'] as String?,
         producerPhone: json['producerPhone'] as String?,
         areaHa: _number(json['areaHa']),
         // A sector the manager hasn't confirmed yet doesn't count as the plot's sector.

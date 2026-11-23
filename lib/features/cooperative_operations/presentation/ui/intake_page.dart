@@ -26,12 +26,20 @@ import 'package:viora/features/cooperative_operations/presentation/viewmodel/int
 /// G30 · Acopio, the root of the intake tab: the tons the members should deliver in a campaign,
 /// green and black, how much of it was sampled and how it splits by sector.
 class IntakePage extends StatelessWidget {
-  const IntakePage({super.key, required this.onOpenAlerts, required this.onOpenMembers});
+  const IntakePage({
+    super.key,
+    required this.onOpenAlerts,
+    required this.onOpenMembers,
+    required this.onOpenCaliberRanges,
+  });
 
   final VoidCallback onOpenAlerts;
 
   /// «Ver socios sin muestreo» of G30 · Sin datos para proyectar.
   final VoidCallback onOpenMembers;
+
+  /// The caliber ranges of the plant; the projection is read again when the manager comes back.
+  final Future<void> Function() onOpenCaliberRanges;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +58,10 @@ class IntakePage extends StatelessWidget {
             },
             onOpenAlerts: onOpenAlerts,
             onOpenMembers: onOpenMembers,
+            onOpenCaliberRanges: () async {
+              await onOpenCaliberRanges();
+              await viewModel.load();
+            },
           );
         },
       ),
@@ -67,8 +79,11 @@ class IntakePageContent extends StatelessWidget {
     required this.onChooseCampaign,
     required this.onOpenAlerts,
     required this.onOpenMembers,
+    this.onOpenCaliberRanges = _noop,
     this.now,
   });
+
+  static void _noop() {}
 
   final IntakeUiState state;
   final VoidCallback onRetry;
@@ -76,6 +91,7 @@ class IntakePageContent extends StatelessWidget {
   final VoidCallback onChooseCampaign;
   final VoidCallback onOpenAlerts;
   final VoidCallback onOpenMembers;
+  final VoidCallback onOpenCaliberRanges;
 
   /// The clock for «hoy» in the offline pill; the phone's by default.
   final DateTime? now;
@@ -170,6 +186,22 @@ class IntakePageContent extends StatelessWidget {
         VioraSectionHeader(title: l10n.intakeBySector, count: sectors.length),
         const SizedBox(height: Spacing.xs),
         _SectorsCard(forecast: forecast),
+      ],
+      // The caliber split is for the campaign in progress; a past one has only the intake settled.
+      if (!settled && forecast.hasFigure) ...[
+        const SizedBox(height: 38),
+        if (forecast.caliberBreakdown.isEmpty)
+          _CaliberSetupCard(onSetUp: onOpenCaliberRanges)
+        else ...[
+          VioraSectionHeader(
+            title: l10n.intakeByCaliber,
+            count: forecast.caliberBreakdown.length,
+            actionLabel: l10n.intakeCaliberEdit,
+            onAction: onOpenCaliberRanges,
+          ),
+          const SizedBox(height: Spacing.xs),
+          _CaliberCard(forecast: forecast),
+        ],
       ],
     ];
   }
@@ -282,7 +314,7 @@ class _TotalCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: Spacing.xs),
-              _StatusPill(status: forecast.status),
+              _StatusPill(forecast: forecast),
             ],
           ),
           const SizedBox(height: 14),
@@ -381,18 +413,25 @@ class _TotalCard extends StatelessWidget {
 
 /// «Cobertura suficiente», «Preliminar», «Cerrada» or «Parcial».
 class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.status});
+  const _StatusPill({required this.forecast});
 
-  final IntakeStatus status;
+  final IntakeForecast forecast;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final preliminary = status == IntakeStatus.preliminary;
-    final (label, icon) = switch (status) {
-      IntakeStatus.preliminary => (l10n.intakeTagPreliminary, VioraIcons.warning),
-      IntakeStatus.closed => (l10n.intakeTagClosed, VioraIcons.check),
-      IntakeStatus.partial => (l10n.intakeTagPartial, VioraIcons.schedule),
+    final status = forecast.status;
+    final confidence = forecast.kind == IntakeKind.projection ? forecast.confidence : null;
+    // A projection is graded by its confidence; a server that does not grade it keeps the old tags.
+    final preliminary =
+        confidence == IntakeConfidence.low || (confidence == null && status == IntakeStatus.preliminary);
+    final (label, icon) = switch ((confidence, status)) {
+      (IntakeConfidence.low, _) => (l10n.intakeTagConfidenceLow, VioraIcons.warning),
+      (IntakeConfidence.medium, _) => (l10n.intakeTagConfidenceMedium, VioraIcons.schedule),
+      (IntakeConfidence.high, _) => (l10n.intakeTagConfidenceHigh, VioraIcons.check),
+      (_, IntakeStatus.preliminary) => (l10n.intakeTagPreliminary, VioraIcons.warning),
+      (_, IntakeStatus.closed) => (l10n.intakeTagClosed, VioraIcons.check),
+      (_, IntakeStatus.partial) => (l10n.intakeTagPartial, VioraIcons.schedule),
       _ => (l10n.intakeTagSufficient, VioraIcons.check),
     };
     final foreground = preliminary ? VioraColors.neutral0 : VioraColors.green900;
@@ -495,17 +534,25 @@ class _CoverageCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     final settled = forecast.kind == IntakeKind.settled;
-    final preliminary = forecast.status == IntakeStatus.preliminary;
+    // A graded projection speaks of confidence only: the old preliminary threshold would contradict its tag.
+    final graded = !settled && forecast.confidence != null;
+    final preliminary =
+        graded ? forecast.confidence == IntakeConfidence.low : forecast.status == IntakeStatus.preliminary;
     final threshold = forecast.preliminaryThresholdPercent.round();
+    final locale = Localizations.localeOf(context).toLanguageTag();
     final accent = preliminary ? VioraColors.terracotta700 : VioraColors.green900;
     final String body;
     if (settled) {
       body = l10n.intakeCoverageSettled(forecast.sampledPlots, forecast.plots, '${forecast.campaignYear}');
+    } else if (graded) {
+      body = [l10n.intakeEstimablePlots(forecast.estimablePlots, forecast.plots), ?_pending(l10n, forecast, locale)]
+          .join(' ');
     } else if (preliminary) {
       body = '${l10n.intakeCoveragePreliminary(forecast.estimablePlots, forecast.plots, threshold)} '
-          '${l10n.intakeMissingPlots(forecast.plotsToThreshold)}';
+          '${_pending(l10n, forecast, locale) ?? l10n.intakeMissingPlots(forecast.plotsToThreshold)}';
     } else {
-      body = l10n.intakeCoverageSufficient(forecast.estimablePlots, forecast.plots, threshold);
+      final pending = _pending(l10n, forecast, locale);
+      body = [l10n.intakeCoverageSufficient(forecast.estimablePlots, forecast.plots, threshold), ?pending].join(' ');
     }
     return VioraCard(
       padding: const EdgeInsets.fromLTRB(22, 20, 22, 20),
@@ -546,9 +593,9 @@ class _CoverageCard extends StatelessWidget {
           _CoverageBar(
             percent: forecast.coveragePercent,
             color: preliminary ? VioraColors.terracotta500 : VioraColors.green800,
-            threshold: settled ? null : forecast.preliminaryThresholdPercent,
+            threshold: settled || graded ? null : forecast.preliminaryThresholdPercent,
           ),
-          if (!settled) ...[
+          if (!settled && !graded) ...[
             const SizedBox(height: 6),
             Align(
               // The label sits under the mark, centered on it.
@@ -565,6 +612,17 @@ class _CoverageCard extends StatelessWidget {
       ),
     );
   }
+}
+
+/// «Para confianza alta faltan 4 parcelas y 6,5 ha.»; null once high, settled, or when the server does not grade it.
+String? _pending(AppLocalizations l10n, IntakeForecast forecast, String locale) {
+  final confidence = forecast.confidence;
+  if (forecast.kind != IntakeKind.projection || confidence == null || confidence == IntakeConfidence.high) return null;
+  final plots = forecast.pendingPlots ?? 0;
+  final hectares = forecast.pendingHectares ?? 0;
+  if (plots == 0 && hectares == 0) return null;
+  final next = confidence == IntakeConfidence.low ? l10n.intakeConfidenceMedium : l10n.intakeConfidenceHigh;
+  return l10n.intakePendingForConfidence(next, plots, formatOneDecimal(hectares, locale));
 }
 
 /// The 12-tall track with its fill and, for a projection, the mark of the threshold.
@@ -759,6 +817,120 @@ class _SectorRow extends StatelessWidget {
 }
 
 /// G30 · Sin datos para proyectar: no figure without sampling, and never a zero.
+/// «Por calibre»: the projected tons of each caliber range of the plant, green and black, and apart the plots whose
+/// producer weighed no fruits or whose caliber falls outside every range.
+class _CaliberCard extends StatelessWidget {
+  const _CaliberCard({required this.forecast});
+
+  final IntakeForecast forecast;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final ranges = forecast.caliberBreakdown;
+    final unsized = forecast.unsizedTons ?? 0;
+    final outOfRange = forecast.outOfRangeTons ?? 0;
+    final rows = <Widget>[
+      for (final range in ranges)
+        _CaliberRow(
+          label: l10n.intakeCaliberRange(range.minFruitsPerKg, range.maxFruitsPerKg),
+          tons: range.tons,
+          segments: [
+            VioraBarSegment(value: range.greenTons, color: VioraColors.green800),
+            VioraBarSegment(value: range.blackTons, color: VioraColors.neutral900),
+            VioraBarSegment(value: range.unclassifiedTons, color: VioraColors.neutral500),
+          ],
+        ),
+      _CaliberRow(label: l10n.intakeUnsized, tons: unsized, segments: const []),
+      if (outOfRange > 0) _CaliberRow(label: l10n.intakeOutOfRange, tons: outOfRange, segments: const []),
+    ];
+    return VioraCard(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      child: Column(
+        children: [
+          for (var i = 0; i < rows.length; i++) ...[
+            if (i > 0) const Divider(height: 1, color: VioraColors.neutral200),
+            rows[i],
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _CaliberRow extends StatelessWidget {
+  const _CaliberRow({required this.label, required this.tons, required this.segments});
+
+  final String label;
+  final double tons;
+
+  /// Green, black and unclassified; empty for the rows outside the ranges.
+  final List<VioraBarSegment> segments;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final textTheme = Theme.of(context).textTheme;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 14, 0, 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(label, style: textTheme.titleMedium?.copyWith(letterSpacing: 0, fontSize: 15)),
+              ),
+              const SizedBox(width: Spacing.sm),
+              Text(
+                l10n.homeTons(formatTons(tons, locale)),
+                style: const TextStyle(fontFamily: VioraFonts.newsreader, fontSize: 22, height: 26 / 22),
+              ),
+            ],
+          ),
+          if (segments.any((segment) => segment.value > 0)) ...[
+            const SizedBox(height: Spacing.xs),
+            VioraSegmentedBar(height: 8, gap: 3, segments: segments),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Without caliber ranges the projection has only green and black; the plant's ranges are set from here.
+class _CaliberSetupCard extends StatelessWidget {
+  const _CaliberSetupCard({required this.onSetUp});
+
+  final VoidCallback onSetUp;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return VioraCard(
+      padding: const EdgeInsets.fromLTRB(22, 20, 22, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.intakeByCaliber, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: Spacing.xs),
+          Text(
+            l10n.intakeCaliberSetup,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: VioraColors.neutral700),
+          ),
+          const SizedBox(height: Spacing.md),
+          CooperativeActionPill(
+            label: l10n.intakeCaliberSetupAction,
+            iconAsset: VioraIcons.arrowForward,
+            onPressed: onSetUp,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _NoDataCard extends StatelessWidget {
   const _NoDataCard({required this.forecast});
 

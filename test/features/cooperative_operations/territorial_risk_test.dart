@@ -23,6 +23,7 @@ import 'package:viora/features/cooperative_operations/presentation/state/sector_
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/risk_plot_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/sector_detail_page.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/widgets/risk_widgets.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_map_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/risk_plot_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/sector_detail_view_model.dart';
@@ -43,6 +44,7 @@ RiskPlot _plot(
   String? sectorName = 'La Yarada Baja',
   SectorPlacement placement = SectorPlacement.assigned,
   String producer = 'Teodoro Mamani',
+  String? memberCode,
   double? distanceKm,
   List<PlotRiskReason> reasons = const [],
   List<GeoCoordinate> outline = _square,
@@ -53,6 +55,7 @@ RiskPlot _plot(
       id: id,
       name: 'Lote $id',
       producerName: producer,
+      memberCode: memberCode,
       areaHa: 2.5,
       center: outline.isEmpty ? null : outline.first,
       outline: outline,
@@ -79,11 +82,13 @@ RiskPlotDetail _detail({
   String? phone = '+51952184337',
   String? sectorName = 'La Yarada Baja',
   SectorPlacement placement = SectorPlacement.assigned,
+  String? memberCode,
 }) =>
     RiskPlotDetail(
       id: 'p1',
       name: 'La Yarada 02',
       producerName: 'Teodoro Mamani',
+      memberCode: memberCode,
       producerPhone: phone,
       areaHa: 2.5,
       sectorName: sectorName,
@@ -263,6 +268,14 @@ void main() {
       expect(plot.center, isNull);
       expect(plot.risk, PlotRisk.noData);
       expect(plot.placement, SectorPlacement.none);
+      expect(plot.memberCode, isNull);
+    });
+
+    test('a plot and its detail read the member code the same way', () {
+      const json = {'plotId': 'p1', 'producerName': 'Teodoro Mamani', 'memberCode': 'COOP-••2Q'};
+
+      expect(RiskPlotDto.fromJson(json).toDomain().memberCode, 'COOP-••2Q');
+      expect(RiskPlotDetailDto.fromJson(json).toDomain().memberCode, 'COOP-••2Q');
     });
   });
 
@@ -729,7 +742,7 @@ void main() {
 
       expect(tester.takeException(), isNull);
       expect(find.text('Lote a'), findsOneWidget);
-      expect(find.text('Teodoro Mamani · La Yarada Baja · 2,5 ha'), findsOneWidget);
+      expect(find.text('Socio: Teodoro Mamani · La Yarada Baja · 2,5 ha'), findsOneWidget);
       expect(find.text('43 %'), findsOneWidget);
       expect(find.text('30 %'), findsOneWidget);
       expect(find.text('12'), findsOneWidget);
@@ -846,10 +859,12 @@ void main() {
       expect(find.text('Sobrecarga 43 %'), findsOneWidget);
       expect(find.text('Helada 1,2 °C · 9 nov'), findsOneWidget);
       expect(find.text('Teodoro y Rosa están a menos de 1,5 km: puedes verlos en una sola salida.'), findsOneWidget);
+      // Each level of the sector's legend has its icon, not only its color
+      expect(find.byType(RiskBadge), findsNWidgets(4));
       expect(find.text('Resto del sector'), findsOneWidget);
       expect(find.text('Sin datos suficientes'), findsOneWidget);
 
-      await tester.tap(find.text('Teodoro Mamani'));
+      await tester.tap(find.text('Socio: Teodoro Mamani'));
       expect(opened, 'a');
     });
 
@@ -862,7 +877,7 @@ void main() {
       ));
       await tester.tap(find.text('Sin datos suficientes'));
       expect(toggled, PlotRisk.noData);
-      expect(find.text('Luis Ccama'), findsNothing);
+      expect(find.text('Socio: Luis Ccama'), findsNothing);
 
       await tester.pumpWidget(page(SectorDetailUiState(
         loading: false,
@@ -872,7 +887,7 @@ void main() {
         expanded: const {PlotRisk.noData},
       )));
       await tester.pumpAndSettle();
-      expect(find.text('Luis Ccama'), findsOneWidget);
+      expect(find.text('Socio: Luis Ccama'), findsOneWidget);
     });
 
     testWidgets('a sector without plots says so', (tester) async {
@@ -945,6 +960,41 @@ void main() {
       expect(find.text('Óptimo'), findsNothing);
       expect(find.text('Quedan 12 días'), findsNothing);
       expect(find.textContaining('Escríbele a Teodoro'), findsOneWidget);
+    });
+
+    testWidgets('the member and their code are labelled before the visit', (tester) async {
+      _phone(tester, height: 1600);
+      await tester.pumpWidget(page(_detail(memberCode: 'COOP-••2Q')));
+      await tester.pumpAndSettle();
+      expect(find.text('Socio: Teodoro Mamani · Código: COOP-••2Q'), findsOneWidget);
+
+      await tester.pumpWidget(page(_detail()));
+      await tester.pumpAndSettle();
+      expect(find.text('Socio: Teodoro Mamani'), findsOneWidget);
+    });
+
+    testWidgets('each level of the legend has its icon and keeps a readable size on a narrow screen', (tester) async {
+      tester.view.physicalSize = const Size(320, 800);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(_app(Scaffold(
+        body: RiskCountsStrip(group: RiskGroup([_plot('a', risk: PlotRisk.critical), _plot('b')])),
+      )));
+
+      expect(tester.takeException(), isNull);
+      expect(find.byType(RiskBadge), findsNWidgets(4));
+      // The text is never shrunk to fit: the strip wraps instead.
+      expect(find.ancestor(of: find.text('críticas'), matching: find.byType(FittedBox)), findsNothing);
+      final label = tester.widget<Text>(find.text('críticas'));
+      expect(label.style!.fontSize, greaterThanOrEqualTo(14));
+    });
+
+    testWidgets('a visit row names the member with their code', (tester) async {
+      _phone(tester);
+      await tester.pumpWidget(_app(Scaffold(
+        body: RiskVisitRow(position: 1, plot: _plot('a', memberCode: 'COOP-••2Q'), subtitle: 'Lote a', onTap: () {}),
+      )));
+      expect(find.text('Socio: Teodoro Mamani · COOP-••2Q'), findsOneWidget);
     });
 
     testWidgets('the heading tells a sector to confirm from no sector, as the map does', (tester) async {

@@ -107,7 +107,8 @@ class DashedPill extends StatelessWidget {
       );
 }
 
-/// «9 críticas · 14 moderadas · 31 óptimas · 6 sin datos».
+/// «9 críticas · 14 moderadas · 31 óptimas · 6 sin datos». Each level has its own icon besides its color, so none is
+/// told apart by color alone, and the text keeps its size outdoors: the strip wraps instead of shrinking.
 class RiskCountsStrip extends StatelessWidget {
   const RiskCountsStrip({super.key, required this.group, this.background = VioraColors.neutral0});
 
@@ -118,21 +119,22 @@ class RiskCountsStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return DecoratedBox(
-      decoration: ShapeDecoration(color: background, shape: const StadiumBorder()),
+      decoration: ShapeDecoration(
+        color: background,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 14,
-            children: [
-              _Count(risk: PlotRisk.critical, value: group.critical, label: l10n.riskCountCritical),
-              _Count(risk: PlotRisk.moderate, value: group.moderate, label: l10n.riskCountModerate),
-              _Count(risk: PlotRisk.optimal, value: group.optimal, label: l10n.riskCountOptimal),
-              _Count(risk: PlotRisk.noData, value: group.noData, label: l10n.riskCountNoData),
-            ],
-          ),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        child: Wrap(
+          spacing: 14,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            _Count(risk: PlotRisk.critical, value: group.critical, label: l10n.riskCountCritical),
+            _Count(risk: PlotRisk.moderate, value: group.moderate, label: l10n.riskCountModerate),
+            _Count(risk: PlotRisk.optimal, value: group.optimal, label: l10n.riskCountOptimal),
+            _Count(risk: PlotRisk.noData, value: group.noData, label: l10n.riskCountNoData),
+          ],
         ),
       ),
     );
@@ -148,16 +150,51 @@ class _Count extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).textTheme.bodySmall?.copyWith(color: VioraColors.neutral900);
+    final style = Theme.of(context).textTheme.bodyMedium?.copyWith(color: VioraColors.neutral900);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        RiskDot(risk: risk),
+        RiskBadge(risk: risk),
         const SizedBox(width: 6),
         Text('$value', style: style?.copyWith(fontWeight: FontWeight.w600, fontVariations: const [FontVariation.weight(600)])),
         const SizedBox(width: 4),
         Text(label, style: style),
       ],
+    );
+  }
+}
+
+/// The color of a level with its icon on it: a warning when critical, an eye to watch, a check when optimal and an
+/// «i» without data. On a card of its own color, [color] replaces the level's, and the icon turns light or dark to
+/// stay readable on it.
+class RiskBadge extends StatelessWidget {
+  const RiskBadge({super.key, required this.risk, this.size = 22, this.color});
+
+  final PlotRisk risk;
+  final double size;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    final (icon, levelForeground) = switch (risk) {
+      PlotRisk.critical => (VioraIcons.warning, VioraColors.neutral0),
+      // Yellow is too light for a white icon.
+      PlotRisk.moderate => (VioraIcons.visibility, VioraColors.neutral900),
+      PlotRisk.optimal => (VioraIcons.check, VioraColors.neutral0),
+      PlotRisk.noData => (VioraIcons.info, VioraColors.neutral0),
+    };
+    final background = color ?? riskColor(risk);
+    final foreground = color == null
+        ? levelForeground
+        : background.computeLuminance() > 0.45
+            ? VioraColors.neutral900
+            : VioraColors.neutral0;
+    return SizedBox.square(
+      dimension: size,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(color: background, shape: const CircleBorder()),
+        child: Center(child: VioraIcon(icon, size: size * 0.64, color: foreground)),
+      ),
     );
   }
 }
@@ -395,7 +432,7 @@ class RiskVisitRow extends StatelessWidget {
   final int position;
   final RiskPlot plot;
 
-  /// The line under the member's name: the plot and its distance or its sector.
+  /// The line under the member: the plot and its distance or its sector.
   final String subtitle;
   final VoidCallback onTap;
 
@@ -434,7 +471,12 @@ class RiskVisitRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(plot.producerName, style: textTheme.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(
+                  formatMember(AppLocalizations.of(context), plot.producerName, plot.memberCode),
+                  style: textTheme.titleSmall,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 Text(
                   subtitle,
                   maxLines: 1,

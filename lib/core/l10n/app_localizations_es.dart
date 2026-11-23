@@ -1309,6 +1309,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get riskUnassignedTitle => 'Sin sector';
 
   @override
+  String riskMember(Object name) {
+    return 'Socio: $name';
+  }
+
+  @override
+  String riskMemberWithCode(String name, String code) {
+    return 'Socio: $name · $code';
+  }
+
+  @override
+  String riskMemberIdentity(String name, String code) {
+    return 'Socio: $name · Código: $code';
+  }
+
+  @override
   String get riskReview => 'Revisar';
 
   @override
@@ -2161,6 +2176,62 @@ class AppLocalizationsEs extends AppLocalizations {
   String get intakeTagSufficient => 'Cobertura suficiente';
 
   @override
+  String get intakeTagConfidenceLow => 'Confianza baja';
+
+  @override
+  String get intakeTagConfidenceMedium => 'Confianza media';
+
+  @override
+  String get intakeTagConfidenceHigh => 'Confianza alta';
+
+  @override
+  String get intakeConfidenceMedium => 'media';
+
+  @override
+  String get intakeConfidenceHigh => 'alta';
+
+  @override
+  String intakePendingForConfidence(String level, int plots, String hectares) {
+    String _temp0 = intl.Intl.pluralLogic(
+      plots,
+      locale: localeName,
+      other: '$plots parcelas',
+      one: '1 parcela',
+      zero: '0 parcelas',
+    );
+    return 'Para confianza $level faltan $_temp0 y $hectares ha.';
+  }
+
+  @override
+  String get intakeByCaliber => 'Por calibre';
+
+  @override
+  String intakeEstimablePlots(int estimable, int plots) {
+    return '$estimable de $plots parcelas son estimables.';
+  }
+
+  @override
+  String intakeCaliberRange(int min, int max) {
+    return '$min–$max frutos/kg';
+  }
+
+  @override
+  String get intakeUnsized => 'Sin calibre';
+
+  @override
+  String get intakeOutOfRange => 'Fuera de rango';
+
+  @override
+  String get intakeCaliberEdit => 'Editar rangos';
+
+  @override
+  String get intakeCaliberSetup =>
+      'Define los rangos de calibre de tu planta para ver la proyección por calibre.';
+
+  @override
+  String get intakeCaliberSetupAction => 'Configurar calibres';
+
+  @override
   String get intakeTagPreliminary => 'Preliminar';
 
   @override
@@ -2350,4 +2421,67 @@ class AppLocalizationsEs extends AppLocalizations {
   String riskSavedAt(String when) {
     return 'guardado $when';
   }
+
+  @override
+  String get caliberRangesTitle => 'Rangos de calibre';
+
+  @override
+  String get caliberRangesSubtitle => 'Planta de tu organización';
+
+  @override
+  String get caliberRangesVoice =>
+      'Los calibres con los que tu planta recibe la aceituna.';
+
+  @override
+  String get caliberRangesHint =>
+      'Del fruto más grande al más chico: cada rango empieza justo después del anterior.';
+
+  @override
+  String get caliberRangesEmpty =>
+      'Aún no hay rangos: la proyección se muestra solo por aceituna verde y negra.';
+
+  @override
+  String caliberRangeLabel(int position) {
+    return 'Rango $position';
+  }
+
+  @override
+  String get caliberRangeFrom => 'Desde (frutos/kg)';
+
+  @override
+  String get caliberRangeTo => 'Hasta (frutos/kg)';
+
+  @override
+  String get caliberRangeRemove => 'Quitar rango';
+
+  @override
+  String get caliberRangesAdd => 'Añadir rango';
+
+  @override
+  String get caliberRangesSave => 'Guardar rangos';
+
+  @override
+  String get caliberRangeIncomplete =>
+      'Completa los dos extremos con números enteros.';
+
+  @override
+  String get caliberRangeOverlapping => 'Se superpone con el rango anterior.';
+
+  @override
+  String get caliberRangeGap =>
+      'Debe empezar justo después del rango anterior.';
+
+  @override
+  String get caliberRangeInverted =>
+      'El inicio no puede ser mayor que el final.';
+
+  @override
+  String get caliberRangeOffScale =>
+      'Usa valores entre 60 y 2000 frutos por kilo.';
+
+  @override
+  String get caliberRangesTooMany => 'Puedes definir hasta 20 rangos.';
+
+  @override
+  String get caliberRangeInvalid => 'Revisa este rango.';
 }

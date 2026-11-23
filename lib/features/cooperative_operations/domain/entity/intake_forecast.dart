@@ -88,6 +88,12 @@ class IntakeForecast {
     required this.preliminaryThresholdPercent,
     required this.sectors,
     required this.evaluatedAt,
+    this.confidence,
+    this.pendingPlots,
+    this.pendingHectares,
+    this.caliberBreakdown = const [],
+    this.unsizedTons,
+    this.outOfRangeTons,
   });
 
   final int campaignYear;
@@ -113,6 +119,23 @@ class IntakeForecast {
   final List<SectorIntake> sectors;
   final DateTime? evaluatedAt;
 
+  /// How far a projection can be trusted, by the lower of the plot and hectare coverage; null once settled or
+  /// when the server does not tell.
+  final IntakeConfidence? confidence;
+
+  /// What is left to sample to reach the next confidence level; null once settled.
+  final int? pendingPlots;
+  final double? pendingHectares;
+
+  /// The projection by the plant's caliber ranges; empty when the plant set none, or once settled.
+  final List<CaliberIntake> caliberBreakdown;
+
+  /// Tons of plots whose producer weighed no fruits; null without ranges.
+  final double? unsizedTons;
+
+  /// Tons of plots whose caliber falls outside every range; null without ranges.
+  final double? outOfRangeTons;
+
   bool get hasFigure => totalTons != null;
 
   /// How many more plots must be sampled for the projection to stop being preliminary.
@@ -121,3 +144,37 @@ class IntakeForecast {
     return needed > sampledPlots ? needed - sampledPlots : 0;
   }
 }
+
+/// The confidence of a projection, graded by how much of the license was sampled.
+enum IntakeConfidence {
+  low,
+  medium,
+  high;
+
+  static IntakeConfidence? parse(String? value) => switch (value) {
+        'LOW' => low,
+        'MEDIUM' => medium,
+        'HIGH' => high,
+        _ => null,
+      };
+}
+
+/// The projected tons of one caliber range of the plant, in fruits per kilogram.
+class CaliberIntake {
+  const CaliberIntake({
+    required this.minFruitsPerKg,
+    required this.maxFruitsPerKg,
+    required this.tons,
+    required this.greenTons,
+    required this.blackTons,
+    required this.unclassifiedTons,
+  });
+
+  final int minFruitsPerKg;
+  final int maxFruitsPerKg;
+  final double tons;
+  final double greenTons;
+  final double blackTons;
+  final double unclassifiedTons;
+}
+

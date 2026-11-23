@@ -343,10 +343,23 @@ class _ValleyCard extends StatelessWidget {
                     spacing: Spacing.sm,
                     runSpacing: Spacing.xs,
                     children: [
-                      _Legend(color: VioraColors.terracotta500, text: '${riskLevelLabel(l10n, PlotRisk.critical)} ${valley.critical}'),
-                      _Legend(color: VioraColors.harvest300, text: '${riskLevelLabel(l10n, PlotRisk.moderate)} ${valley.moderate}'),
-                      _Legend(color: VioraColors.green200, text: '${riskLevelLabel(l10n, PlotRisk.optimal)} ${valley.optimal}'),
                       _Legend(
+                        risk: PlotRisk.critical,
+                        color: VioraColors.terracotta500,
+                        text: '${riskLevelLabel(l10n, PlotRisk.critical)} ${valley.critical}',
+                      ),
+                      _Legend(
+                        risk: PlotRisk.moderate,
+                        color: VioraColors.harvest300,
+                        text: '${riskLevelLabel(l10n, PlotRisk.moderate)} ${valley.moderate}',
+                      ),
+                      _Legend(
+                        risk: PlotRisk.optimal,
+                        color: VioraColors.green200,
+                        text: '${riskLevelLabel(l10n, PlotRisk.optimal)} ${valley.optimal}',
+                      ),
+                      _Legend(
+                        risk: PlotRisk.noData,
                         color: _onDark.withValues(alpha: 0.5),
                         text: '${riskLevelLabel(l10n, PlotRisk.noData)} ${valley.noData}',
                       ),
@@ -364,9 +377,11 @@ class _ValleyCard extends StatelessWidget {
   }
 }
 
+/// A level of the valley: its icon on its color, so no level is told apart by color alone.
 class _Legend extends StatelessWidget {
-  const _Legend({required this.color, required this.text});
+  const _Legend({required this.risk, required this.color, required this.text});
 
+  final PlotRisk risk;
   final Color color;
   final String text;
 
@@ -375,14 +390,11 @@ class _Legend extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox.square(
-          dimension: 8,
-          child: DecoratedBox(decoration: ShapeDecoration(color: color, shape: const CircleBorder())),
-        ),
+        RiskBadge(risk: risk, color: color, size: 18),
         const SizedBox(width: 6),
         Text(
           text,
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 letterSpacing: 0,
                 color: _onDark.withValues(alpha: 0.85),
               ),

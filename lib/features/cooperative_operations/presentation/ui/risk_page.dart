@@ -697,7 +697,7 @@ class _PlotPanel extends StatelessWidget {
     final closes = detail?.windowClosesOn;
     final daysLeft = closes == null ? null : daysUntil(closes, now);
     final parts = [
-      plot.producerName,
+      formatMember(l10n, plot.producerName, plot.memberCode),
       plot.sectorName ?? plot.proposedSectorName,
       if (plot.areaHa != null) l10n.riskHectares(formatHectares(plot.areaHa!, locale)),
     ].whereType<String>().where((part) => part.isNotEmpty);

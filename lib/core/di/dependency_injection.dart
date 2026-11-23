@@ -4,6 +4,7 @@ import 'package:viora/core/datastore/session_events.dart';
 import 'package:viora/core/datastore/session_store.dart';
 import 'package:viora/core/locale/app_language.dart';
 import 'package:viora/core/network/api_client.dart';
+import 'package:viora/features/cooperative_operations/application/usecase/caliber_range_use_cases.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_intake_forecasts_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_invitation_codes_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_kept_reads_use_cases.dart';
@@ -20,6 +21,7 @@ import 'package:viora/features/cooperative_operations/application/usecase/issue_
 import 'package:viora/features/cooperative_operations/application/usecase/revoke_invitation_code_use_case.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/sector_use_cases.dart';
 import 'package:viora/features/cooperative_operations/domain/entity/license_capacity.dart';
+import 'package:viora/features/cooperative_operations/domain/repository/caliber_range_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/cooperative_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/dossier_repository.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/intake_repository.dart';
@@ -29,16 +31,19 @@ import 'package:viora/features/cooperative_operations/infrastructure/local/devic
 import 'package:viora/features/cooperative_operations/infrastructure/local/device_location_repository.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/manager_snapshot_dao.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/local/manager_snapshot_store.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/remote/caliber_range_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/cooperative_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/dossier_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/intake_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/risk_api.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/remote/sector_api.dart';
+import 'package:viora/features/cooperative_operations/infrastructure/repository/caliber_range_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/cooperative_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/dossier_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/intake_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/risk_repository_impl.dart';
 import 'package:viora/features/cooperative_operations/infrastructure/repository/sector_repository_impl.dart';
+import 'package:viora/features/cooperative_operations/presentation/viewmodel/caliber_ranges_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/issue_codes_view_model.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/manager_alerts_view_model.dart';
@@ -118,6 +123,16 @@ void _setupCooperativeOperations() {
   getIt.registerLazySingleton(() => GetInvitationCodesUseCase(repository: getIt<CooperativeRepository>()));
   getIt.registerLazySingleton(() => IssueInvitationCodesUseCase(repository: getIt<CooperativeRepository>()));
   getIt.registerLazySingleton(() => RevokeInvitationCodeUseCase(repository: getIt<CooperativeRepository>()));
+  getIt.registerLazySingleton<CaliberRangeApi>(() => CaliberRangeApi(client: getIt<ApiClient>()));
+  getIt.registerLazySingleton<CaliberRangeRepository>(() => CaliberRangeRepositoryImpl(api: getIt<CaliberRangeApi>()));
+  getIt.registerLazySingleton(() => GetCaliberRangesUseCase(repository: getIt<CaliberRangeRepository>()));
+  getIt.registerLazySingleton(() => ReplaceCaliberRangesUseCase(repository: getIt<CaliberRangeRepository>()));
+  getIt.registerFactory<CaliberRangesViewModel>(
+    () => CaliberRangesViewModel(
+      getRanges: getIt<GetCaliberRangesUseCase>(),
+      replaceRanges: getIt<ReplaceCaliberRangesUseCase>(),
+    ),
+  );
   getIt.registerLazySingleton<SectorApi>(() => SectorApi(client: getIt<ApiClient>()));
   getIt.registerLazySingleton<SectorRepository>(() => SectorRepositoryImpl(api: getIt<SectorApi>()));
   getIt.registerLazySingleton(() => GetSectorsUseCase(repository: getIt<SectorRepository>()));
