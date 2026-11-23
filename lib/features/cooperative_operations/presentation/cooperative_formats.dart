@@ -59,3 +59,8 @@ String formatOffline(AppLocalizations l10n, String what, DateTime at, DateTime n
   final when = formatReadAt(l10n, at, now, locale);
   return daysUntil(at.toLocal(), now) == 0 ? l10n.offlineToday(what, when) : l10n.offlineOn(what, when);
 }
+
+/// «Socio: Teodoro Mamani · COOP-••2Q»: the member a plot belongs to, labelled, with their code when known.
+String formatMember(AppLocalizations l10n, String name, String? code) =>
+    code == null || code.isEmpty ? l10n.riskMember(name) : l10n.riskMemberWithCode(name, code);
+

@@ -2180,6 +2180,24 @@ abstract class AppLocalizations {
   /// **'No sector'**
   String get riskUnassignedTitle;
 
+  /// No description provided for @riskMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member: {name}'**
+  String riskMember(Object name);
+
+  /// No description provided for @riskMemberWithCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Member: {name} · {code}'**
+  String riskMemberWithCode(String name, String code);
+
+  /// No description provided for @riskMemberIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'Member: {name} · Code: {code}'**
+  String riskMemberIdentity(String name, String code);
+
   /// No description provided for @riskReview.
   ///
   /// In en, this message translates to:

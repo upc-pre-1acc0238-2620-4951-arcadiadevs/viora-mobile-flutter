@@ -44,6 +44,7 @@ class RiskPlot {
     required this.id,
     required this.name,
     required this.producerName,
+    this.memberCode,
     required this.areaHa,
     required this.center,
     required this.outline,
@@ -61,6 +62,9 @@ class RiskPlot {
   final String id;
   final String name;
   final String producerName;
+
+  /// The code the member redeemed, masked («COOP-••2Q»), to tell members apart; null if unknown.
+  final String? memberCode;
   final double? areaHa;
   final GeoCoordinate? center;
 
@@ -111,6 +115,7 @@ class RiskPlotDetail {
     required this.id,
     required this.name,
     required this.producerName,
+    this.memberCode,
     required this.producerPhone,
     required this.areaHa,
     required this.sectorName,
@@ -134,6 +139,9 @@ class RiskPlotDetail {
   final String id;
   final String name;
   final String producerName;
+
+  /// The code the member redeemed, masked («COOP-••2Q»), to tell members apart; null if unknown.
+  final String? memberCode;
   final String? producerPhone;
   final double? areaHa;
   final String? sectorName;

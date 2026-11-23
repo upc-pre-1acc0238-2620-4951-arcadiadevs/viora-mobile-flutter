@@ -682,6 +682,21 @@
   "riskPendingTitle": "To confirm",
   "riskPendingSummary": "{plots} · review the sector",
   "riskUnassignedTitle": "No sector",
+  "riskMember": "Member: {name}",
+  "riskMemberWithCode": "Member: {name} · {code}",
+  "@riskMemberWithCode": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "code": {"type": "String"}
+    }
+  },
+  "riskMemberIdentity": "Member: {name} · Code: {code}",
+  "@riskMemberIdentity": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "code": {"type": "String"}
+    }
+  },
   "riskReview": "Review",
   "riskSummaryCritical": "{plots} · {count, plural, other{{count} critical}}",
   "@riskSummaryCritical": {

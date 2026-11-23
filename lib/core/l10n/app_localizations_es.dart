@@ -1309,6 +1309,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get riskUnassignedTitle => 'Sin sector';
 
   @override
+  String riskMember(Object name) {
+    return 'Socio: $name';
+  }
+
+  @override
+  String riskMemberWithCode(String name, String code) {
+    return 'Socio: $name · $code';
+  }
+
+  @override
+  String riskMemberIdentity(String name, String code) {
+    return 'Socio: $name · Código: $code';
+  }
+
+  @override
   String get riskReview => 'Revisar';
 
   @override
