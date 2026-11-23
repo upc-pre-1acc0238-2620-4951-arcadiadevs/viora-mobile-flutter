@@ -42,6 +42,22 @@ class IntakeForecastDto {
           ),
       ],
       evaluatedAt: evaluatedAt == null ? null : DateTime.tryParse(evaluatedAt),
+      confidence: IntakeConfidence.parse(json['confidenceLevel'] as String?),
+      pendingPlots: (json['pendingPlots'] as num?)?.toInt(),
+      pendingHectares: (json['pendingHectares'] as num?)?.toDouble(),
+      caliberBreakdown: [
+        for (final range in ((json['caliberBreakdown'] as List<dynamic>?) ?? const []).cast<Map<String, dynamic>>())
+          CaliberIntake(
+            minFruitsPerKg: (range['minFruitsPerKg'] as num).toInt(),
+            maxFruitsPerKg: (range['maxFruitsPerKg'] as num).toInt(),
+            tons: _tons(range['tons']),
+            greenTons: _tons(range['greenTons']),
+            blackTons: _tons(range['blackTons']),
+            unclassifiedTons: _tons(range['unclassifiedTons']),
+          ),
+      ],
+      unsizedTons: (json['unsizedTons'] as num?)?.toDouble(),
+      outOfRangeTons: (json['outOfRangeTons'] as num?)?.toDouble(),
     );
   }
 }

@@ -73,6 +73,11 @@ class ApiClient {
         (headers) => _client.put(_uri(path), headers: headers, body: jsonEncode(body)),
       );
 
+  /// A PUT whose answer is a JSON array, such as a collection replaced as a whole.
+  Future<List<Map<String, dynamic>>> putList(String path, Map<String, dynamic> body) async => _decodeList(
+        await _authorizedBody((headers) => _client.put(_uri(path), headers: headers, body: jsonEncode(body))),
+      );
+
   Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> body) => _authorized(
         (headers) => _client.patch(_uri(path), headers: headers, body: jsonEncode(body)),
       );

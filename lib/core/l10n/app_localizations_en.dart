@@ -2170,6 +2170,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get intakeTagSufficient => 'Enough coverage';
 
   @override
+  String get intakeTagConfidenceLow => 'Low confidence';
+
+  @override
+  String get intakeTagConfidenceMedium => 'Medium confidence';
+
+  @override
+  String get intakeTagConfidenceHigh => 'High confidence';
+
+  @override
+  String get intakeConfidenceMedium => 'medium';
+
+  @override
+  String get intakeConfidenceHigh => 'high';
+
+  @override
+  String intakePendingForConfidence(String level, int plots, String hectares) {
+    String _temp0 = intl.Intl.pluralLogic(
+      plots,
+      locale: localeName,
+      other: '$plots plots',
+      one: '1 plot',
+      zero: '0 plots',
+    );
+    return '$_temp0 and $hectares ha left to sample for $level confidence.';
+  }
+
+  @override
+  String get intakeByCaliber => 'By caliber';
+
+  @override
+  String intakeEstimablePlots(int estimable, int plots) {
+    return '$estimable of $plots plots are estimable.';
+  }
+
+  @override
+  String intakeCaliberRange(int min, int max) {
+    return '$min–$max fruits/kg';
+  }
+
+  @override
+  String get intakeUnsized => 'No caliber';
+
+  @override
+  String get intakeOutOfRange => 'Out of range';
+
+  @override
+  String get intakeCaliberEdit => 'Edit ranges';
+
+  @override
+  String get intakeCaliberSetup =>
+      'Set your plant\'s caliber ranges to see the projection by caliber.';
+
+  @override
+  String get intakeCaliberSetupAction => 'Set caliber ranges';
+
+  @override
   String get intakeTagPreliminary => 'Preliminary';
 
   @override
@@ -2359,4 +2415,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String riskSavedAt(String when) {
     return 'saved $when';
   }
+
+  @override
+  String get caliberRangesTitle => 'Caliber ranges';
+
+  @override
+  String get caliberRangesSubtitle => 'Your organization\'s plant';
+
+  @override
+  String get caliberRangesVoice => 'The calibers your plant takes olives in.';
+
+  @override
+  String get caliberRangesHint =>
+      'From the biggest fruit to the smallest: each range starts right after the previous one.';
+
+  @override
+  String get caliberRangesEmpty =>
+      'No ranges yet: the projection shows green and black olives only.';
+
+  @override
+  String caliberRangeLabel(int position) {
+    return 'Range $position';
+  }
+
+  @override
+  String get caliberRangeFrom => 'From (fruits/kg)';
+
+  @override
+  String get caliberRangeTo => 'To (fruits/kg)';
+
+  @override
+  String get caliberRangeRemove => 'Remove range';
+
+  @override
+  String get caliberRangesAdd => 'Add range';
+
+  @override
+  String get caliberRangesSave => 'Save ranges';
+
+  @override
+  String get caliberRangeIncomplete => 'Fill in both ends with whole numbers.';
+
+  @override
+  String get caliberRangeOverlapping => 'It overlaps the previous range.';
+
+  @override
+  String get caliberRangeGap => 'It must start right after the previous range.';
+
+  @override
+  String get caliberRangeInverted => 'The start cannot be above the end.';
+
+  @override
+  String get caliberRangeOffScale =>
+      'Use values between 60 and 2000 fruits per kilogram.';
+
+  @override
+  String get caliberRangesTooMany => 'You can set up to 20 ranges.';
+
+  @override
+  String get caliberRangeInvalid => 'Check this range.';
 }

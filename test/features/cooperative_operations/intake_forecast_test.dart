@@ -104,7 +104,13 @@ Widget _app(Widget child) => MaterialApp(
       home: child,
     );
 
-Widget _page(IntakeUiState state, {VoidCallback? onOpenMembers, VoidCallback? onChooseCampaign}) => _app(
+Widget _page(
+  IntakeUiState state, {
+  VoidCallback? onOpenMembers,
+  VoidCallback? onChooseCampaign,
+  VoidCallback? onOpenCaliberRanges,
+}) =>
+    _app(
       IntakePageContent(
         state: state,
         onRetry: () {},
@@ -112,6 +118,7 @@ Widget _page(IntakeUiState state, {VoidCallback? onOpenMembers, VoidCallback? on
         onChooseCampaign: onChooseCampaign ?? () {},
         onOpenAlerts: () {},
         onOpenMembers: onOpenMembers ?? () {},
+        onOpenCaliberRanges: onOpenCaliberRanges ?? () {},
       ),
     );
 
@@ -141,6 +148,34 @@ void main() {
       expect(forecast.kind, IntakeKind.settled);
       expect(forecast.status, IntakeStatus.closed);
       expect(forecast.sectors.map((sector) => sector.placement), [SectorPlacement.pending, SectorPlacement.none]);
+    });
+
+    test('reads the confidence, what is left to sample and the split by caliber', () {
+      final forecast = IntakeForecastDto.fromJson({
+        'campaignYear': 2026,
+        'kind': 'PROJECTION',
+        'status': 'SUFFICIENT',
+        'confidenceLevel': 'MEDIUM',
+        'pendingPlots': 4,
+        'pendingHectares': 6.5,
+        'caliberBreakdown': [
+          {'minFruitsPerKg': 140, 'maxFruitsPerKg': 180, 'tons': 320.0, 'greenTons': 190.0, 'blackTons': 110.0,
+            'unclassifiedTons': 20.0},
+        ],
+        'unsizedTons': 80.0,
+        'outOfRangeTons': 0.0,
+      }).toDomain();
+
+      expect(forecast.confidence, IntakeConfidence.medium);
+      expect(forecast.pendingPlots, 4);
+      expect(forecast.pendingHectares, 6.5);
+      expect(forecast.caliberBreakdown.single.minFruitsPerKg, 140);
+      expect(forecast.caliberBreakdown.single.greenTons, 190);
+      expect(forecast.unsizedTons, 80);
+
+      final older = IntakeForecastDto.fromJson({'campaignYear': 2026, 'kind': 'PROJECTION'}).toDomain();
+      expect(older.confidence, isNull);
+      expect(older.caliberBreakdown, isEmpty);
     });
 
     test('reads how each sector splits by color, and leaves it out when the server does not send it', () {
@@ -301,6 +336,58 @@ void main() {
 
       // The total and the first sector are split; the second one stays a single green bar.
       expect(find.byType(VioraSegmentedBar), findsNWidgets(2));
+    });
+
+    testWidgets('grades the projection, says what is left to sample and splits it by caliber', (tester) async {
+      final forecast = IntakeForecast(
+        campaignYear: 2026,
+        kind: IntakeKind.projection,
+        status: IntakeStatus.sufficient,
+        totalTons: 1240,
+        greenTons: 700,
+        blackTons: 420,
+        unclassifiedTons: 120,
+        plots: 60,
+        sampledPlots: 37,
+        estimablePlots: 31,
+        coveragePercent: 61.7,
+        preliminaryThresholdPercent: 50,
+        sectors: const [],
+        evaluatedAt: null,
+        confidence: IntakeConfidence.medium,
+        pendingPlots: 12,
+        pendingHectares: 38.5,
+        caliberBreakdown: const [
+          CaliberIntake(minFruitsPerKg: 140, maxFruitsPerKg: 180, tons: 320, greenTons: 190, blackTons: 110,
+              unclassifiedTons: 20),
+        ],
+        unsizedTons: 80,
+        outOfRangeTons: 0,
+      );
+      var opened = false;
+      await tester.pumpWidget(_page(IntakeUiState(loading: false, selectedYear: 2026, forecast: forecast),
+          onOpenCaliberRanges: () => opened = true));
+
+      expect(find.text('Confianza media'), findsOneWidget);
+      expect(find.text('31 de 60 parcelas son estimables. Para confianza alta faltan 12 parcelas y 38,5 ha.'),
+          findsOneWidget);
+      // A graded projection no longer speaks of the preliminary threshold, which would contradict its tag
+      expect(find.textContaining('umbral preliminar'), findsNothing);
+      await tester.scrollUntilVisible(find.text('Sin calibre'), 200);
+      expect(find.text('140–180 frutos/kg'), findsOneWidget);
+      expect(find.text('Fuera de rango'), findsNothing);
+      await tester.tap(find.text('Editar rangos'));
+      expect(opened, isTrue);
+    });
+
+    testWidgets('without caliber ranges it offers to set them', (tester) async {
+      var opened = false;
+      await tester.pumpWidget(_page(IntakeUiState(loading: false, selectedYear: 2026, forecast: _forecast()),
+          onOpenCaliberRanges: () => opened = true));
+
+      await tester.scrollUntilVisible(find.text('Configurar calibres'), 200);
+      await tester.tap(find.text('Configurar calibres'));
+      expect(opened, isTrue);
     });
 
     testWidgets('marks a projection below the threshold as preliminary', (tester) async {
