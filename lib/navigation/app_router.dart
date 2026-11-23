@@ -6,6 +6,7 @@ import 'package:viora/app_shell.dart';
 import 'package:viora/core/datastore/session_events.dart';
 import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/navigation/top_level_destination.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/caliber_ranges_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/intake_page.dart';
@@ -210,19 +211,28 @@ GoRoute _riskRoute(String path) {
   );
 }
 
-/// G30 · Acopio and the alerts its bell opens. «Ver socios sin muestreo» goes to the members tab,
-/// showing only the members who are missing a sampling.
+/// G30 · Acopio, the alerts its bell opens and the caliber ranges of the plant. «Ver socios sin muestreo» goes to the
+/// members tab, showing only the members who are missing a sampling.
 GoRoute _intakeRoute(String path) {
   return GoRoute(
     path: path,
     builder: (context, state) => IntakePage(
       onOpenAlerts: () => context.push('$path/${ManagerAlertsPage.path}'),
+      onOpenCaliberRanges: () => context.push<void>('$path/${CaliberRangesPage.path}'),
       onOpenMembers: () => context.go(Uri(
         path: TopLevelDestination.members.path,
         queryParameters: {'filter': MembersFilter.unsampled.name},
       ).toString()),
     ),
-    routes: [_alertsRoute(path)],
+    routes: [
+      _alertsRoute(path),
+      // A form: it covers the tab bar, as the account details do, so the keyboard never lifts the bar.
+      GoRoute(
+        path: CaliberRangesPage.path,
+        parentNavigatorKey: _rootNavigator,
+        builder: (context, state) => CaliberRangesPage(onBack: () => context.pop()),
+      ),
+    ],
   );
 }
 

@@ -40,6 +40,15 @@ abstract final class CooperativeErrorMapper {
         _ => const CooperativeUnexpected(),
       };
 
+  /// A 400 on the caliber ranges names the range in conflict and why.
+  static CooperativeFailure caliber(ApiException error) => switch (error.status) {
+        400 when error.reason != null => CaliberRangeConflict(
+            reason: error.reason!,
+            rangeIndex: (error.body['rangeIndex'] as num?)?.toInt(),
+          ),
+        _ => read(error),
+      };
+
   static CooperativeFailure revoke(ApiException error) => switch (error.status) {
         409 when error.reason == _alreadyRedeemed => CodeAlreadyRedeemed(
             error.body['redeemedAt'] is String ? DateTime.tryParse(error.body['redeemedAt'] as String) : null,

@@ -208,8 +208,10 @@ class _Hero extends StatelessWidget {
       PlotRisk.optimal => l10n.riskHeroOptimal(group.total),
       PlotRisk.noData => l10n.riskHeroNoData(group.total),
     };
+    // On a red card the red of «crítico» would vanish, so the bar and its legend use colors that stand out on it;
+    // «sin datos» stays the neutral grey of the other cards instead of a pale red close to the card's own.
     final colors = critical
-        ? const [VioraColors.neutral900, VioraColors.harvest400, VioraColors.neutral0, Color(0xFFDD9E82)]
+        ? const [VioraColors.neutral900, VioraColors.harvest400, VioraColors.neutral0, VioraColors.neutral300]
         : null;
     final frost = group.coldestFrost;
     final locale = Localizations.localeOf(context).toLanguageTag();
@@ -247,10 +249,13 @@ class _Hero extends StatelessWidget {
             spacing: Spacing.sm,
             runSpacing: Spacing.xxs,
             children: [
-              _Legend(color: (colors ?? _barColors)[0], label: l10n.riskLegend(riskLevelLabel(l10n, PlotRisk.critical), group.critical), foreground: foreground),
-              _Legend(color: (colors ?? _barColors)[1], label: l10n.riskLegend(riskLevelLabel(l10n, PlotRisk.moderate), group.moderate), foreground: foreground),
-              _Legend(color: (colors ?? _barColors)[2], label: l10n.riskLegend(riskLevelLabel(l10n, PlotRisk.optimal), group.optimal), foreground: foreground),
-              _Legend(color: (colors ?? _barColors)[3], label: l10n.riskLegend(riskLevelLabel(l10n, PlotRisk.noData), group.noData), foreground: foreground),
+              for (final (i, risk) in PlotRisk.values.indexed)
+                _Legend(
+                  risk: risk,
+                  color: (colors ?? _barColors)[i],
+                  label: l10n.riskLegend(riskLevelLabel(l10n, risk), group.count(risk)),
+                  foreground: foreground,
+                ),
             ],
           ),
           if (frost != null) ...[
@@ -292,9 +297,11 @@ class _Hero extends StatelessWidget {
 
 const _barColors = [VioraColors.terracotta500, VioraColors.harvest400, VioraColors.green700, VioraColors.neutral300];
 
+/// A level of the sector's bar: its icon on the bar's color, so no level is told apart by color alone.
 class _Legend extends StatelessWidget {
-  const _Legend({required this.color, required this.label, required this.foreground});
+  const _Legend({required this.risk, required this.color, required this.label, required this.foreground});
 
+  final PlotRisk risk;
   final Color color;
   final String label;
   final Color foreground;
@@ -304,12 +311,9 @@ class _Legend extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox.square(
-          dimension: 8,
-          child: DecoratedBox(decoration: ShapeDecoration(color: color, shape: const CircleBorder())),
-        ),
-        const SizedBox(width: Spacing.xxs),
-        Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: foreground)),
+        RiskBadge(risk: risk, color: color, size: 18),
+        const SizedBox(width: 6),
+        Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: foreground)),
       ],
     );
   }
@@ -403,7 +407,12 @@ class _RestGroup extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(plot.producerName, style: textTheme.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+                            Text(
+                              formatMember(l10n, plot.producerName, plot.memberCode),
+                              style: textTheme.titleSmall,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             Text(
                               _plotLine(l10n, plot, locale),
                               maxLines: 1,

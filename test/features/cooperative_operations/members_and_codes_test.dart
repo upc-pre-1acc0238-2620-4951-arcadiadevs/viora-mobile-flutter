@@ -22,6 +22,7 @@ import 'package:viora/features/cooperative_operations/presentation/state/member_
 import 'package:viora/features/cooperative_operations/presentation/state/members_ui_state.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/issue_codes_sheet.dart';
+import 'package:viora/features/cooperative_operations/presentation/ui/issued_codes_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/member_detail_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/ui/members_page.dart';
 import 'package:viora/features/cooperative_operations/presentation/viewmodel/codes_view_model.dart';
@@ -649,4 +650,40 @@ void main() {
     });
   });
 
+
+  group('G44 · Códigos generados', () {
+    testWidgets('each code stays whole on one line, with a way to copy it, on a narrow screen with large text',
+        (tester) async {
+      tester.view.physicalSize = const Size(360, 1400);
+      tester.view.devicePixelRatio = 1;
+      tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+      addTearDown(tester.view.reset);
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+      final codes = ['COOP-4F9T', 'COOP-9HX3'];
+      await tester.pumpWidget(_app(IssuedCodesPage(
+        args: IssuedCodesArgs(
+          organizationName: 'Cooperativa Olivar del Sur',
+          issued: IssuedCodes(
+            batchId: 'b9',
+            issuedAt: DateTime.utc(2026, 11, 27),
+            expiresAt: DateTime.utc(2026, 12, 27),
+            hectaresPerCode: 12,
+            codes: codes,
+          ),
+        ),
+        onClose: () {},
+        onSeeAll: () {},
+      )));
+
+      expect(tester.takeException(), isNull);
+      for (final code in codes) {
+        final text = tester.widget<Text>(find.text(code));
+        expect(text.maxLines, 1);
+        expect(text.softWrap, isFalse);
+        expect(tester.getSize(find.text(code)).width, lessThanOrEqualTo(360));
+      }
+      expect(find.text('Copiar'), findsNWidgets(codes.length));
+    });
+  });
 }
+

@@ -110,6 +110,14 @@ class RiskPlotContent extends StatelessWidget {
                 child: Center(child: CircularProgressIndicator(color: VioraColors.green800)),
               )
             else ...[
+              // Who the plot belongs to, labelled, so the manager finds the member before the visit.
+              Text(
+                plot.memberCode == null || plot.memberCode!.isEmpty
+                    ? l10n.riskMember(plot.producerName)
+                    : l10n.riskMemberIdentity(plot.producerName, plot.memberCode!),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              const SizedBox(height: Spacing.xs),
               _ReadOnlyLine(evaluatedAt: plot.evaluatedAt, now: now),
               const SizedBox(height: Spacing.sm),
               if (state.savedAt != null) ...[

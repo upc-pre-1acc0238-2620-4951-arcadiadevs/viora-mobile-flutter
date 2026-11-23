@@ -30,6 +30,12 @@ void main() {
     expect(appRouter.configuration.findMatch(Uri.parse(AccountPage.path)).matches, isNotEmpty);
   });
 
+  test('the caliber ranges of the plant open over the intake tab', () {
+    final match = appRouter.configuration.findMatch(Uri.parse('/collection/caliber-ranges'));
+
+    expect(match.matches.last.matchedLocation, '/collection/caliber-ranges');
+  });
+
   test('every tab opens its own screen', () {
     for (final tab in TopLevelDestination.values) {
       expect(appRouter.configuration.findMatch(Uri.parse(tab.path)).matches.last.matchedLocation, tab.path);
