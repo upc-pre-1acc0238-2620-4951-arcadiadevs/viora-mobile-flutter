@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' show MapboxOptions;
 
+import 'package:viora/core/designsystem/component/viora_voice_animation.dart';
 import 'package:viora/core/designsystem/theme/app_theme.dart';
 import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/locale/app_language.dart';
+import 'package:viora/core/presentation/voice_animation_preference.dart';
 import 'package:viora/navigation/app_router.dart';
 
 /// Public Mapbox token (pk.…), kept out of git like in the Kotlin app. It comes from
@@ -22,6 +24,7 @@ Future<void> main() async {
   forgetAccountDataWhenSessionEnds();
   // The saved language has to be known before the first frame.
   await getIt<AppLanguageCubit>().load();
+  await getIt<VoiceAnimationPreferenceCubit>().load();
   runApp(const VioraApp());
 }
 
@@ -53,7 +56,16 @@ class VioraApp extends StatelessWidget {
       builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
         value: AppTheme.systemBars,
         // What a crossfade between two screens shows through; without it the fade dips to black.
-        child: ColoredBox(color: Theme.of(context).scaffoldBackgroundColor, child: child!),
+        child: BlocBuilder<VoiceAnimationPreferenceCubit, bool>(
+          bloc: getIt<VoiceAnimationPreferenceCubit>(),
+          builder: (context, enabled) => VioraVoiceAnimation(
+            enabled: enabled,
+            child: ColoredBox(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: child!,
+            ),
+          ),
+        ),
       ),
     );
   }

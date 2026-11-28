@@ -3,6 +3,7 @@ import 'package:viora/core/database/app_database.dart';
 import 'package:viora/core/datastore/session_events.dart';
 import 'package:viora/core/datastore/session_store.dart';
 import 'package:viora/core/locale/app_language.dart';
+import 'package:viora/core/presentation/voice_animation_preference.dart';
 import 'package:viora/core/network/api_client.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/caliber_range_use_cases.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/get_intake_forecasts_use_case.dart';
@@ -303,6 +304,7 @@ void _setupSubscription() {
 void _setupCore() {
   getIt.registerLazySingleton<AppDatabase>(() => AppDatabase());
   getIt.registerLazySingleton<AppLanguageCubit>(() => AppLanguageCubit());
+  getIt.registerLazySingleton<VoiceAnimationPreferenceCubit>(() => VoiceAnimationPreferenceCubit());
   getIt.registerLazySingleton<SessionStore>(() => const SessionStore());
   getIt.registerLazySingleton<SessionEvents>(() => SessionEvents());
   getIt.registerLazySingleton<ApiClient>(

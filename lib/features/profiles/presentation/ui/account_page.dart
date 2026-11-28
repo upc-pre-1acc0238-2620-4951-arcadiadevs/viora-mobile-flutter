@@ -10,6 +10,7 @@ import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/domain/account_rules.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/locale/app_language.dart';
+import 'package:viora/core/presentation/voice_animation_preference.dart';
 import 'package:viora/features/iam/presentation/ui/iam_page.dart';
 import 'package:viora/features/profiles/domain/entity/profile.dart';
 import 'package:viora/features/profiles/presentation/state/account_ui_state.dart';
@@ -197,6 +198,14 @@ class _AccountViewState extends State<_AccountView> with WidgetsBindingObserver 
                               ? l10n.accountNotificationsOn
                               : l10n.accountNotificationsOff,
                           onTap: openAppSettings,
+                        ),
+                        BlocBuilder<VoiceAnimationPreferenceCubit, bool>(
+                          bloc: getIt<VoiceAnimationPreferenceCubit>(),
+                          builder: (context, enabled) => AccountSwitchRow(
+                            label: l10n.accountAnimatedVoice,
+                            value: enabled,
+                            onChanged: getIt<VoiceAnimationPreferenceCubit>().setEnabled,
+                          ),
                         ),
                       ],
                     ),

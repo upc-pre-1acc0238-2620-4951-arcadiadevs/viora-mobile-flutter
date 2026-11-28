@@ -213,6 +213,37 @@ class AccountRow extends StatelessWidget {
   }
 }
 
+/// A preference row whose label and switch both change the value.
+class AccountSwitchRow extends StatelessWidget {
+  const AccountSwitchRow({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String label;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) => SwitchListTile(
+    contentPadding: const EdgeInsets.fromLTRB(20, 3, 16, 3),
+    title: Text(
+      label,
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        fontSize: 14,
+        height: 20 / 14,
+        fontWeight: FontWeight.w400,
+        fontVariations: [const FontVariation.weight(400)],
+        color: VioraColors.neutral900,
+      ),
+    ),
+    value: value,
+    onChanged: onChanged,
+  );
+}
+
 /// The white field card of the account forms: a small label over the value, an optional eye
 /// for secrets, and under it a helper or an error with the warning icon.
 class ValidatedFieldCard extends StatefulWidget {
