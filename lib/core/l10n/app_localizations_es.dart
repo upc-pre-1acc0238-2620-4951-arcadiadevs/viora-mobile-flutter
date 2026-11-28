@@ -54,6 +54,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accountLanguageEnglish => 'English';
 
   @override
+  String get accountAnimatedVoice => 'Voz de Viora animada';
+
+  @override
   String get accountNotifications => 'Notificaciones';
 
   @override

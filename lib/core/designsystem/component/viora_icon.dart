@@ -16,6 +16,9 @@ abstract final class VioraIcons {
   static const groups = 'assets/icons/ic_groups.svg';
   static const arrowForward = 'assets/icons/ic_arrow_forward.svg';
   static const brote = 'assets/icons/ic_brote.svg';
+  static const broteReposo = 'assets/icons/ic_brote_reposo.svg';
+  static const brotePensando = 'assets/icons/ic_brote_pensando.svg';
+  static const broteLogro = 'assets/icons/ic_brote_logro.svg';
   static const acUnit = 'assets/icons/ic_ac_unit.svg';
   static const scale = 'assets/icons/ic_scale.svg';
   static const arrowBack = 'assets/icons/ic_arrow_back.svg';
