@@ -182,6 +182,12 @@ abstract class AppLocalizations {
   /// **'English'**
   String get accountLanguageEnglish;
 
+  /// No description provided for @accountAnimatedVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Animated Viora voice'**
+  String get accountAnimatedVoice;
+
   /// No description provided for @accountNotifications.
   ///
   /// In en, this message translates to:

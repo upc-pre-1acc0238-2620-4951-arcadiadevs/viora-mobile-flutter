@@ -8,6 +8,7 @@ import 'package:viora/core/di/dependency_injection.dart';
 import 'package:viora/core/domain/account_rules.dart';
 import 'package:viora/core/l10n/app_localizations.dart';
 import 'package:viora/core/locale/app_language.dart';
+import 'package:viora/core/presentation/voice_animation_preference.dart';
 import 'package:viora/features/cooperative_operations/application/usecase/has_active_sector_alerts_use_case.dart';
 import 'package:viora/features/cooperative_operations/domain/repository/risk_repository.dart';
 import 'package:viora/features/home/presentation/viewmodel/home_view_model.dart';
@@ -310,6 +311,7 @@ void main() {
   Widget app(AccountViewModel accountViewModel, {Widget? statusBadge, Widget? roleSuffix}) {
     getIt.registerFactory<AccountViewModel>(() => accountViewModel);
     getIt.registerLazySingleton<AppLanguageCubit>(() => AppLanguageCubit());
+    getIt.registerLazySingleton<VoiceAnimationPreferenceCubit>(() => VoiceAnimationPreferenceCubit());
     final router = GoRouter(
       initialLocation: AccountPage.path,
       routes: [
@@ -330,6 +332,24 @@ void main() {
   }
 
   tearDown(() => getIt.reset());
+
+  testWidgets('the animated voice switch reflects and saves the preference', (
+    tester,
+  ) async {
+    FlutterSecureStorage.setMockInitialValues({});
+    await tester.pumpWidget(app(viewModel(_profile)));
+    await tester.pumpAndSettle();
+    final label = find.text('Voz de Viora animada');
+    await tester.ensureVisible(label);
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
+    await tester.tap(label);
+    await tester.pumpAndSettle();
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isFalse);
+    final next = VoiceAnimationPreferenceCubit();
+    await next.load();
+    expect(next.state, isFalse);
+    await next.close();
+  });
 
   testWidgets('the account shows the profile', (tester) async {
     await tester.pumpWidget(app(viewModel(_profile)));
